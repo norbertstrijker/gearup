@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "GearUp — Finde kompatible Teile für deine Maschine",
+    "description": "Gib Marke und Modell ein und entdecke sofort welcher Kraftstoff, Ketten, Zündkerzen und andere Teile kompatibel sind."
+  },
+  "header": {
+    "logo_alt": "GearUp Logo"
+  },
+  "hero": {
+    "headline": "GEAR UP YOUR MACHINE",
+    "subtitle": "Marke + Modell eingeben — sofort alle kompatiblen Teile sehen",
+    "search_placeholder": "Marke oder Modell suchen...",
+    "search_button": "SUCHEN"
+  },
+  "howto": {
+    "step1": "Marke + Modell eingeben",
+    "step2": "Kompatible Teile ansehen",
+    "step3": "Direkt online bestellen"
+  },
+  "categories": {
+    "title": "Beliebte Kategorien",
+    "grasmaaiers": "Rasenmäher",
+    "kettingzagen": "Kettensägen",
+    "bladblazers": "Laubbläser",
+    "bosmaaiers": "Motorsensen"
+  },
+  "cta": {
+    "status": "Status: Bereit",
+    "headline": "OPTIMIERE DEINE\nLEISTUNG",
+    "description": "Gib dich nicht mit generischen Teilen zufrieden. Wähle die richtigen Teile für dein genaues Modell.",
+    "button": "TEILE ENTDECKEN"
+  },
+  "footer": {
+    "copyright": "© 2026 GEARUP. ALLE RECHTE VORBEHALTEN.",
+    "privacy": "DATENSCHUTZ",
+    "terms": "AGB",
+    "support": "SUPPORT"
+  },
+  "suggestions": {
+    "title": "Welches Modell ist deine Maschine?",
+    "count": "Wir haben {count} Maschinen gefunden. Wähle deine.",
+    "not_found": "Keine Maschinen gefunden für \"{query}\". Versuche einen anderen Suchbegriff.",
+    "search_label": "Suchbegriff"
+  },
+  "result": {
+    "compatible_products": "Kompatible Produkte",
+    "found_in_db": "In Datenbank gefunden",
+    "order": "Bestellen",
+    "coming_soon": "Demnächst",
+    "coming_soon_desc": "Dieses Produkt wird bald hinzugefügt."
+  },
+  "producttypes": {
+    "brandstof": "Kraftstoff",
+    "ketting": "Kette",
+    "bougie": "Zündkerze",
+    "filter": "Luftfilter",
+    "olie": "Öl",
+    "maaimes": "Mähmesser",
+    "maaidraad": "Mähfaden",
+    "accu": "Akku",
+    "lader": "Ladegerät",
+    "zaagblad": "Sägeblatt",
+    "boren": "Bohrer"
+  },
+  "tiers": {
+    "basis": "BASIS",
+    "beter": "BESSER",
+    "best": "BEST",
+    "popular": "BELIEBT"
+  }
+}

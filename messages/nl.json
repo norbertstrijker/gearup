@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "GearUp — Vind compatibele onderdelen voor jouw machine",
+    "description": "Voer merk en model in en ontdek direct welke brandstof, kettingen, bougies en andere onderdelen compatibel zijn."
+  },
+  "header": {
+    "logo_alt": "GearUp logo"
+  },
+  "hero": {
+    "headline": "GEAR UP YOUR MACHINE",
+    "subtitle": "Vul merk + model in — bekijk direct alle compatibele onderdelen",
+    "search_placeholder": "Zoek merk of model...",
+    "search_button": "ZOEKEN"
+  },
+  "howto": {
+    "step1": "Vul merk + model in",
+    "step2": "Bekijk compatibele onderdelen",
+    "step3": "Bestel direct online"
+  },
+  "categories": {
+    "title": "Populaire categorieën",
+    "grasmaaiers": "Grasmaaiers",
+    "kettingzagen": "Kettingzagen",
+    "bladblazers": "Bladblazers",
+    "bosmaaiers": "Bosmaaiers"
+  },
+  "cta": {
+    "status": "Status: Ready",
+    "headline": "OPTIMALISEER JE\nPRESTATIES",
+    "description": "Neem geen genoegen met generiek. Kies de juiste onderdelen voor jouw exacte model.",
+    "button": "ONTDEK ONDERDELEN"
+  },
+  "footer": {
+    "copyright": "© 2026 GEARUP. ALLE RECHTEN VOORBEHOUDEN.",
+    "privacy": "PRIVACY",
+    "terms": "VOORWAARDEN",
+    "support": "SUPPORT"
+  },
+  "suggestions": {
+    "title": "Welk model is jouw machine?",
+    "count": "We vonden {count} machines. Kies de jouwe.",
+    "not_found": "Geen machines gevonden voor \"{query}\". Probeer een andere zoekterm.",
+    "search_label": "Zoekterm"
+  },
+  "result": {
+    "compatible_products": "Compatibele producten",
+    "found_in_db": "Gevonden in database",
+    "order": "Bestel",
+    "coming_soon": "Binnenkort",
+    "coming_soon_desc": "Dit product wordt binnenkort toegevoegd."
+  },
+  "producttypes": {
+    "brandstof": "Brandstof",
+    "ketting": "Ketting",
+    "bougie": "Bougie",
+    "filter": "Luchtfilter",
+    "olie": "Olie",
+    "maaimes": "Maaimes",
+    "maaidraad": "Maaidraad",
+    "accu": "Accu",
+    "lader": "Lader",
+    "zaagblad": "Zaagblad",
+    "boren": "Boren"
+  },
+  "tiers": {
+    "basis": "BASIS",
+    "beter": "BETER",
+    "best": "BEST",
+    "popular": "POPULAIR"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "GearUp — Find compatible parts for your machine",
+    "description": "Enter brand and model to instantly discover which fuel, chains, spark plugs and other parts are compatible."
+  },
+  "header": {
+    "logo_alt": "GearUp logo"
+  },
+  "hero": {
+    "headline": "GEAR UP YOUR MACHINE",
+    "subtitle": "Enter brand + model — get all compatible parts instantly",
+    "search_placeholder": "Search brand or model...",
+    "search_button": "SEARCH"
+  },
+  "howto": {
+    "step1": "Enter brand + model",
+    "step2": "See all compatible parts",
+    "step3": "Order directly online"
+  },
+  "categories": {
+    "title": "Popular categories",
+    "grasmaaiers": "Lawnmowers",
+    "kettingzagen": "Chainsaws",
+    "bladblazers": "Leaf blowers",
+    "bosmaaiers": "Brush cutters"
+  },
+  "cta": {
+    "status": "Status: Ready",
+    "headline": "OPTIMIZE YOUR\nPERFORMANCE",
+    "description": "Don't settle for generic. Get precision-engineered parts for your exact model.",
+    "button": "EXPLORE PARTS"
+  },
+  "footer": {
+    "copyright": "© 2026 GEARUP. ALL RIGHTS RESERVED.",
+    "privacy": "PRIVACY",
+    "terms": "TERMS",
+    "support": "SUPPORT"
+  },
+  "suggestions": {
+    "title": "Which model is your machine?",
+    "count": "We found {count} machines. Pick yours.",
+    "not_found": "No machines found for \"{query}\". Try a different search term.",
+    "search_label": "Search term"
+  },
+  "result": {
+    "compatible_products": "Compatible products",
+    "found_in_db": "Found in database",
+    "order": "Order",
+    "coming_soon": "Coming soon",
+    "coming_soon_desc": "This product will be added soon."
+  },
+  "producttypes": {
+    "brandstof": "Fuel",
+    "ketting": "Chain",
+    "bougie": "Spark plug",
+    "filter": "Air filter",
+    "olie": "Oil",
+    "maaimes": "Mower blade",
+    "maaidraad": "Trimmer line",
+    "accu": "Battery",
+    "lader": "Charger",
+    "zaagblad": "Saw blade",
+    "boren": "Drill bits"
+  },
+  "tiers": {
+    "basis": "BASIC",
+    "beter": "BETTER",
+    "best": "BEST",
+    "popular": "POPULAR"
+  }
+}
