@@ -7,8 +7,8 @@
     "logo_alt": "GearUp logo"
   },
   "hero": {
-    "headline": "GEAR UP YOUR MACHINE",
-    "subtitle": "Vul merk + model in — bekijk direct alle compatibele onderdelen",
+    "headline": "GEAR UP",
+    "subtitle": "Find the right parts for any tool or machine",
     "search_placeholder": "Zoek merk of model...",
     "search_button": "ZOEKEN"
   },
@@ -24,11 +24,10 @@
     "bladblazers": "Bladblazers",
     "bosmaaiers": "Bosmaaiers"
   },
-  "cta": {
-    "status": "Status: Ready",
-    "headline": "OPTIMALISEER JE\nPRESTATIES",
-    "description": "Neem geen genoegen met generiek. Kies de juiste onderdelen voor jouw exacte model.",
-    "button": "ONTDEK ONDERDELEN"
+  "manual": {
+    "title": "HANDLEIDING NODIG?",
+    "description": "Vind de officiële handleiding voor jouw machine",
+    "button": "BEKIJK HANDLEIDING"
   },
   "footer": {
     "copyright": "© 2026 GEARUP. ALLE RECHTEN VOORBEHOUDEN.",
@@ -47,7 +46,10 @@
     "found_in_db": "Gevonden in database",
     "order": "Bestel",
     "coming_soon": "Binnenkort",
-    "coming_soon_desc": "Dit product wordt binnenkort toegevoegd."
+    "coming_soon_desc": "Dit product wordt binnenkort toegevoegd.",
+    "manual_title": "HANDLEIDING NODIG?",
+    "manual_description": "Vind de officiële handleiding voor jouw machine",
+    "manual_button": "BEKIJK HANDLEIDING"
   },
   "producttypes": {
     "brandstof": "Brandstof",

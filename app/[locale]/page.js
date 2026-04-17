@@ -70,25 +70,19 @@ export default function HomePage({ params }) {
         <CategoryGrid locale={locale} />
       </section>
 
-      {/* CTA Banner */}
+      {/* Manual Section */}
       <section className="px-6 py-8">
         <div className="bg-primary-container rounded-xl p-8 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-8 opacity-20 transition-transform group-hover:scale-110">
-            <span className="material-symbols-outlined text-8xl text-secondary-container">bolt</span>
+            <span className="material-symbols-outlined text-8xl text-secondary-container">menu_book</span>
           </div>
           <div className="relative z-10 flex flex-col gap-2">
-            <span className="text-secondary-container font-headline font-black text-sm tracking-[0.2em] uppercase">
-              {t('cta.status')}
-            </span>
-            <h3 className="text-3xl font-headline font-bold text-white uppercase leading-none mb-4 whitespace-pre-line">
-              {t('cta.headline')}
+            <h3 className="text-3xl font-headline font-bold text-white uppercase leading-none mb-4">
+              {t('manual.title')}
             </h3>
             <p className="text-on-primary-container mb-6 max-w-xs">
-              {t('cta.description')}
+              {t('manual.description')}
             </p>
-            <button className="bg-cta hover:bg-secondary text-white px-8 py-3 rounded-md font-headline font-bold tracking-widest w-fit transition-all active:scale-95">
-              {t('cta.button')}
-            </button>
           </div>
         </div>
       </section>

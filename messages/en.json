@@ -7,8 +7,8 @@
     "logo_alt": "GearUp logo"
   },
   "hero": {
-    "headline": "GEAR UP YOUR MACHINE",
-    "subtitle": "Enter brand + model — get all compatible parts instantly",
+    "headline": "GEAR UP",
+    "subtitle": "Find the right parts for any tool or machine",
     "search_placeholder": "Search brand or model...",
     "search_button": "SEARCH"
   },
@@ -24,11 +24,10 @@
     "bladblazers": "Leaf blowers",
     "bosmaaiers": "Brush cutters"
   },
-  "cta": {
-    "status": "Status: Ready",
-    "headline": "OPTIMIZE YOUR\nPERFORMANCE",
-    "description": "Don't settle for generic. Get precision-engineered parts for your exact model.",
-    "button": "EXPLORE PARTS"
+  "manual": {
+    "title": "NEED THE MANUAL?",
+    "description": "Find the official manual for your tool",
+    "button": "VIEW MANUAL"
   },
   "footer": {
     "copyright": "© 2026 GEARUP. ALL RIGHTS RESERVED.",
@@ -47,7 +46,10 @@
     "found_in_db": "Found in database",
     "order": "Order",
     "coming_soon": "Coming soon",
-    "coming_soon_desc": "This product will be added soon."
+    "coming_soon_desc": "This product will be added soon.",
+    "manual_title": "NEED THE MANUAL?",
+    "manual_description": "Find the official manual for your tool",
+    "manual_button": "VIEW MANUAL"
   },
   "producttypes": {
     "brandstof": "Fuel",

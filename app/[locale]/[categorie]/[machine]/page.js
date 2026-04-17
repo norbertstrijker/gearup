@@ -76,6 +76,9 @@ export default async function ResultPage({ params }) {
       ? `${machine.motortype} · mengverhouding ${machine.mengverhouding}`
       : machine.motortype
 
+  const manualUrl = machine.handleiding_url
+    || `https://www.manualslib.com/search/?q=${encodeURIComponent(machine.merk + ' ' + machine.modelnummer)}`
+
   return (
     <div className="pt-20 pb-20 px-4 max-w-2xl mx-auto w-full">
       {/* Machine card */}
@@ -115,6 +118,31 @@ export default async function ResultPage({ params }) {
               products={grouped[type] || []}
             />
           ))}
+        </div>
+      </section>
+
+      {/* Manual section */}
+      <section className="mt-16">
+        <div className="bg-primary-container rounded-xl p-8 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-8 opacity-20 transition-transform group-hover:scale-110">
+            <span className="material-symbols-outlined text-8xl text-secondary-container">menu_book</span>
+          </div>
+          <div className="relative z-10 flex flex-col gap-2">
+            <h3 className="text-3xl font-headline font-bold text-white uppercase leading-none mb-4">
+              {t('manual_title')}
+            </h3>
+            <p className="text-on-primary-container mb-6 max-w-xs">
+              {t('manual_description')}
+            </p>
+            <a
+              href={manualUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-cta hover:bg-secondary text-white px-8 py-3 rounded-md font-headline font-bold tracking-widest w-fit transition-all active:scale-95"
+            >
+              {t('manual_button')}
+            </a>
+          </div>
         </div>
       </section>
     </div>

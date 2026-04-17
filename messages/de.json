@@ -7,8 +7,8 @@
     "logo_alt": "GearUp Logo"
   },
   "hero": {
-    "headline": "GEAR UP YOUR MACHINE",
-    "subtitle": "Marke + Modell eingeben — sofort alle kompatiblen Teile sehen",
+    "headline": "GEAR UP",
+    "subtitle": "Find the right parts for any tool or machine",
     "search_placeholder": "Marke oder Modell suchen...",
     "search_button": "SUCHEN"
   },
@@ -24,11 +24,10 @@
     "bladblazers": "Laubbläser",
     "bosmaaiers": "Motorsensen"
   },
-  "cta": {
-    "status": "Status: Bereit",
-    "headline": "OPTIMIERE DEINE\nLEISTUNG",
-    "description": "Gib dich nicht mit generischen Teilen zufrieden. Wähle die richtigen Teile für dein genaues Modell.",
-    "button": "TEILE ENTDECKEN"
+  "manual": {
+    "title": "ANLEITUNG GESUCHT?",
+    "description": "Finde die offizielle Anleitung für dein Werkzeug",
+    "button": "ANLEITUNG ANSEHEN"
   },
   "footer": {
     "copyright": "© 2026 GEARUP. ALLE RECHTE VORBEHALTEN.",
@@ -47,7 +46,10 @@
     "found_in_db": "In Datenbank gefunden",
     "order": "Bestellen",
     "coming_soon": "Demnächst",
-    "coming_soon_desc": "Dieses Produkt wird bald hinzugefügt."
+    "coming_soon_desc": "Dieses Produkt wird bald hinzugefügt.",
+    "manual_title": "ANLEITUNG GESUCHT?",
+    "manual_description": "Finde die offizielle Anleitung für dein Werkzeug",
+    "manual_button": "ANLEITUNG ANSEHEN"
   },
   "producttypes": {
     "brandstof": "Kraftstoff",

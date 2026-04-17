@@ -26,9 +26,9 @@ export default function Header() {
           <Image
             src="/gearup-logo-onderste.png"
             alt={t('logo_alt')}
-            width={32}
-            height={32}
-            className="w-8 h-8 object-contain"
+            width={96}
+            height={48}
+            className="h-12 w-auto object-contain"
           />
           <span className="text-2xl font-black text-white italic tracking-widest font-headline uppercase">
             GEARUP
