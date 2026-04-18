@@ -34,9 +34,10 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <html lang={locale}>
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased" style={{ backgroundColor: '#FBF8FF', color: '#181A2E', fontFamily: "'Inter', sans-serif" }}>
+      <body className="bg-background text-on-background font-body">
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>

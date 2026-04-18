@@ -15,26 +15,11 @@ export default function CategoryGrid({ locale }) {
           href={`/${locale}/${categorySlug(key, locale)}`}
           className="group cursor-pointer"
         >
-          <div
-            className="aspect-square rounded-lg flex flex-col items-center justify-center p-4 transition-all group-hover:-translate-y-1"
-            style={{ backgroundColor: '#E6E6FF' }}
-          >
-            <div
-              className="w-20 h-20 rounded-lg mb-4 overflow-hidden flex items-center justify-center text-4xl"
-              style={{
-                backgroundColor: '#F4F2FF',
-                border: '1px solid rgba(199, 197, 205, 0.3)',
-              }}
-            >
+          <div className="aspect-square bg-surface-container-high rounded-lg flex flex-col items-center justify-center p-4 transition-all group-hover:bg-primary-fixed group-hover:-translate-y-1">
+            <div className="w-20 h-20 bg-surface-container-low rounded-lg mb-4 overflow-hidden border border-outline-variant/30 flex items-center justify-center text-4xl">
               {categoryEmoji(key)}
             </div>
-            <span
-              className="font-bold text-xs uppercase tracking-widest text-center"
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                color: '#16182C',
-              }}
-            >
+            <span className="font-headline font-bold text-primary text-xs uppercase tracking-widest text-center">
               {t(key)}
             </span>
           </div>

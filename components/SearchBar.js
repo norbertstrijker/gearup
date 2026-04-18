@@ -24,30 +24,21 @@ export default function SearchBar({ defaultValue = '', variant = 'hero' }) {
   if (variant === 'compact') {
     return (
       <form onSubmit={handleSubmit} className="relative max-w-md">
-        <span
-          className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-sm"
-          style={{ color: '#77767D' }}
-        >
+        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">
           search
         </span>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="block w-full pl-10 pr-10 py-3 rounded-lg font-medium"
-          style={{
-            backgroundColor: '#FFFFFF',
-            border: '1px solid #C7C5CD',
-            color: '#16182C',
-          }}
+          className="block w-full pl-10 pr-10 py-3 bg-white border border-outline-variant rounded-lg font-medium text-primary focus:ring-2 focus:ring-secondary-container"
           placeholder={t('search_placeholder')}
         />
         {query && (
           <button
             type="button"
             onClick={handleClear}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center"
-            style={{ color: '#77767D' }}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-outline"
           >
             <span className="material-symbols-outlined text-sm">close</span>
           </button>
@@ -62,22 +53,12 @@ export default function SearchBar({ defaultValue = '', variant = 'hero' }) {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full border-none py-4 px-6 rounded-lg transition-all"
-        style={{
-          backgroundColor: '#FFFFFF',
-          color: '#16182C',
-          fontFamily: "'Inter', sans-serif",
-        }}
+        className="w-full bg-surface-container-lowest border-none py-4 px-6 rounded-lg text-primary focus:ring-2 focus:ring-secondary-container transition-all font-body"
         placeholder={t('search_placeholder')}
       />
       <button
         type="submit"
-        className="absolute right-2 px-6 py-2 rounded-md font-bold tracking-wider transition-colors"
-        style={{
-          backgroundColor: '#E8620A',
-          color: '#FFFFFF',
-          fontFamily: "'Space Grotesk', sans-serif",
-        }}
+        className="absolute right-2 bg-[#E8620A] text-white px-6 py-2 rounded-md font-headline font-bold tracking-wider hover:bg-secondary transition-colors"
       >
         {t('search_button')}
       </button>

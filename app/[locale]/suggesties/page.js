@@ -28,26 +28,24 @@ export default async function SuggestiesPage({ params, searchParams }) {
   }
 
   return (
-    <div className="pt-20 pb-12 px-6 max-w-2xl mx-auto w-full">
-      {/* Search bar */}
+    <main className="flex-grow pt-20 pb-12 px-6 max-w-2xl mx-auto w-full">
+
+      {/* Zoekbalk */}
       <div className="mb-8">
         <SearchBar defaultValue={q || ''} variant="compact" />
       </div>
 
-      {/* Title */}
+      {/* Titel */}
       <div className="mb-8">
-        <h1
-          className="text-3xl tracking-tighter uppercase mb-2"
-          style={{ color: '#16182C', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 900 }}
-        >
+        <h1 className="text-3xl font-black text-primary tracking-tighter uppercase mb-2 font-headline">
           {t('title')}
         </h1>
         {machines.length > 0 ? (
-          <p className="font-medium" style={{ color: '#46464D' }}>
+          <p className="text-on-surface-variant font-medium">
             {t('count', { count: machines.length })}
           </p>
         ) : (
-          <p className="font-medium" style={{ color: '#46464D' }}>
+          <p className="text-on-surface-variant font-medium">
             {t('not_found', { query: q || '' })}
           </p>
         )}
@@ -61,6 +59,7 @@ export default async function SuggestiesPage({ params, searchParams }) {
           ))}
         </div>
       )}
-    </div>
+
+    </main>
   )
 }
