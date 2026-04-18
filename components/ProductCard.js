@@ -72,7 +72,7 @@ export default function ProductCard({ product, tier }) {
         <span className="font-headline text-xs font-bold text-on-primary-container uppercase tracking-widest mb-4">
           {t('tiers.beter')}
         </span>
-        <div className="h-36 mb-4 bg-slate-800 flex items-center justify-center text-5xl">
+        <div className="h-36 mb-4 bg-primary flex items-center justify-center text-5xl">
           {product.afbeelding_url ? (
             <img src={product.afbeelding_url} alt={product.product_naam} className="h-full w-full object-contain" />
           ) : '⭐'}

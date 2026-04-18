@@ -96,7 +96,7 @@ export default async function ResultPage({ params }) {
             <span className="bg-cta text-white px-3 py-1 text-xs font-bold font-headline">
               {motorLabel}
             </span>
-            <span className="text-green-700 text-xs font-bold font-headline uppercase tracking-tight">
+            <span className="text-[#15803d] text-xs font-bold font-headline uppercase tracking-tight">
               ✅ {t('found_in_db')}
             </span>
           </div>

@@ -1,49 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-@theme {
-  /* GearUp — Industrial Tool palette (Material Design 3) */
-  --color-primary: #16182C;
-  --color-primary-container: #2B2D42;
-  --color-on-primary: #FFFFFF;
-  --color-on-primary-container: #9394AE;
-
-  --color-secondary: #A14000;
-  --color-secondary-container: #FD711F;
-  --color-on-secondary: #FFFFFF;
-  --color-on-secondary-container: #5B2100;
-
-  --color-surface: #FBF8FF;
-  --color-surface-dim: #D7D8F4;
-  --color-surface-bright: #FBF8FF;
-  --color-surface-container-lowest: #FFFFFF;
-  --color-surface-container-low: #F4F2FF;
-  --color-surface-container: #EDECFF;
-  --color-surface-container-high: #E6E6FF;
-  --color-surface-container-highest: #E0E0FC;
-
-  --color-on-surface: #181A2E;
-  --color-on-surface-variant: #46464D;
-  --color-outline: #77767D;
-  --color-outline-variant: #C7C5CD;
-  --color-background: #FBF8FF;
-  --color-on-background: #181A2E;
-
-  --color-error: #BA1A1A;
-  --color-cta: #E8620A;
-
-  /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-headline: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-label: 'Space Grotesk', system-ui, sans-serif;
-
-  /* Border radius */
-  --radius: 0.125rem;
-  --radius-lg: 0.25rem;
-  --radius-xl: 0.5rem;
-}
+/* Font defaults */
+body { font-family: 'Inter', sans-serif; }
+h1, h2, h3, .font-headline { font-family: 'Space Grotesk', sans-serif; }
 
 /* Glass nav effect */
 .glass-nav {

@@ -33,6 +33,9 @@ export default async function LocaleLayout({ children, params }) {
 
   return (
     <html lang={locale}>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
       <body className="font-body bg-surface text-on-surface antialiased">
         <NextIntlClientProvider messages={messages}>
           <Header />
