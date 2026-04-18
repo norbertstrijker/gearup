@@ -20,7 +20,10 @@ export default function Header() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-primary-container/80 glass-nav">
+    <nav
+      className="fixed top-0 w-full z-50 backdrop-blur-md"
+      style={{ backgroundColor: 'rgba(43, 45, 66, 0.8)' }}
+    >
       <div className="flex items-center justify-between px-6 py-4 w-full">
         <Link href={`/${locale}`} className="flex items-center gap-2">
           <Image
@@ -30,7 +33,10 @@ export default function Header() {
             height={48}
             className="h-12 w-auto object-contain"
           />
-          <span className="text-2xl font-black text-white italic tracking-widest font-headline uppercase">
+          <span
+            className="text-2xl font-black italic tracking-widest font-headline uppercase"
+            style={{ color: '#ffffff' }}
+          >
             GEARUP
           </span>
         </Link>
@@ -39,11 +45,12 @@ export default function Header() {
             <button
               key={loc}
               onClick={() => switchLocale(loc)}
-              className={`px-3 py-1 text-xs font-headline font-bold uppercase tracking-widest transition-colors ${
+              className="px-3 py-1 text-xs font-headline font-bold uppercase tracking-widest transition-colors rounded-sm"
+              style={
                 loc === locale
-                  ? 'text-white bg-cta rounded-sm'
-                  : 'text-on-primary-container hover:text-white'
-              }`}
+                  ? { backgroundColor: '#E8620A', color: '#ffffff' }
+                  : { color: '#9394AE' }
+              }
             >
               {loc.toUpperCase()}
             </button>

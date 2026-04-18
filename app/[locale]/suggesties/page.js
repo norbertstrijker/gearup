@@ -36,15 +36,18 @@ export default async function SuggestiesPage({ params, searchParams }) {
 
       {/* Title */}
       <div className="mb-8">
-        <h1 className="text-3xl font-black text-primary tracking-tighter uppercase mb-2 font-headline">
+        <h1
+          className="text-3xl tracking-tighter uppercase mb-2"
+          style={{ color: '#16182C', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 900 }}
+        >
           {t('title')}
         </h1>
         {machines.length > 0 ? (
-          <p className="text-on-surface-variant font-medium">
+          <p className="font-medium" style={{ color: '#46464D' }}>
             {t('count', { count: machines.length })}
           </p>
         ) : (
-          <p className="text-on-surface-variant font-medium">
+          <p className="font-medium" style={{ color: '#46464D' }}>
             {t('not_found', { query: q || '' })}
           </p>
         )}

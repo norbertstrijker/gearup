@@ -13,15 +13,32 @@ export default function HomePage({ params }) {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="bg-primary-container px-6 pt-12 pb-24 relative overflow-hidden">
+      <section
+        className="px-6 pt-12 pb-24 relative overflow-hidden"
+        style={{ backgroundColor: '#2B2D42' }}
+      >
         <div className="absolute right-[-10%] top-[10%] opacity-10 select-none pointer-events-none">
-          <span className="material-symbols-outlined text-[240px] text-white">settings</span>
+          <span
+            className="material-symbols-outlined text-[240px]"
+            style={{ color: '#FFFFFF' }}
+          >
+            settings
+          </span>
         </div>
         <div className="relative z-10">
-          <h1 className="text-4xl md:text-6xl font-headline font-bold text-white leading-none uppercase mb-4 tracking-tight">
+          <h1
+            className="text-4xl md:text-6xl font-bold leading-none uppercase mb-4 tracking-tight"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              color: '#FFFFFF',
+            }}
+          >
             {t('hero.headline')}
           </h1>
-          <p className="text-on-primary-container text-lg mb-8 max-w-md">
+          <p
+            className="text-lg mb-8 max-w-md"
+            style={{ color: '#9394AE' }}
+          >
             {t('hero.subtitle')}
           </p>
           <div className="flex flex-col gap-4 mb-8">
@@ -31,7 +48,12 @@ export default function HomePage({ params }) {
                 <a
                   key={label}
                   href={`/api/zoek?q=${encodeURIComponent(label)}&locale=${locale}`}
-                  className="bg-primary text-white px-4 py-2 rounded-sm text-sm font-label font-bold uppercase transition-all hover:bg-secondary-container"
+                  className="px-4 py-2 rounded-sm text-sm font-bold uppercase transition-all"
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    backgroundColor: '#16182C',
+                    color: '#FFFFFF',
+                  }}
                 >
                   {label}
                 </a>
@@ -43,14 +65,38 @@ export default function HomePage({ params }) {
 
       {/* Floating How-To Card */}
       <section className="px-6 -mt-16 relative z-20">
-        <div className="bg-surface-container-lowest rounded-xl p-6 shadow-2xl shadow-primary/10 border border-outline-variant/10">
+        <div
+          className="rounded-xl p-6 shadow-2xl"
+          style={{
+            backgroundColor: '#FFFFFF',
+            border: '1px solid rgba(199, 197, 205, 0.1)',
+            boxShadow: '0 25px 50px -12px rgba(22, 24, 44, 0.1)',
+          }}
+        >
           <div className="flex flex-col md:flex-row gap-6">
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-start gap-4">
-                <div className="bg-secondary-container/10 p-3 rounded-lg flex items-center justify-center">
-                  <span className="text-secondary-container font-headline font-black text-xl">{step}</span>
+                <div
+                  className="p-3 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: 'rgba(253, 113, 31, 0.1)' }}
+                >
+                  <span
+                    className="font-black text-xl"
+                    style={{
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      color: '#FD711F',
+                    }}
+                  >
+                    {step}
+                  </span>
                 </div>
-                <p className="text-on-surface font-headline font-bold text-sm uppercase tracking-tight">
+                <p
+                  className="font-bold text-sm uppercase tracking-tight"
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    color: '#181A2E',
+                  }}
+                >
                   {t(`howto.step${step}`)}
                 </p>
               </div>
@@ -62,25 +108,51 @@ export default function HomePage({ params }) {
       {/* Popular Categories */}
       <section className="px-6 py-16">
         <div className="flex justify-between items-end mb-8">
-          <h2 className="text-2xl font-headline font-bold text-primary uppercase tracking-tighter italic">
+          <h2
+            className="text-2xl font-bold uppercase tracking-tighter italic"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              color: '#16182C',
+            }}
+          >
             {t('categories.title')}
           </h2>
-          <div className="h-[2px] flex-grow mx-4 bg-outline-variant/20 mb-2" />
+          <div
+            className="h-[2px] flex-grow mx-4 mb-2"
+            style={{ backgroundColor: 'rgba(199, 197, 205, 0.2)' }}
+          />
         </div>
         <CategoryGrid locale={locale} />
       </section>
 
       {/* Manual Section */}
       <section className="px-6 py-8">
-        <div className="bg-primary-container rounded-xl p-8 relative overflow-hidden group">
+        <div
+          className="rounded-xl p-8 relative overflow-hidden group"
+          style={{ backgroundColor: '#2B2D42' }}
+        >
           <div className="absolute top-0 right-0 p-8 opacity-20 transition-transform group-hover:scale-110">
-            <span className="material-symbols-outlined text-8xl text-secondary-container">menu_book</span>
+            <span
+              className="material-symbols-outlined text-8xl"
+              style={{ color: '#FD711F' }}
+            >
+              menu_book
+            </span>
           </div>
           <div className="relative z-10 flex flex-col gap-2">
-            <h3 className="text-3xl font-headline font-bold text-white uppercase leading-none mb-4">
+            <h3
+              className="text-3xl font-bold uppercase leading-none mb-4"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                color: '#FFFFFF',
+              }}
+            >
               {t('manual.title')}
             </h3>
-            <p className="text-on-primary-container mb-6 max-w-xs">
+            <p
+              className="mb-6 max-w-xs"
+              style={{ color: '#9394AE' }}
+            >
               {t('manual.description')}
             </p>
           </div>

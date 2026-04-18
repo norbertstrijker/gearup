@@ -30,8 +30,16 @@ export default function ProductCarousel({ producttype, products }) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <span className="material-symbols-outlined text-cta text-2xl">{icon}</span>
-        <h3 className="text-xl font-headline font-bold uppercase tracking-tight">
+        <span
+          className="material-symbols-outlined text-2xl"
+          style={{ color: '#E8620A' }}
+        >
+          {icon}
+        </span>
+        <h3
+          className="text-xl font-bold uppercase tracking-tight"
+          style={{ color: '#181A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+        >
           {t(`producttypes.${producttype}`)}
         </h3>
       </div>

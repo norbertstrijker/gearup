@@ -82,21 +82,36 @@ export default async function ResultPage({ params }) {
   return (
     <div className="pt-20 pb-20 px-4 max-w-2xl mx-auto w-full">
       {/* Machine card */}
-      <section className="mb-10 bg-surface-container-highest p-6 flex items-center gap-6 border-l-8 border-cta">
-        <div className="w-20 h-20 bg-outline-variant flex items-center justify-center flex-shrink-0 text-4xl">
+      <section
+        className="mb-10 p-6 flex items-center gap-6"
+        style={{ backgroundColor: '#E0E0FC', borderLeft: '8px solid #E8620A' }}
+      >
+        <div
+          className="w-20 h-20 flex items-center justify-center flex-shrink-0 text-4xl"
+          style={{ backgroundColor: '#C7C5CD' }}
+        >
           {machine.afbeelding_url ? (
             <img src={machine.afbeelding_url} alt={`${machine.merk} ${machine.modelnummer}`} className="w-full h-full object-contain" />
           ) : emoji}
         </div>
         <div className="flex-grow">
-          <h1 className="text-2xl font-black text-primary tracking-tighter mb-2 uppercase font-headline italic">
+          <h1
+            className="text-2xl tracking-tighter mb-2 uppercase"
+            style={{ color: '#16182C', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 900, fontStyle: 'italic' }}
+          >
             {machine.merk} {machine.modelnummer}
           </h1>
           <div className="flex flex-wrap gap-3 items-center">
-            <span className="bg-cta text-white px-3 py-1 text-xs font-bold font-headline">
+            <span
+              className="px-3 py-1 text-xs"
+              style={{ backgroundColor: '#E8620A', color: '#FFFFFF', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700 }}
+            >
               {motorLabel}
             </span>
-            <span className="text-[#15803d] text-xs font-bold font-headline uppercase tracking-tight">
+            <span
+              className="text-xs uppercase tracking-tight"
+              style={{ color: '#15803d', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700 }}
+            >
               ✅ {t('found_in_db')}
             </span>
           </div>
@@ -105,10 +120,13 @@ export default async function ResultPage({ params }) {
 
       {/* Compatible products */}
       <section>
-        <h2 className="text-3xl font-black text-primary tracking-tighter uppercase mb-2 font-headline">
+        <h2
+          className="text-3xl tracking-tighter uppercase mb-2"
+          style={{ color: '#16182C', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 900 }}
+        >
           {t('compatible_products')}
         </h2>
-        <div className="h-1 w-24 bg-cta mb-10" />
+        <div className="h-1 w-24 mb-10" style={{ backgroundColor: '#E8620A' }} />
 
         <div className="space-y-16">
           {relevantTypes.map((type) => (
@@ -123,22 +141,26 @@ export default async function ResultPage({ params }) {
 
       {/* Manual section */}
       <section className="mt-16">
-        <div className="bg-primary-container rounded-xl p-8 relative overflow-hidden group">
+        <div className="rounded-xl p-8 relative overflow-hidden group" style={{ backgroundColor: '#2B2D42' }}>
           <div className="absolute top-0 right-0 p-8 opacity-20 transition-transform group-hover:scale-110">
-            <span className="material-symbols-outlined text-8xl text-secondary-container">menu_book</span>
+            <span className="material-symbols-outlined text-8xl" style={{ color: '#9394AE' }}>menu_book</span>
           </div>
           <div className="relative z-10 flex flex-col gap-2">
-            <h3 className="text-3xl font-headline font-bold text-white uppercase leading-none mb-4">
+            <h3
+              className="text-3xl uppercase leading-none mb-4"
+              style={{ color: '#FFFFFF', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700 }}
+            >
               {t('manual_title')}
             </h3>
-            <p className="text-on-primary-container mb-6 max-w-xs">
+            <p className="mb-6 max-w-xs" style={{ color: '#9394AE' }}>
               {t('manual_description')}
             </p>
             <a
               href={manualUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-cta hover:bg-secondary text-white px-8 py-3 rounded-md font-headline font-bold tracking-widest w-fit transition-all active:scale-95"
+              className="px-8 py-3 rounded-md tracking-widest w-fit transition-all active:scale-95"
+              style={{ backgroundColor: '#E8620A', color: '#FFFFFF', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700 }}
             >
               {t('manual_button')}
             </a>
