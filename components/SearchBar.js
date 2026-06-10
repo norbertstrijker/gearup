@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
+import Icon from '@/components/Icons'
 
 export default function SearchBar({ defaultValue = '', variant = 'hero' }) {
   const [query, setQuery] = useState(defaultValue)
@@ -17,50 +18,55 @@ export default function SearchBar({ defaultValue = '', variant = 'hero' }) {
     router.push(`/api/zoek?q=${encodeURIComponent(trimmed)}&locale=${locale}`)
   }
 
-  function handleClear() {
-    setQuery('')
-  }
-
   if (variant === 'compact') {
     return (
-      <form onSubmit={handleSubmit} className="relative max-w-md">
-        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">
-          search
-        </span>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-paper rounded-[12px] border border-line-on-light p-[6px] flex items-stretch gap-2"
+      >
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="block w-full pl-10 pr-10 py-3 bg-white border border-outline-variant rounded-lg font-medium text-primary focus:ring-2 focus:ring-secondary-container"
+          className="flex-1 min-w-0 bg-transparent outline-none px-3 text-[15px] font-medium text-ink placeholder:text-[#a8a399] placeholder:font-normal"
           placeholder={t('search_placeholder')}
+          aria-label={t('search_placeholder')}
         />
-        {query && (
-          <button
-            type="button"
-            onClick={handleClear}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-outline"
-          >
-            <span className="material-symbols-outlined text-sm">close</span>
-          </button>
-        )}
+        <button
+          type="submit"
+          className="flex-none w-[46px] bg-signal text-white rounded-[9px] flex items-center justify-center hover:brightness-110 transition"
+          aria-label={t('search_button')}
+        >
+          <Icon name="search" className="w-5 h-5" strokeWidth={2.4} />
+        </button>
       </form>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex items-center">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="w-full bg-surface-container-lowest border-none py-4 px-6 rounded-lg text-primary focus:ring-2 focus:ring-secondary-container transition-all font-body"
-        placeholder={t('search_placeholder')}
-      />
+    <form
+      onSubmit={handleSubmit}
+      className="bg-paper rounded-[16px] border border-line-on-light p-2 flex items-stretch gap-2 max-w-[640px] mx-auto shadow-[0_24px_60px_-28px_rgba(0,0,0,0.7)]"
+    >
+      <div className="flex-1 min-w-0 flex flex-col justify-center px-[14px] py-1 text-left">
+        <label htmlFor="gearup-search" className="text-[10.5px] tracking-[0.06em] uppercase text-mut-d font-semibold">
+          {t('search_label')}
+        </label>
+        <input
+          id="gearup-search"
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="bg-transparent outline-none text-[15.5px] font-medium text-ink w-full placeholder:text-[#a8a399] placeholder:font-normal"
+          placeholder={t('search_placeholder')}
+        />
+      </div>
       <button
         type="submit"
-        className="absolute right-2 bg-[#E8620A] text-white px-6 py-2 rounded-md font-headline font-bold tracking-wider hover:bg-secondary transition-colors"
+        className="flex-none w-[54px] bg-signal text-white rounded-[11px] flex items-center justify-center hover:brightness-110 transition"
+        aria-label={t('search_button')}
       >
-        {t('search_button')}
+        <Icon name="search" className="w-[22px] h-[22px]" strokeWidth={2.4} />
       </button>
     </form>
   )

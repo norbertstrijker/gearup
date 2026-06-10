@@ -1,36 +1,43 @@
 import Link from 'next/link'
-import { categorySlug, categoryEmoji, categoryName } from '@/lib/categories'
-
-const CATEGORY_LABEL_CLASS = {
-  kettingzagen: 'text-[#2B2D42]',
-  grasmaaiers: 'text-[#1e4d38]',
-  bladblazers: 'text-[#7c3aed]',
-  bosmaaiers: 'text-[#b45309]',
-}
+import { useTranslations } from 'next-intl'
+import Icon from '@/components/Icons'
+import { categorySlug } from '@/lib/categories'
 
 export default function MachineCard({ machine, locale }) {
+  const t = useTranslations('suggestions')
   const catSlug = categorySlug(machine.categorie, locale)
-  const emoji = categoryEmoji(machine.categorie)
-  const catName = categoryName(machine.categorie, locale)
-  const labelClass = CATEGORY_LABEL_CLASS[machine.categorie] || 'text-primary'
 
   return (
     <Link
       href={`/${locale}/${catSlug}/${machine.slug}`}
-      className="model-card bg-white border border-outline-variant rounded-xl p-5 flex items-center gap-4 cursor-pointer transition-colors"
+      className="group bg-ink-2 border border-steel rounded-card overflow-hidden flex flex-col transition-all hover:border-signal hover:-translate-y-[3px]"
     >
-      <div className="w-16 h-16 bg-surface-container-highest rounded-lg flex items-center justify-center text-3xl flex-shrink-0">
-        {emoji}
-      </div>
-      <div className="flex-grow">
-        <span className={`text-xs font-bold ${labelClass} uppercase tracking-widest block mb-1`}>
-          {catName}
+      <span className="relative h-[124px] bg-gradient-to-br from-paper to-paper-2 flex items-center justify-center text-[#9a958a]">
+        {machine.afbeelding_url ? (
+          <img
+            src={machine.afbeelding_url}
+            alt={`${machine.merk} ${machine.modelnummer}`}
+            className="h-full w-full object-contain"
+          />
+        ) : (
+          <>
+            <Icon name="photo" viewBox="0 0 120 90" className="w-24 h-[72px]" strokeWidth={2.2} />
+            <span className="absolute bottom-[7px] right-[9px] text-[9px] tracking-[0.08em] uppercase text-[#b0a99c] font-semibold">
+              {t('photo_badge')}
+            </span>
+          </>
+        )}
+      </span>
+      <span className="p-[13px] pt-[13px] pb-[14px] flex flex-col gap-[3px] flex-1">
+        <span className="font-headline font-bold text-[15px] leading-tight text-paper">{machine.modelnummer}</span>
+        <span className="text-[12px] text-mut">
+          {machine.merk} · {machine.motortype}
         </span>
-        <h3 className="text-lg font-bold text-primary font-headline">
-          {machine.merk} {machine.modelnummer}
-        </h3>
-      </div>
-      <span className="material-symbols-outlined text-[#E8620A]">arrow_forward</span>
+        <span className="mt-2 inline-flex items-center gap-[5px] text-[12.5px] font-semibold text-signal">
+          {t('view_parts')}
+          <Icon name="arrowRight" className="w-[14px] h-[14px]" strokeWidth={2.2} />
+        </span>
+      </span>
     </Link>
   )
 }

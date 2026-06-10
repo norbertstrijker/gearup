@@ -1,55 +1,95 @@
 {
   "meta": {
     "title": "GearUp — Find compatible parts for your machine",
-    "description": "Enter brand and model to instantly discover which fuel, chains, spark plugs and other parts are compatible."
+    "description": "Enter brand and model to instantly discover which fuel and parts are compatible with your machine."
   },
   "header": {
     "logo_alt": "GearUp logo"
   },
   "hero": {
-    "headline": "GEAR UP",
-    "subtitle": "Find the right parts for any tool or machine",
+    "eyebrow": "Never search for the right parts again",
+    "headline_pre": "Everything for",
+    "headline_hl": "your tool",
+    "lead": "Enter the brand and model of your lawnmower, chainsaw or brush cutter — and instantly see which fuel and parts fit it.",
+    "hint": "Type freely: brand and model, e.g. “Honda HRG 416” or “Stihl MS 250”. The model number is on a sticker or type plate.",
     "search_placeholder": "Search brand or model...",
-    "search_button": "SEARCH"
+    "search_label": "Search",
+    "search_button": "Search"
   },
-  "howto": {
-    "step1": "Enter brand + model",
-    "step2": "See all compatible parts",
-    "step3": "Order directly online"
+  "popular": {
+    "label": "Most searched"
+  },
+  "stats": {
+    "models": "models",
+    "categories": "categories",
+    "languages": "languages"
   },
   "categories": {
-    "title": "Popular categories",
-    "grasmaaiers": "Lawnmowers",
-    "kettingzagen": "Chainsaws",
-    "bladblazers": "Leaf blowers",
-    "bosmaaiers": "Brush cutters"
+    "title": "Which machine are you looking for?",
+    "subtitle": "Pick a type to browse brands and models",
+    "soon": "Coming soon"
   },
-  "manual": {
-    "title": "NEED THE MANUAL?",
-    "description": "Find the official manual for your tool",
-    "button": "VIEW MANUAL"
-  },
-  "footer": {
-    "copyright": "© 2026 GEARUP. ALL RIGHTS RESERVED.",
-    "privacy": "PRIVACY",
-    "terms": "TERMS",
-    "support": "SUPPORT"
+  "trust": {
+    "checked": "Checked at model level",
+    "independent": "Independent advice",
+    "noaccount": "No account needed"
   },
   "suggestions": {
-    "title": "Which model is your machine?",
-    "count": "We found {count} machines. Pick yours.",
-    "not_found": "No machines found for \"{query}\". Try a different search term.",
-    "search_label": "Search term"
+    "title_generic": "Which model is your machine?",
+    "title_brand": "Which {merk} {category} do you have?",
+    "title_category": "Which {category} do you have?",
+    "kicker": "Pick your model",
+    "lead": "Don't know the model number? Click the card that looks like your machine. Otherwise the model number is on a sticker or type plate on the machine.",
+    "help": "Can't find your machine?",
+    "help_link": "Search again",
+    "photo_badge": "photo",
+    "view_parts": "View parts"
+  },
+  "empty": {
+    "edit": "edit",
+    "title": "This model isn't in our database yet",
+    "body": "We couldn't find “{query}”. We're constantly adding models — but we'd rather show nothing than something that might be wrong.",
+    "body_noquery": "We couldn't find this model. We're constantly adding models — but we'd rather show nothing than something that might be wrong.",
+    "noted": "We've noted your search. The more often a model is searched, the sooner we add it.",
+    "general_title": "General guideline",
+    "general_text": "Most 4-stroke lawnmowers run on regular Euro 95 (E5/E10) petrol and you don't mix it with oil — the engine oil sits separately in the crankcase. On 2-stroke machines you do mix oil into the petrol. Always check your manual or the type plate for the exact details of your machine.",
+    "try_other": "Try another model",
+    "browse": "Browse by category"
   },
   "result": {
-    "compatible_products": "Compatible products",
-    "found_in_db": "Found in database",
-    "order": "Order",
+    "result_for": "Result for",
+    "edit": "edit",
+    "hero_fallback": "{type} for the {merk} {model}",
+    "options_lead": "Three options",
+    "options_label": "Three options",
+    "more_gear_title": "Looking for more gear for your {model}?",
+    "more_gear_sub": "Open a part for the three best buying options.",
+    "from": "from",
+    "options_count": "{count} options",
+    "fits_model": "Fits your {model}",
     "coming_soon": "Coming soon",
     "coming_soon_desc": "This product will be added soon.",
+    "coming_soon_short": "Coming soon",
+    "order": "View",
     "manual_title": "NEED THE MANUAL?",
-    "manual_description": "Find the official manual for your tool",
-    "manual_button": "VIEW MANUAL"
+    "manual_description": "Find the official manual for your machine.",
+    "manual_button": "VIEW MANUAL",
+    "disclaimer": "GearUp is independent. We don't sell anything ourselves — we show you where to buy the right part. Through the links we earn a small commission; the price doesn't change for you. Advice checked at model level."
+  },
+  "fuel": {
+    "euro95": "Euro 95",
+    "mengsmering": "2-stroke mix"
+  },
+  "spec": {
+    "motortype": "Engine type",
+    "brandstof": "Fuel",
+    "mengverhouding": "Mix ratio",
+    "e10": "E10 compatible",
+    "none": "None"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No"
   },
   "producttypes": {
     "brandstof": "Fuel",
@@ -65,9 +105,14 @@
     "boren": "Drill bits"
   },
   "tiers": {
-    "basis": "BASIC",
-    "beter": "BETTER",
-    "best": "BEST",
-    "popular": "POPULAR"
+    "basis": "Cheapest",
+    "beter": "Best value",
+    "best": "Best quality"
+  },
+  "footer": {
+    "copyright": "© 2026 GEARUP. ALL RIGHTS RESERVED.",
+    "privacy": "PRIVACY",
+    "terms": "TERMS",
+    "support": "SUPPORT"
   }
 }

@@ -2,21 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GearUp dark system */
+html, body {
+  background: radial-gradient(130% 90% at 50% -20%, #20242c 0%, #16181d 60%), #16181d;
+  color: #f4f2ec;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   font-family: 'Material Symbols Outlined';
 }
 
-.stenciled-headline {
-  letter-spacing: -0.02em;
+/* logo op lichte plaat (zoals in de designs) */
+.logoplate {
+  background: #f4f2ec;
+  border-radius: 12px;
+  border: 1px solid #d8d3c6;
 }
 
-.glass-nav {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* puls-indicator op de eyebrow */
+.pulse {
+  box-shadow: 0 0 0 0 rgba(223, 92, 2, 0.6);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(223, 92, 2, 0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(223, 92, 2, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(223, 92, 2, 0); }
 }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-.model-card:hover { border-color: #E8620A; background: #fff8f5; }

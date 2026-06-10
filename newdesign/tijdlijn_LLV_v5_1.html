@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Tijdlijn LLV 2026–2028 v5</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap');
+
+  :root {
+    --red:          #C0392B;
+    --orange:       #E67E22;
+    --teal:         #1A7A6E;
+    --pad-a:        #1A5276;
+    --pad-a-light:  #D6EAF8;
+    --pad-a-border: #AED6F1;
+    --pad-b:        #145A32;
+    --pad-b-light:  #D5F5E3;
+    --pad-b-border: #A9DFBF;
+    --shared:       #4A235A;
+    --shared-light: #F5EEF8;
+    --shared-border:#C39BD3;
+    --border:       #D5D8DC;
+    --text:         #1C2833;
+    --muted:        #717D7E;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #EAECEE;
+    color: var(--text);
+    padding: 32px 28px;
+    min-width: 960px;
+  }
+
+  .page-header { margin-bottom: 28px; }
+  .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 4px; }
+  .page-header p  { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 10px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+  .badge.shared { background: var(--shared-light); color: var(--shared); border: 1px solid var(--shared-border); }
+  .badge.pada   { background: var(--pad-a-light);  color: var(--pad-a);  border: 1px solid var(--pad-a-border); }
+  .badge.padb   { background: var(--pad-b-light);  color: var(--pad-b);  border: 1px solid var(--pad-b-border); }
+  .badge.risk   { background: #FEF9E7; color: #9A7D0A; border: 1px solid #F9E79F; }
+  .badge.hard   { background: #FDEDEC; color: #922B21; border: 1px solid #F1948A; }
+
+  /* SCENARIO CARD */
+  .scenario {
+    background: white;
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .scenario-header {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 28px; padding-bottom: 16px;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .s-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 20px; color: white; flex-shrink: 0;
+  }
+  .s-icon.pada { background: var(--pad-a); }
+  .s-icon.padb { background: var(--pad-b); }
+  .s-title { font-family: 'DM Serif Display', serif; font-size: 20px; }
+  .s-sub   { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .s-dead  { font-size: 11px; font-weight: 600; color: var(--red); margin-top: 5px; }
+
+  /* RULER */
+  .ruler-wrap { display: flex; margin-bottom: 2px; }
+  .ruler-spacer { width: 150px; flex-shrink: 0; }
+  .ruler-months { flex: 1; display: flex; border-bottom: 2px solid #BDC3C7; }
+  .qcol {
+    flex: 1; text-align: center; font-size: 10px; font-weight: 700;
+    color: var(--text); padding-bottom: 5px; position: relative;
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .qcol span { display: block; font-weight: 400; font-size: 9px; color: var(--muted); }
+  .qcol::after { content:''; position:absolute; bottom:-2px; left:0; width:1px; height:7px; background:#BDC3C7; }
+
+  /* LANES */
+  .lanes { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
+  .lane  { display: flex; align-items: center; min-height: 40px; }
+  .lane-label {
+    width: 150px; flex-shrink: 0;
+    font-size: 10px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.4px;
+    padding-right: 14px; text-align: right; line-height: 1.3;
+  }
+  .lane-track { flex: 1; position: relative; height: 40px; }
+
+  /* BLOCKS
+     8 kwartalen, elk 12.5%:
+     Q2'26 = 0–12.5
+     Q3'26 = 12.5–25
+     Q4'26 = 25–37.5
+     Q1'27 = 37.5–50
+     Q2'27 = 50–62.5
+     Q3'27 = 62.5–75
+     Q4'27 = 75–87.5
+     Q1-Q2'28 = 87.5–100
+  */
+  .blk {
+    position: absolute; top: 5px; height: 30px;
+    border-radius: 7px; display: flex; align-items: center;
+    padding: 0 10px; font-size: 11px; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .blk.shared { background: var(--shared-light); color: var(--shared); border: 1.5px solid var(--shared-border); }
+  .blk.pada   { background: var(--pad-a-light);  color: var(--pad-a);  border: 1.5px solid var(--pad-a-border); }
+  .blk.padb   { background: var(--pad-b-light);  color: var(--pad-b);  border: 1.5px solid var(--pad-b-border); }
+  .blk.crit   { border-style: dashed; border-width: 2px; }
+
+  /* DECISIONS */
+  .dec-section { margin-top: 16px; border-top: 1px dashed #D5D8DC; padding-top: 10px; }
+  .dec-axis { display: flex; position: relative; height: 52px; }
+  .dec-spacer { width: 150px; flex-shrink: 0; }
+  .dec-track  { flex: 1; position: relative; }
+  .dec-dot {
+    position: absolute; top: 0; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .dec-circle {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px; color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.18);
+  }
+  .dec-circle.or { background: var(--orange); }
+  .dec-circle.rd { background: var(--red); }
+  .dec-circle.tl { background: var(--teal); }
+  .dec-txt { font-size: 9px; font-weight: 600; color: var(--muted); text-align: center; white-space: nowrap; line-height: 1.2; }
+
+  /* DEC CARDS */
+  .dec-cards { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .dc { flex:1; min-width:150px; border-radius:9px; padding:10px 12px; border:1px solid var(--border); background:#FDFEFE; }
+  .dc.hard { border-color:#F1948A; background:#FFFAFA; }
+  .dc-hd { display:flex; align-items:center; gap:7px; margin-bottom:6px; }
+  .dc-num { width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px; color:white; flex-shrink:0; }
+  .dc-num.or { background: var(--orange); }
+  .dc-num.rd { background: var(--red); }
+  .dc-num.tl { background: var(--teal); }
+  .dc-title { font-size:11px; font-weight:600; color:var(--text); line-height:1.3; }
+  .dc-date  { font-size:10px; color:var(--muted); margin-bottom:5px; }
+  .go   { font-size:10px; color:#1A7A6E; background:#E8F5F3; border-radius:3px; padding:2px 6px; margin-bottom:3px; display:block; }
+  .nogo { font-size:10px; color:#922B21; background:#FDEDEC; border-radius:3px; padding:2px 6px; display:block; }
+
+  /* NOTES */
+  .notes { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+  .np { font-size:10px; padding:3px 8px; border-radius:20px; font-weight:500; }
+  .np.jur  { background:#EEF0FF; color:#3D3D9A; border:1px solid #B8BEF0; }
+  .np.risk { background:#FEF9E7; color:#9A7D0A; border:1px solid #F9E79F; }
+  .np.info { background:#EAF2F8; color:#1A5276; border:1px solid #AED6F1; }
+
+  /* FINISH */
+  .finish { margin-top:16px; padding:12px 18px; border-radius:10px; background:linear-gradient(135deg,#E8F8F5,#D5F5E3); border:1.5px solid var(--teal); display:flex; align-items:center; gap:10px; }
+  .finish strong { font-size:14px; color:var(--teal); display:block; }
+  .finish span   { font-size:11px; color:var(--muted); }
+
+  hr.sec { border:none; border-top:1px dashed var(--border); margin:12px 0; }
+  .sec-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted); margin-bottom:8px; }
+  .footer { font-size:10px; color:#95A5A6; text-align:center; margin-top:8px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Leerlingenvervoer Maastricht-Heuvelland 2026–2028</h1>
+  <p>Realistisch scenario v5 — twee uitvoeringspaden naar contractstart 1 augustus 2028</p>
+  <div class="badges">
+    <span class="badge shared">Gedeeld spoor</span>
+    <span class="badge pada">Pad A — EU aanbesteding</span>
+    <span class="badge padb">Pad B — Omnibuzz GR</span>
+    <span class="badge risk">⚠ Kritisch pad</span>
+    <span class="badge hard">● Hard beslismoment</span>
+  </div>
+</div>
+
+
+<!-- ═══ PAD A ═══ -->
+<div class="scenario">
+  <div class="scenario-header">
+    <div class="s-icon pada">A</div>
+    <div>
+      <div class="s-title">Pad A — Europese aanbesteding</div>
+      <div class="s-sub">Maastricht-Heuvelland (+ 2 regio's) voert zelf een Europese aanbesteding uit</div>
+      <div class="s-dead">Harde deadline: 1 augustus 2028 — contractstart schooljaar 2028/2029</div>
+    </div>
+  </div>
+
+  <div class="ruler-wrap">
+    <div class="ruler-spacer"></div>
+    <div class="ruler-months">
+      <div class="qcol">Q2 '26<span>mei–jun</span></div>
+      <div class="qcol">Q3 '26<span>jul–sep</span></div>
+      <div class="qcol">Q4 '26<span>okt–dec</span></div>
+      <div class="qcol">Q1 '27<span>jan–mrt</span></div>
+      <div class="qcol">Q2 '27<span>apr–jun</span></div>
+      <div class="qcol">Q3 '27<span>jul–sep</span></div>
+      <div class="qcol">Q4 '27<span>okt–dec</span></div>
+      <div class="qcol">Q1–Q2 '28<span>jan–aug</span></div>
+    </div>
+  </div>
+
+  <div class="lanes">
+
+    <!-- Ambtelijk onderzoek: mei–sep '26 = Q2+Q3 = 0–25% -->
+    <div class="lane">
+      <div class="lane-label">Ambtelijk onderzoek</div>
+      <div class="lane-track">
+        <div class="blk shared" style="left:0%;width:25%">Producten 1–4 — 3 regio's gezamenlijk</div>
+      </div>
+    </div>
+
+    <!-- Besluit colleges + raden: okt '26 – apr '27 = Q4'26 + Q1'27 + begin Q2'27 = 25–56% -->
+    <div class="lane">
+      <div class="lane-label">Besluit colleges &amp; raden</div>
+      <div class="lane-track">
+        <div class="blk shared crit" style="left:25%;width:31%">Besluit 6 colleges + beleidskader 6 raden ⚠</div>
+      </div>
+    </div>
+
+    <!-- PvE + percelen: jan–jun '27 = Q1'27 + Q2'27 = 37.5–62.5% -->
+    <div class="lane">
+      <div class="lane-label">PvE &amp; percelen</div>
+      <div class="lane-track">
+        <div class="blk pada" style="left:37.5%;width:25%">PvE, percelen, aanbestedingsdocumenten</div>
+      </div>
+    </div>
+
+    <!-- EU procedure: jul–dec '27 = Q3+Q4'27 = 62.5–87.5% -->
+    <div class="lane">
+      <div class="lane-label">EU procedure</div>
+      <div class="lane-track">
+        <div class="blk pada crit" style="left:62.5%;width:25%">TenderNed → inschrijving → beoordeling → gunning ⚠</div>
+      </div>
+    </div>
+
+    <!-- Contract + implementatie: jan–aug '28 = 87.5–100% -->
+    <div class="lane">
+      <div class="lane-label">Contract &amp; implementatie</div>
+      <div class="lane-track">
+        <div class="blk pada" style="left:87.5%;width:5%">Contract</div>
+        <div class="blk shared" style="left:91%;width:9%">Implementatie</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BESLISMOMENTEN PAD A -->
+  <div class="dec-section">
+    <div class="dec-axis">
+      <div class="dec-spacer"></div>
+      <div class="dec-track">
+        <!-- GNG 1: feb '27 = midden Q1'27 = ~44% -->
+        <div class="dec-dot" style="left:44%">
+          <div class="dec-circle or">1</div>
+          <div class="dec-txt">Feb '27<br>6 colleges GO?</div>
+        </div>
+        <!-- GNG 2: apr '27 = begin Q2'27 = ~56% -->
+        <div class="dec-dot" style="left:56%">
+          <div class="dec-circle rd">2</div>
+          <div class="dec-txt">Apr '27<br>6 raden GO?</div>
+        </div>
+        <!-- GNG 3: okt '27 = begin Q4'27 = ~75% -->
+        <div class="dec-dot" style="left:75%">
+          <div class="dec-circle or">3</div>
+          <div class="dec-txt">Okt '27<br>Inschrijvingen OK?</div>
+        </div>
+        <!-- GNG 4: feb '28 = ~91% -->
+        <div class="dec-dot" style="left:91%">
+          <div class="dec-circle tl">4</div>
+          <div class="dec-txt">Feb '28<br>Implementatie OK?</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sec">
+    <div class="sec-label">Beslismomenten Pad A</div>
+    <div class="dec-cards">
+
+      <div class="dc">
+        <div class="dc-hd"><div class="dc-num or">1</div><div class="dc-title">6 colleges unaniem akkoord Pad A?</div></div>
+        <div class="dc-date">Februari 2027</div>
+        <span class="go">GO → PvE en percelen starten, raden-route afronden</span>
+        <span class="nogo">NO-GO → politieke impasse, tijdlijn aug '28 onder druk</span>
+      </div>
+
+      <div class="dc hard">
+        <div class="dc-hd"><div class="dc-num rd">2</div><div class="dc-title">Beleidskader vastgesteld door 6 raden?</div></div>
+        <div class="dc-date">April 2027 — HARD RISICO</div>
+        <span class="go">GO → TenderNed publicatie jul '27</span>
+        <span class="nogo">NO-GO → EU procedure schuift op, aug '28 niet haalbaar zonder overbrugging</span>
+      </div>
+
+      <div class="dc">
+        <div class="dc-hd"><div class="dc-num or">3</div><div class="dc-title">Geldige inschrijvingen ontvangen?</div></div>
+        <div class="dc-date">Oktober 2027</div>
+        <span class="go">GO → gunning doorzetten, contract tekenen</span>
+        <span class="nogo">NO-GO → heraanbesteding nodig, aug '28 niet haalbaar</span>
+      </div>
+
+      <div class="dc">
+        <div class="dc-hd"><div class="dc-num tl">4</div><div class="dc-title">Implementatie op koers?</div></div>
+        <div class="dc-date">Februari 2028</div>
+        <span class="go">GO → operationeel 1 aug '28</span>
+        <span class="nogo">NO-GO → noodprocedure verlenging huidig contract</span>
+      </div>
+
+    </div>
+
+    <div class="notes">
+      <span class="np risk">⚠ PvE/percelen overlapt bewust met staart besluitvorming — beide sporen bewaken</span>
+      <span class="np risk">⚠ EU procedure jul–dec '27 heeft geen buffer bij vertraging</span>
+      <span class="np jur">📋 Juridisch: tijdelijke verlenging Van Meurs als overbrugging — uitzoeken</span>
+      <span class="np info">📋 Vergaderkalenders 6 raden opvragen</span>
+    </div>
+  </div>
+
+  <div class="finish">
+    <div style="font-size:22px">🏁</div>
+    <div>
+      <strong>1 augustus 2028 — Contractstart Pad A</strong>
+      <span>Haalbaar bij GO op alle 4 beslismomenten. Kritisch pad: raadsbesluiten apr '27 + EU procedure jul–dec '27.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ PAD B ═══ -->
+<div class="scenario">
+  <div class="scenario-header">
+    <div class="s-icon padb">B</div>
+    <div>
+      <div class="s-title">Pad B — Inbesteding via Omnibuzz GR</div>
+      <div class="s-sub">Toetreding tot GR Omnibuzz + opheffing huidige GR LLV Maastricht-Heuvelland (parallel)</div>
+      <div class="s-dead">Harde deadline: 1 augustus 2028 — contractstart schooljaar 2028/2029</div>
+    </div>
+  </div>
+
+  <div class="ruler-wrap">
+    <div class="ruler-spacer"></div>
+    <div class="ruler-months">
+      <div class="qcol">Q2 '26<span>mei–jun</span></div>
+      <div class="qcol">Q3 '26<span>jul–sep</span></div>
+      <div class="qcol">Q4 '26<span>okt–dec</span></div>
+      <div class="qcol">Q1 '27<span>jan–mrt</span></div>
+      <div class="qcol">Q2 '27<span>apr–jun</span></div>
+      <div class="qcol">Q3 '27<span>jul–sep</span></div>
+      <div class="qcol">Q4 '27<span>okt–dec</span></div>
+      <div class="qcol">Q1–Q2 '28<span>jan–aug</span></div>
+    </div>
+  </div>
+
+  <div class="lanes">
+
+    <!-- Ambtelijk onderzoek: mei–sep '26 = 0–25% -->
+    <div class="lane">
+      <div class="lane-label">Ambtelijk onderzoek</div>
+      <div class="lane-track">
+        <div class="blk shared" style="left:0%;width:25%">Producten 1–4 — 3 regio's gezamenlijk</div>
+      </div>
+    </div>
+
+    <!-- Besluit colleges + raden: okt '26 – apr '27 = 25–56% -->
+    <div class="lane">
+      <div class="lane-label">Besluit colleges &amp; raden</div>
+      <div class="lane-track">
+        <div class="blk shared crit" style="left:25%;width:31%">Besluit 6 colleges + beleidskader 6 raden ⚠</div>
+      </div>
+    </div>
+
+    <!-- GR LLV opheffing: feb '27 – okt '27 = 37.5–75% -->
+    <div class="lane">
+      <div class="lane-label">GR LLV opheffing</div>
+      <div class="lane-track">
+        <div class="blk padb crit" style="left:37.5%;width:37.5%">Opheffing/wijziging GR LLV — 5 tot 9 mnd ⚠</div>
+      </div>
+    </div>
+
+    <!-- Toetreding Omnibuzz: mrt '27 – okt '27 = 50–75% -->
+    <div class="lane">
+      <div class="lane-label">Toetreding Omnibuzz</div>
+      <div class="lane-track">
+        <div class="blk padb crit" style="left:50%;width:25%">Toetreding GR Omnibuzz — parallel aan opheffing ⚠</div>
+      </div>
+    </div>
+
+    <!-- Contractering vervoerder: nov–dec '27 = 75–87.5% -->
+    <div class="lane">
+      <div class="lane-label">Contractering vervoerder</div>
+      <div class="lane-track">
+        <div class="blk padb" style="left:75%;width:12.5%">Omnibuzz contracteert vervoerder</div>
+      </div>
+    </div>
+
+    <!-- Implementatie: jan–aug '28 = 87.5–100% -->
+    <div class="lane">
+      <div class="lane-label">Implementatie</div>
+      <div class="lane-track">
+        <div class="blk shared" style="left:87.5%;width:12.5%">Implementatie</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BESLISMOMENTEN PAD B -->
+  <div class="dec-section">
+    <div class="dec-axis">
+      <div class="dec-spacer"></div>
+      <div class="dec-track">
+        <!-- GNG 1: feb '27 = ~44% -->
+        <div class="dec-dot" style="left:44%">
+          <div class="dec-circle or">1</div>
+          <div class="dec-txt">Feb '27<br>6 colleges GO?</div>
+        </div>
+        <!-- GNG 2: apr '27 = ~56% -->
+        <div class="dec-dot" style="left:56%">
+          <div class="dec-circle rd">2</div>
+          <div class="dec-txt">Apr '27<br>6 raden GO?</div>
+        </div>
+        <!-- GNG 3: okt '27 = ~75% -->
+        <div class="dec-dot" style="left:75%">
+          <div class="dec-circle or">3</div>
+          <div class="dec-txt">Okt '27<br>GR-procedures OK?</div>
+        </div>
+        <!-- GNG 4: feb '28 = ~91% -->
+        <div class="dec-dot" style="left:91%">
+          <div class="dec-circle tl">4</div>
+          <div class="dec-txt">Feb '28<br>Implementatie OK?</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sec">
+    <div class="sec-label">Beslismomenten Pad B</div>
+    <div class="dec-cards">
+
+      <div class="dc">
+        <div class="dc-hd"><div class="dc-num or">1</div><div class="dc-title">6 colleges unaniem akkoord Pad B?</div></div>
+        <div class="dc-date">Februari 2027</div>
+        <span class="go">GO → start GR LLV opheffing direct</span>
+        <span class="nogo">NO-GO → politieke impasse, tijdlijn aug '28 onder druk</span>
+      </div>
+
+      <div class="dc hard">
+        <div class="dc-hd"><div class="dc-num rd">2</div><div class="dc-title">Beleidskader vastgesteld door 6 raden?</div></div>
+        <div class="dc-date">April 2027 — HARD RISICO</div>
+        <span class="go">GO → toetreding Omnibuzz doorzetten</span>
+        <span class="nogo">NO-GO → GR-procedure vertraagd, overbrugging nodig</span>
+      </div>
+
+      <div class="dc">
+        <div class="dc-hd"><div class="dc-num or">3</div><div class="dc-title">GR-procedures op schema?</div></div>
+        <div class="dc-date">Oktober 2027</div>
+        <span class="go">GO → Omnibuzz contracteert vervoerder</span>
+        <span class="nogo">NO-GO → GR vertraagd, overbrugging Van Meurs nodig</span>
+      </div>
+
+      <div class="dc">
+        <div class="dc-hd"><div class="dc-num tl">4</div><div class="dc-title">Implementatie op koers?</div></div>
+        <div class="dc-date">Februari 2028</div>
+        <span class="go">GO → operationeel 1 aug '28</span>
+        <span class="nogo">NO-GO → noodprocedure verlenging huidig contract</span>
+      </div>
+
+    </div>
+
+    <div class="notes">
+      <span class="np risk">⚠ GR-opheffing + Omnibuzz-toetreding lopen parallel — beide kritisch pad</span>
+      <span class="np risk">⚠ Raad kan GR-procedure verlengen naar 26 wkn</span>
+      <span class="np jur">📋 Juridisch: tijdelijke verlenging Van Meurs als overbrugging — uitzoeken</span>
+      <span class="np info">Businesscase Omnibuzz: input voor collegebesluit — niet als tijdlijnfase</span>
+    </div>
+  </div>
+
+  <div class="finish">
+    <div style="font-size:22px">🏁</div>
+    <div>
+      <strong>1 augustus 2028 — Contractstart Pad B</strong>
+      <span>Haalbaar bij GO op alle 4 beslismomenten. Kritisch pad: parallelle GR-procedures feb–okt '27.</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Realistisch scenario v5 | Mei 2026 | Planning is indicatief — data kunnen nog wijzigen | Aanname: huidige vervoerder continueert → implementatietijd &lt;6 mnd
+</div>
+
+</body>
+</html>

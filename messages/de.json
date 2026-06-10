@@ -1,55 +1,95 @@
 {
   "meta": {
     "title": "GearUp — Finde kompatible Teile für deine Maschine",
-    "description": "Gib Marke und Modell ein und entdecke sofort welcher Kraftstoff, Ketten, Zündkerzen und andere Teile kompatibel sind."
+    "description": "Gib Marke und Modell ein und entdecke sofort, welcher Kraftstoff und welche Teile zu deiner Maschine passen."
   },
   "header": {
     "logo_alt": "GearUp Logo"
   },
   "hero": {
-    "headline": "GEAR UP",
-    "subtitle": "Find the right parts for any tool or machine",
+    "eyebrow": "Nie wieder nach den richtigen Teilen suchen",
+    "headline_pre": "Alles für",
+    "headline_hl": "dein Werkzeug",
+    "lead": "Gib Marke und Modell deines Rasenmähers, deiner Kettensäge oder Motorsense ein — und sieh sofort, welcher Kraftstoff und welche Teile passen.",
+    "hint": "Frei tippen: Marke und Modell, z. B. „Honda HRG 416“ oder „Stihl MS 250“. Die Modellnummer steht auf einem Aufkleber oder Typenschild.",
     "search_placeholder": "Marke oder Modell suchen...",
-    "search_button": "SUCHEN"
+    "search_label": "Suchen",
+    "search_button": "Suchen"
   },
-  "howto": {
-    "step1": "Marke + Modell eingeben",
-    "step2": "Kompatible Teile ansehen",
-    "step3": "Direkt online bestellen"
+  "popular": {
+    "label": "Meistgesucht"
+  },
+  "stats": {
+    "models": "Modelle",
+    "categories": "Kategorien",
+    "languages": "Sprachen"
   },
   "categories": {
-    "title": "Beliebte Kategorien",
-    "grasmaaiers": "Rasenmäher",
-    "kettingzagen": "Kettensägen",
-    "bladblazers": "Laubbläser",
-    "bosmaaiers": "Motorsensen"
+    "title": "Für welche Maschine suchst du?",
+    "subtitle": "Wähle einen Typ, um durch Marken und Modelle zu blättern",
+    "soon": "Demnächst"
   },
-  "manual": {
-    "title": "ANLEITUNG GESUCHT?",
-    "description": "Finde die offizielle Anleitung für dein Werkzeug",
-    "button": "ANLEITUNG ANSEHEN"
-  },
-  "footer": {
-    "copyright": "© 2026 GEARUP. ALLE RECHTE VORBEHALTEN.",
-    "privacy": "DATENSCHUTZ",
-    "terms": "AGB",
-    "support": "SUPPORT"
+  "trust": {
+    "checked": "Auf Modellebene geprüft",
+    "independent": "Unabhängige Beratung",
+    "noaccount": "Kein Konto nötig"
   },
   "suggestions": {
-    "title": "Welches Modell ist deine Maschine?",
-    "count": "Wir haben {count} Maschinen gefunden. Wähle deine.",
-    "not_found": "Keine Maschinen gefunden für \"{query}\". Versuche einen anderen Suchbegriff.",
-    "search_label": "Suchbegriff"
+    "title_generic": "Welches Modell ist deine Maschine?",
+    "title_brand": "Welche {merk} {category} hast du?",
+    "title_category": "Welche {category} hast du?",
+    "kicker": "Wähle dein Modell",
+    "lead": "Du kennst die Modellnummer nicht? Klick auf die Karte, die deiner Maschine ähnelt. Die Modellnummer steht sonst auf einem Aufkleber oder Typenschild an der Maschine.",
+    "help": "Ist deine Maschine nicht dabei?",
+    "help_link": "Erneut suchen",
+    "photo_badge": "Foto",
+    "view_parts": "Teile ansehen"
+  },
+  "empty": {
+    "edit": "ändern",
+    "title": "Dieses Modell ist noch nicht in unserer Datenbank",
+    "body": "Wir konnten „{query}“ nicht finden. Wir fügen ständig Modelle hinzu — aber wir zeigen lieber nichts als etwas, das vielleicht nicht stimmt.",
+    "body_noquery": "Wir konnten dieses Modell nicht finden. Wir fügen ständig Modelle hinzu — aber wir zeigen lieber nichts als etwas, das vielleicht nicht stimmt.",
+    "noted": "Wir haben deine Suchanfrage notiert. Je öfter ein Modell gesucht wird, desto schneller fügen wir es hinzu.",
+    "general_title": "Allgemeine Richtlinie",
+    "general_text": "Die meisten 4-Takt-Rasenmäher laufen mit gewöhnlichem Super E5/E10 und du mischst diesen nicht mit Öl — das Motoröl sitzt separat im Kurbelgehäuse. Bei 2-Takt-Maschinen mischst du das Öl in den Kraftstoff. Prüfe immer deine Anleitung oder das Typenschild für die genauen Angaben deiner Maschine.",
+    "try_other": "Anderes Modell versuchen",
+    "browse": "Nach Kategorie blättern"
   },
   "result": {
-    "compatible_products": "Kompatible Produkte",
-    "found_in_db": "In Datenbank gefunden",
-    "order": "Bestellen",
+    "result_for": "Ergebnis für",
+    "edit": "ändern",
+    "hero_fallback": "{type} für die {merk} {model}",
+    "options_lead": "Drei Optionen",
+    "options_label": "Drei Optionen",
+    "more_gear_title": "Suchst du mehr Gear für deine {model}?",
+    "more_gear_sub": "Klick ein Teil auf für die drei besten Kaufoptionen.",
+    "from": "ab",
+    "options_count": "{count} Optionen",
+    "fits_model": "Passt auf deine {model}",
     "coming_soon": "Demnächst",
     "coming_soon_desc": "Dieses Produkt wird bald hinzugefügt.",
+    "coming_soon_short": "Demnächst",
+    "order": "Ansehen",
     "manual_title": "ANLEITUNG GESUCHT?",
-    "manual_description": "Finde die offizielle Anleitung für dein Werkzeug",
-    "manual_button": "ANLEITUNG ANSEHEN"
+    "manual_description": "Finde die offizielle Anleitung für deine Maschine.",
+    "manual_button": "ANLEITUNG ANSEHEN",
+    "disclaimer": "GearUp ist unabhängig. Wir verkaufen selbst nichts — wir zeigen, wo du das richtige Teil kaufst. Über die Links verdienen wir eine kleine Provision; für dich ändert sich der Preis nicht. Beratung auf Modellebene geprüft."
+  },
+  "fuel": {
+    "euro95": "Super E5/E10",
+    "mengsmering": "Gemisch"
+  },
+  "spec": {
+    "motortype": "Motortyp",
+    "brandstof": "Kraftstoff",
+    "mengverhouding": "Mischungsverhältnis",
+    "e10": "E10 geeignet",
+    "none": "Kein"
+  },
+  "common": {
+    "yes": "Ja",
+    "no": "Nein"
   },
   "producttypes": {
     "brandstof": "Kraftstoff",
@@ -65,9 +105,14 @@
     "boren": "Bohrer"
   },
   "tiers": {
-    "basis": "BASIS",
-    "beter": "BESSER",
-    "best": "BEST",
-    "popular": "BELIEBT"
+    "basis": "Günstigste",
+    "beter": "Bester Preis / Leistung",
+    "best": "Beste Qualität"
+  },
+  "footer": {
+    "copyright": "© 2026 GEARUP. ALLE RECHTE VORBEHALTEN.",
+    "privacy": "DATENSCHUTZ",
+    "terms": "AGB",
+    "support": "SUPPORT"
   }
 }

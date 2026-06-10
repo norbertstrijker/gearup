@@ -1,55 +1,95 @@
 {
   "meta": {
     "title": "GearUp — Vind compatibele onderdelen voor jouw machine",
-    "description": "Voer merk en model in en ontdek direct welke brandstof, kettingen, bougies en andere onderdelen compatibel zijn."
+    "description": "Voer merk en model in en ontdek direct welke brandstof en onderdelen compatibel zijn met jouw machine."
   },
   "header": {
     "logo_alt": "GearUp logo"
   },
   "hero": {
-    "headline": "GEAR UP",
-    "subtitle": "Find the right parts for any tool or machine",
+    "eyebrow": "Nooit meer zoeken naar de juiste onderdelen",
+    "headline_pre": "Alles voor",
+    "headline_hl": "jouw gereedschap",
+    "lead": "Vul merk en model in van je grasmaaier, kettingzaag of bosmaaier — en zie direct welke brandstof en onderdelen erop passen.",
+    "hint": "Typ vrij: merk en model, bijv. “Honda HRG 416” of “Stihl MS 250”. Het modelnummer staat op een sticker of typeplaatje.",
     "search_placeholder": "Zoek merk of model...",
-    "search_button": "ZOEKEN"
+    "search_label": "Zoeken",
+    "search_button": "Zoeken"
   },
-  "howto": {
-    "step1": "Vul merk + model in",
-    "step2": "Bekijk compatibele onderdelen",
-    "step3": "Bestel direct online"
+  "popular": {
+    "label": "Meest gezocht"
+  },
+  "stats": {
+    "models": "modellen",
+    "categories": "categorieën",
+    "languages": "talen"
   },
   "categories": {
-    "title": "Populaire categorieën",
-    "grasmaaiers": "Grasmaaiers",
-    "kettingzagen": "Kettingzagen",
-    "bladblazers": "Bladblazers",
-    "bosmaaiers": "Bosmaaiers"
+    "title": "Voor welke machine zoek je?",
+    "subtitle": "Kies een type om door merken en modellen te bladeren",
+    "soon": "Binnenkort"
   },
-  "manual": {
-    "title": "HANDLEIDING NODIG?",
-    "description": "Vind de officiële handleiding voor jouw machine",
-    "button": "BEKIJK HANDLEIDING"
-  },
-  "footer": {
-    "copyright": "© 2026 GEARUP. ALLE RECHTEN VOORBEHOUDEN.",
-    "privacy": "PRIVACY",
-    "terms": "VOORWAARDEN",
-    "support": "SUPPORT"
+  "trust": {
+    "checked": "Gecontroleerd op modelniveau",
+    "independent": "Onafhankelijk advies",
+    "noaccount": "Geen account nodig"
   },
   "suggestions": {
-    "title": "Welk model is jouw machine?",
-    "count": "We vonden {count} machines. Kies de jouwe.",
-    "not_found": "Geen machines gevonden voor \"{query}\". Probeer een andere zoekterm.",
-    "search_label": "Zoekterm"
+    "title_generic": "Welk model is jouw machine?",
+    "title_brand": "Welke {merk} {category} heb je?",
+    "title_category": "Welke {category} heb je?",
+    "kicker": "Kies je model",
+    "lead": "Weet je het modelnummer niet? Klik op de kaart die op jouw machine lijkt. Het modelnummer staat anders op een sticker of typeplaatje op de machine.",
+    "help": "Staat jouw machine er niet bij?",
+    "help_link": "Zoek opnieuw",
+    "photo_badge": "foto",
+    "view_parts": "Bekijk onderdelen"
+  },
+  "empty": {
+    "edit": "wijzig",
+    "title": "Dit model staat nog niet in onze database",
+    "body": "We konden “{query}” niet vinden. We voegen voortdurend modellen toe — maar we tonen liever niets dan iets dat misschien niet klopt.",
+    "body_noquery": "We konden dit model niet vinden. We voegen voortdurend modellen toe — maar we tonen liever niets dan iets dat misschien niet klopt.",
+    "noted": "We hebben je zoekopdracht genoteerd. Hoe vaker een model wordt gezocht, hoe eerder we het toevoegen.",
+    "general_title": "Algemene richtlijn",
+    "general_text": "De meeste 4-takt grasmaaiers draaien op gewone Euro 95 benzine en je mengt die niet met olie — de motorolie zit apart in het carter. Bij 2-takt machines meng je olie wél door de benzine. Controleer altijd je handleiding of het typeplaatje voor de exacte gegevens van jouw machine.",
+    "try_other": "Probeer een ander model",
+    "browse": "Blader per categorie"
   },
   "result": {
-    "compatible_products": "Compatibele producten",
-    "found_in_db": "Gevonden in database",
-    "order": "Bestel",
+    "result_for": "Resultaat voor",
+    "edit": "wijzig",
+    "hero_fallback": "{type} voor de {merk} {model}",
+    "options_lead": "Drie opties",
+    "options_label": "Drie opties",
+    "more_gear_title": "Zoek je meer gear voor je {model}?",
+    "more_gear_sub": "Klik een onderdeel open voor de drie beste koopopties.",
+    "from": "vanaf",
+    "options_count": "{count} opties",
+    "fits_model": "Past op je {model}",
     "coming_soon": "Binnenkort",
     "coming_soon_desc": "Dit product wordt binnenkort toegevoegd.",
+    "coming_soon_short": "Binnenkort",
+    "order": "Bekijk",
     "manual_title": "HANDLEIDING NODIG?",
-    "manual_description": "Vind de officiële handleiding voor jouw machine",
-    "manual_button": "BEKIJK HANDLEIDING"
+    "manual_description": "Vind de officiële handleiding voor jouw machine.",
+    "manual_button": "BEKIJK HANDLEIDING",
+    "disclaimer": "GearUp is onafhankelijk. Wij verkopen zelf niets — we tonen waar je het juiste onderdeel koopt. Via de links verdienen wij een kleine commissie; voor jou verandert de prijs niet. Advies gecontroleerd op modelniveau."
+  },
+  "fuel": {
+    "euro95": "Euro 95",
+    "mengsmering": "Mengsmering"
+  },
+  "spec": {
+    "motortype": "Motortype",
+    "brandstof": "Brandstof",
+    "mengverhouding": "Mengverhouding",
+    "e10": "E10 geschikt",
+    "none": "Geen"
+  },
+  "common": {
+    "yes": "Ja",
+    "no": "Nee"
   },
   "producttypes": {
     "brandstof": "Brandstof",
@@ -65,9 +105,14 @@
     "boren": "Boren"
   },
   "tiers": {
-    "basis": "BASIS",
-    "beter": "BETER",
-    "best": "BEST",
-    "popular": "POPULAIR"
+    "basis": "Voordeligst",
+    "beter": "Beste prijs / kwaliteit",
+    "best": "Beste kwaliteit"
+  },
+  "footer": {
+    "copyright": "© 2026 GEARUP. ALLE RECHTEN VOORBEHOUDEN.",
+    "privacy": "PRIVACY",
+    "terms": "VOORWAARDEN",
+    "support": "SUPPORT"
   }
 }

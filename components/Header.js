@@ -1,5 +1,5 @@
 'use client'
-import { useLocale, useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 import { useRouter, usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,26 +18,30 @@ export default function Header() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#2B2D42]/80 glass-nav">
-      <div className="flex items-center justify-between px-6 py-4 w-full max-w-full">
-        <Link href={`/${locale}`} className="flex items-center gap-2">
-          <Image
-            src="/gearup-logo-onderste.png"
-            alt="GearUp"
-            width={96}
-            height={48}
-            className="h-12 w-auto object-contain"
-          />
+    <header className="w-full">
+      <div className="max-w-5xl mx-auto px-[18px] flex items-center justify-between py-5">
+        <Link href={`/${locale}`} className="flex items-center" aria-label="GearUp.tools home">
+          <span className="logoplate px-[18px] py-[10px] flex items-center">
+            <Image
+              src="/gearup-logo-onderste.png"
+              alt="GearUp.tools"
+              width={110}
+              height={42}
+              className="h-[42px] w-auto object-contain"
+              priority
+            />
+          </span>
         </Link>
-        <div className="flex gap-1">
+
+        <div className="flex border border-steel rounded-[9px] overflow-hidden">
           {LOCALES.map((loc) => (
             <button
               key={loc}
               onClick={() => switchLocale(loc)}
               className={
                 loc === locale
-                  ? 'px-3 py-1 text-xs font-headline font-bold uppercase tracking-widest bg-[#E8620A] text-white rounded-sm'
-                  : 'px-3 py-1 text-xs font-headline font-bold uppercase tracking-widest text-on-primary-container hover:text-white'
+                  ? 'text-[12.5px] font-semibold px-3 py-[7px] bg-signal text-white transition-colors'
+                  : 'text-[12.5px] font-semibold px-3 py-[7px] text-mut hover:text-paper transition-colors'
               }
             >
               {loc.toUpperCase()}
@@ -45,6 +49,6 @@ export default function Header() {
           ))}
         </div>
       </div>
-    </nav>
+    </header>
   )
 }
