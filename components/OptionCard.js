@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl'
 import Icon from '@/components/Icons'
+import { isValidUrl } from '@/lib/links'
 
 function priceLabel(value) {
   if (value == null) return null
@@ -13,6 +14,8 @@ export default function OptionCard({ product, tier, mini = false }) {
   const tierLabel = t(`tiers.${tier}`)
   const price = product ? priceLabel(product.prijs_indicatie) : null
   const store = product?.winkel
+  // Geen kapotte/placeholder-links: knop alleen bij een geldige bestemming
+  const buyable = isValidUrl(product?.affiliate_url)
 
   if (mini) {
     if (!product) {
@@ -34,16 +37,22 @@ export default function OptionCard({ product, tier, mini = false }) {
         </div>
         <div className="text-[12.5px] font-semibold text-paper mb-2 flex-1 leading-snug">{product.product_naam}</div>
         <div className="font-headline font-extrabold text-[15px] text-paper mb-[9px]">{price}</div>
-        <a
-          href={product.affiliate_url}
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className={`text-[12px] font-semibold py-2 px-[10px] rounded-[9px] text-center transition hover:brightness-110 ${
-            isBest ? 'bg-signal text-white' : 'bg-steel-2 text-paper'
-          }`}
-        >
-          {t('result.order')}
-        </a>
+        {buyable ? (
+          <a
+            href={product.affiliate_url}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className={`text-[12px] font-semibold py-2 px-[10px] rounded-[9px] text-center transition hover:brightness-110 ${
+              isBest ? 'bg-signal text-white' : 'bg-steel-2 text-paper'
+            }`}
+          >
+            {t('result.order')}
+          </a>
+        ) : (
+          <span className="text-[12px] font-semibold py-2 px-[10px] rounded-[9px] text-center bg-steel text-mut-d">
+            {t('result.link_soon')}
+          </span>
+        )}
       </div>
     )
   }
@@ -86,17 +95,23 @@ export default function OptionCard({ product, tier, mini = false }) {
         <div className="text-[13.5px] font-semibold text-ink leading-snug mb-1">{product.product_naam}</div>
         <div className="text-[12px] text-mut-d mb-[11px] flex-1">{product.beschrijving}</div>
         <div className="font-headline font-extrabold text-[18px] text-ink mb-[10px]">{price}</div>
-        <a
-          href={product.affiliate_url}
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className={`flex items-center justify-center gap-[7px] font-semibold text-[13px] py-[10px] px-3 rounded-[9px] transition hover:brightness-110 ${
-            isBest ? 'bg-signal text-white' : 'bg-ink text-white'
-          }`}
-        >
-          {t('result.order')}
-          {store && <span className="opacity-70 font-medium text-[11px]">· {store}</span>}
-        </a>
+        {buyable ? (
+          <a
+            href={product.affiliate_url}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className={`flex items-center justify-center gap-[7px] font-semibold text-[13px] py-[10px] px-3 rounded-[9px] transition hover:brightness-110 ${
+              isBest ? 'bg-signal text-white' : 'bg-ink text-white'
+            }`}
+          >
+            {t('result.order')}
+            {store && <span className="opacity-70 font-medium text-[11px]">· {store}</span>}
+          </a>
+        ) : (
+          <span className="flex items-center justify-center font-semibold text-[13px] py-[10px] px-3 rounded-[9px] bg-paper-2 text-mut-d">
+            {t('result.link_soon')}
+          </span>
+        )}
       </div>
     </div>
   )

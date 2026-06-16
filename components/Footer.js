@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full mt-16 border-t border-steel">
-      <div className="max-w-5xl mx-auto px-[18px] py-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="w-full max-w-3xl mx-auto px-[18px] py-10 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex flex-col items-center md:items-start gap-3">
           <span className="font-headline text-lg font-extrabold text-signal tracking-tight">GEARUP.TOOLS</span>
           <p className="text-[12px] font-semibold tracking-widest uppercase text-mut-d">

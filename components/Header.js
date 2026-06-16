@@ -19,7 +19,7 @@ export default function Header() {
 
   return (
     <header className="w-full">
-      <div className="max-w-5xl mx-auto px-[18px] flex items-center justify-between py-5">
+      <div className="w-full max-w-3xl mx-auto px-[18px] flex items-center justify-between py-5">
         <Link href={`/${locale}`} className="flex items-center" aria-label="GearUp.tools home">
           <span className="logoplate px-[18px] py-[10px] flex items-center">
             <Image

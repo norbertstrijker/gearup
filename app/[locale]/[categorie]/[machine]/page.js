@@ -1,11 +1,12 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { supabaseServer } from '@/lib/supabase-server'
 import { categoryFromSlug, categoryName, categoryProducttypes } from '@/lib/categories'
-import { fuelInfo, uitlegKey, primaryType, fetchUitleg } from '@/lib/advice'
+import { fuelInfo, uitlegKey, fetchUitleg } from '@/lib/advice'
+import { isValidUrl } from '@/lib/links'
 import OptionCard from '@/components/OptionCard'
 import GearAccordion from '@/components/GearAccordion'
+import Container from '@/components/Container'
 import Icon from '@/components/Icons'
 
 const TIERS = ['basis', 'beter', 'best']
@@ -17,7 +18,6 @@ export async function generateMetadata({ params }) {
     .select('merk, modelnummer')
     .eq('slug', machineSlug)
     .single()
-
   if (!machine) return { title: 'Not Found' }
   return {
     title: `${machine.merk} ${machine.modelnummer} — GearUp`,
@@ -52,8 +52,9 @@ function AdRail({ side }) {
   )
 }
 
-export default async function ResultPage({ params }) {
+export default async function ResultPage({ params, searchParams }) {
   const { locale, categorie: catSlug, machine: machineSlug } = await params
+  const { onderdeel: onderdeelParam } = await searchParams
   setRequestLocale(locale)
   const t = await getTranslations('result')
   const tp = await getTranslations('producttypes')
@@ -71,13 +72,12 @@ export default async function ResultPage({ params }) {
     .single()
   if (!machine) notFound()
 
-  // Producten: machine-specifiek eerst, dan generieke fallback per categorie/motortype
+  // Producten: machine-specifiek eerst, dan generieke fallback
   const { data: specificProducts } = await supabaseServer
     .from('gearup_producten')
     .select('*')
     .eq('machine_id', machine.id)
     .eq('markt', locale)
-
   const { data: genericProducts } = await supabaseServer
     .from('gearup_producten')
     .select('*')
@@ -106,63 +106,63 @@ export default async function ResultPage({ params }) {
   }
 
   const uitlegMap = await fetchUitleg(locale)
-  const primary = primaryType(relevantTypes, machine)
   const fuel = fuelInfo(machine)
 
-  // Hero (primair onderdeel)
-  const primaryKey = primary ? uitlegKey(primary, machine) : null
-  const primaryUitleg = (primaryKey && uitlegMap[primaryKey]) || {}
-  const primaryOptions = primary ? grouped[primary] : null
+  function specCellsFor(type) {
+    if (type !== 'brandstof' || !fuel.applies) return null
+    return [
+      { l: ts('motortype'), v: machine.motortype, go: false },
+      { l: ts('brandstof'), v: tf(fuel.brandstofKey), go: false },
+      { l: ts('mengverhouding'), v: fuel.meng || ts('none'), go: false },
+      {
+        l: ts('e10'),
+        v: fuel.e10 === true ? tcommon('yes') : fuel.e10 === false ? tcommon('no') : '—',
+        go: fuel.e10 === true,
+      },
+    ]
+  }
 
-  // "Meer gear": overige onderdelen als accordion
-  const gearItems = relevantTypes
-    .filter((type) => type !== primary)
-    .map((type) => {
-      const byTier = grouped[type]
-      const available = TIERS.map((tier) => byTier[tier]).filter(Boolean)
-      const minPrice = available.reduce((min, p) => {
-        const v = p.prijs_indicatie
-        return v != null && (min == null || v < min) ? v : min
-      }, null)
-      const u = uitlegMap[uitlegKey(type, machine)] || {}
-      const from =
-        available.length > 0
-          ? `${t('from')} ${priceLabel(minPrice)} · ${t('options_count', { count: available.length })}`
-          : t('coming_soon')
-      return {
-        producttype: type,
-        titel: u.titel || null,
-        fallbackName: t('fits_model', { model: machine.modelnummer }),
-        from,
-        optionsByTier: byTier,
-      }
-    })
+  function buildItem(type) {
+    const byTier = grouped[type]
+    const available = TIERS.map((tier) => byTier[tier]).filter(Boolean)
+    const minPrice = available.reduce(
+      (min, p) => (p.prijs_indicatie != null && (min == null || p.prijs_indicatie < min) ? p.prijs_indicatie : min),
+      null
+    )
+    const u = uitlegMap[uitlegKey(type, machine)] || {}
+    const from =
+      available.length > 0
+        ? `${t('from')} ${priceLabel(minPrice)} · ${t('options_count', { count: available.length })}`
+        : t('coming_soon')
+    return {
+      producttype: type,
+      titel: u.titel || null,
+      fallbackName: t('fits_model', { model: machine.modelnummer }),
+      keuze: u.keuze || null,
+      plaatsing: u.plaatsing || null,
+      waarschuwing: u.waarschuwing || null,
+      specCells: specCellsFor(type),
+      manualNote: t('manual_note'),
+      from,
+      optionsByTier: byTier,
+    }
+  }
 
-  const manualUrl =
-    machine.handleiding_url ||
-    `https://www.manualslib.com/search/?q=${encodeURIComponent(machine.merk + ' ' + machine.modelnummer)}`
+  // Onderdeel-bewust: gezocht onderdeel groot; anders model-overzicht (alles gelijkwaardig)
+  const heroType =
+    onderdeelParam && relevantTypes.includes(onderdeelParam) ? onderdeelParam : null
+  const accordionTypes = heroType ? relevantTypes.filter((x) => x !== heroType) : relevantTypes
+  const heroItem = heroType ? buildItem(heroType) : null
+  const accordionItems = accordionTypes.map(buildItem)
 
-  // Brandstof-specbalk uit bestaande machinevelden
-  const specCells =
-    primary === 'brandstof' && fuel.applies
-      ? [
-          { l: ts('motortype'), v: machine.motortype, go: false },
-          { l: ts('brandstof'), v: tf(fuel.brandstofKey), go: false },
-          { l: ts('mengverhouding'), v: fuel.meng || ts('none'), go: false },
-          {
-            l: ts('e10'),
-            v: fuel.e10 === true ? tcommon('yes') : fuel.e10 === false ? tcommon('no') : '—',
-            go: fuel.e10 === true,
-          },
-        ]
-      : null
+  const manualUrl = isValidUrl(machine.handleiding_url) ? machine.handleiding_url : null
 
   return (
-    <div className="w-full px-[18px] pb-12">
-      {/* header-context (breedte van de content) */}
-      <div className="max-w-[760px] mx-auto pt-1">
+    <div className="w-full pb-12">
+      {/* context */}
+      <Container className="pt-1">
         <div className="flex items-center gap-[10px] flex-wrap text-[13.5px] text-mut mb-[22px]">
-          <span className="text-mut">{t('result_for')}</span>
+          <span className="text-mut-d">{t('result_for')}</span>
           {[categoryName(categoryKey, locale), machine.merk, machine.modelnummer].map((label, i) => (
             <span
               key={i}
@@ -172,36 +172,32 @@ export default async function ResultPage({ params }) {
               {label}
             </span>
           ))}
-          <Link href={`/${locale}`} className="text-signal font-semibold text-[13px]">
-            {t('edit')} →
-          </Link>
         </div>
-      </div>
+      </Container>
 
       {/* 3-koloms grid: advertentie | content | advertentie */}
-      <div className="grid gap-7 justify-center items-start grid-cols-1 xl:grid-cols-[760px_300px] 2xl:grid-cols-[300px_760px_300px]">
+      <div className="grid gap-7 justify-center items-start grid-cols-1 xl:grid-cols-[768px_300px] 2xl:grid-cols-[300px_768px_300px] px-[18px]">
         <AdRail side="left" />
 
-        <div className="w-full max-w-[760px]">
-          {/* HERO — primair onderdeel */}
-          {primary && (
+        <div className="w-full max-w-[768px] mx-auto">
+          {/* HERO — gezocht onderdeel groot */}
+          {heroItem && (
             <section className="bg-paper text-ink rounded-card p-[26px] relative overflow-hidden border border-line-on-light">
               <span className="absolute left-0 top-0 bottom-0 w-[6px] bg-signal" />
               <span className="inline-flex items-center gap-[7px] font-headline font-bold text-[11.5px] tracking-[0.14em] uppercase text-signal-d bg-white border border-[#f0c9b8] px-[10px] py-[5px] rounded-[7px] mb-[14px]">
-                <Icon name={primary} className="w-[13px] h-[13px]" strokeWidth={2.2} />
-                {tp(primary)}
+                <Icon name={heroItem.producttype} className="w-[13px] h-[13px]" strokeWidth={2.2} />
+                {tp(heroItem.producttype)}
               </span>
               <h1 className="font-headline font-extrabold text-2xl leading-tight tracking-[-0.02em] text-ink mb-3">
-                {primaryUitleg.titel || t('hero_fallback', { type: tp(primary), merk: machine.merk, model: machine.modelnummer })}
+                {heroItem.titel ||
+                  t('hero_fallback', { type: tp(heroItem.producttype), merk: machine.merk, model: machine.modelnummer })}
               </h1>
 
-              {primaryUitleg.uitleg && (
-                <p className="text-[16px] leading-relaxed text-[#36383d] mb-5">{primaryUitleg.uitleg}</p>
-              )}
+              {heroItem.keuze && <p className="text-[16px] leading-relaxed text-[#36383d] mb-5">{heroItem.keuze}</p>}
 
-              {specCells && (
+              {heroItem.specCells && (
                 <div className="flex flex-wrap border border-line-on-light rounded-[11px] overflow-hidden bg-white mb-5">
-                  {specCells.map((c, i) => (
+                  {heroItem.specCells.map((c, i) => (
                     <div key={i} className="flex-1 min-w-[120px] px-4 py-[13px] border-r border-line-on-light last:border-r-0">
                       <div className="text-[11px] tracking-[0.05em] uppercase text-mut-d font-semibold mb-[3px]">{c.l}</div>
                       <div className={`font-headline font-bold text-[17px] ${c.go ? 'text-ok' : 'text-ink'}`}>{c.v}</div>
@@ -210,10 +206,20 @@ export default async function ResultPage({ params }) {
                 </div>
               )}
 
-              {primaryUitleg.waarschuwing && (
+              {heroItem.plaatsing && (
+                <div className="bg-[#faf8f3] border border-line-on-light rounded-[11px] px-4 py-[13px] mb-5">
+                  <div className="font-headline font-bold text-[11px] tracking-[0.06em] uppercase text-mut-d mb-[6px]">
+                    {t('placement_title')}
+                  </div>
+                  <p className="text-[14px] leading-relaxed text-[#36383d]">{heroItem.plaatsing}</p>
+                  <p className="text-[12.5px] text-mut-d mt-2 italic">{heroItem.manualNote}</p>
+                </div>
+              )}
+
+              {heroItem.waarschuwing && (
                 <div className="flex items-start gap-[9px] text-[13.5px] text-[#8a3d12] bg-[#fbeee4] border border-[#f3d4c2] px-[13px] py-[11px] rounded-[9px] leading-snug mb-6">
                   <span className="flex-none mt-[1px]"><Icon name="warning" className="w-[17px] h-[17px]" strokeWidth={2.2} /></span>
-                  <span>{primaryUitleg.waarschuwing}</span>
+                  <span>{heroItem.waarschuwing}</span>
                 </div>
               )}
 
@@ -222,42 +228,48 @@ export default async function ResultPage({ params }) {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-[11px]">
                 {TIERS.map((tier) => (
-                  <OptionCard key={tier} product={primaryOptions?.[tier]} tier={tier} />
+                  <OptionCard key={tier} product={heroItem.optionsByTier[tier]} tier={tier} />
                 ))}
               </div>
             </section>
           )}
 
-          {/* MEER GEAR */}
-          {gearItems.length > 0 && (
+          {/* Titel boven de onderdelenlijst */}
+          {accordionItems.length > 0 && (
             <>
-              <div className="mt-[38px] mb-[6px] mx-[2px]">
+              <div className={`${heroItem ? 'mt-[38px]' : 'mt-1'} mb-[6px] mx-[2px]`}>
                 <h2 className="font-headline font-extrabold text-[21px] tracking-[-0.02em] text-paper leading-tight">
-                  {t('more_gear_title', { model: machine.modelnummer })}
+                  {heroItem
+                    ? t('more_gear_title', { model: machine.modelnummer })
+                    : t('overview_title', { model: machine.modelnummer })}
                 </h2>
               </div>
-              <p className="text-sm text-mut mx-[2px] mb-[18px] leading-relaxed">{t('more_gear_sub')}</p>
-              <GearAccordion items={gearItems} />
+              <p className="text-sm text-mut mx-[2px] mb-[18px] leading-relaxed">
+                {heroItem ? t('more_gear_sub') : t('overview_sub')}
+              </p>
+              <GearAccordion items={accordionItems} />
             </>
           )}
 
-          {/* HANDLEIDING */}
-          <section className="mt-12">
-            <div className="bg-anthracite rounded-card p-8 relative overflow-hidden">
-              <div className="relative z-10 flex flex-col gap-2">
-                <h3 className="font-headline font-bold text-2xl text-white uppercase leading-none mb-3">{t('manual_title')}</h3>
-                <p className="text-mut mb-5 max-w-xs">{t('manual_description')}</p>
-                <a
-                  href={manualUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-signal hover:brightness-110 text-white px-7 py-3 rounded-md font-headline font-bold tracking-widest w-fit transition"
-                >
-                  {t('manual_button')}
-                </a>
+          {/* HANDLEIDING — alleen bij geldige URL */}
+          {manualUrl && (
+            <section className="mt-12">
+              <div className="bg-anthracite rounded-card p-8 relative overflow-hidden">
+                <div className="relative z-10 flex flex-col gap-2">
+                  <h3 className="font-headline font-bold text-2xl text-white uppercase leading-none mb-3">{t('manual_title')}</h3>
+                  <p className="text-mut mb-5 max-w-xs">{t('manual_description')}</p>
+                  <a
+                    href={manualUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-signal hover:brightness-110 text-white px-7 py-3 rounded-md font-headline font-bold tracking-widest w-fit transition"
+                  >
+                    {t('manual_button')}
+                  </a>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           {/* TRUST */}
           <div className="mt-8 text-[12px] text-mut-d leading-relaxed border-t border-steel pt-4 flex gap-[9px] items-start">
