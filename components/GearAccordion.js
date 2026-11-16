@@ -47,6 +47,9 @@ function AccordionItem({ item }) {
           {/* keuze-advies */}
           {item.keuze && <p className="text-[14px] leading-relaxed text-mut mb-4">{item.keuze}</p>}
 
+          {/* feiten uit de bron: welk onderdeel precies, nummer, voorwaarden */}
+          {item.facts && <div className="mb-4">{item.facts}</div>}
+
           {/* feitelijke specs (brandstof) */}
           {item.specCells && (
             <div className="flex flex-wrap border border-steel-2 rounded-[10px] overflow-hidden bg-ink mb-4">
