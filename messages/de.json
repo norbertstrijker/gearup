@@ -177,5 +177,15 @@
     "manual_lead": "Alles zur Wartung steht in der Anleitung des Herstellers:",
     "manual_link": "Anleitung öffnen",
     "disclaimer": "GearUp ist unabhängig und verkauft selbst nichts. Jedes Teil stammt aus einer Quelle des Herstellers; was noch nicht verifiziert ist, steht dabei."
+  },
+  "housead": {
+    "tip": "Tipp",
+    "tip_plate_title": "Welches Modell hast du?",
+    "tip_plate_text": "Die Modellnummer steht auf dem Typenschild: ein Aufkleber oder Schild am Gerät. Damit findest du die richtige Ausführung.",
+    "tip_manual_title": "Zuerst die Anleitung",
+    "tip_manual_text": "Bei vielen Teilen siehst du, auf welcher Seite der Anleitung der Austausch beschrieben ist.",
+    "advertise_title": "Werben auf GearUp?",
+    "advertise_text": "Hier sehen Besucher deine Anzeige genau dann, wenn sie ein Teil für ihr eigenes Gerät suchen.",
+    "advertise_soon": "Bald möglich"
   }
 }

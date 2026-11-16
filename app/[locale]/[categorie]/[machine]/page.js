@@ -7,6 +7,7 @@ import { fuelInfo, uitlegKey, fetchUitleg } from '@/lib/advice'
 import { isValidUrl } from '@/lib/links'
 import { groupParts, fuelFacts } from '@/lib/machine'
 import PartFacts from '@/components/PartFacts'
+import HouseAd from '@/components/HouseAd'
 import OptionCard from '@/components/OptionCard'
 import GearAccordion from '@/components/GearAccordion'
 import Container from '@/components/Container'
@@ -38,19 +39,8 @@ function AdRail({ side }) {
     <aside
       className={`${side === 'left' ? 'hidden 2xl:flex' : 'hidden xl:flex'} sticky top-5 flex-col gap-[18px] w-[300px]`}
     >
-      {['rect', 'half'].map((kind) => (
-        <div
-          key={kind}
-          className={`bg-[rgba(31,34,41,0.5)] border border-dashed border-steel-2 rounded-xl flex items-center justify-center text-mut-d text-center ${
-            kind === 'rect' ? 'h-[250px]' : 'h-[600px]'
-          }`}
-        >
-          <div>
-            <div className="text-[10px] tracking-[0.14em] uppercase text-mut-d mb-2">Advertentie</div>
-            <div className="text-[12.5px] text-mut">{kind === 'rect' ? '300 × 250' : '300 × 600'}</div>
-          </div>
-        </div>
-      ))}
+      <HouseAd kind="rect" variant={side === 'left' ? 0 : 1} />
+      <HouseAd kind="half" />
     </aside>
   )
 }

@@ -177,5 +177,15 @@
     "manual_lead": "Everything about maintenance is in the maker's manual:",
     "manual_link": "open manual",
     "disclaimer": "GearUp is independent and sells nothing itself. Every part comes from a maker's source; anything not yet verified is marked."
+  },
+  "housead": {
+    "tip": "tip",
+    "tip_plate_title": "Which model do you have?",
+    "tip_plate_text": "The model number is on the rating plate: a sticker or plate on the machine. It tells you which version you have.",
+    "tip_manual_title": "Start with the manual",
+    "tip_manual_text": "For many parts you see which page of the manual explains how to replace it.",
+    "advertise_title": "Advertise on GearUp?",
+    "advertise_text": "Visitors see your ad here at the moment they are looking for a part for their own machine.",
+    "advertise_soon": "Coming soon"
   }
 }

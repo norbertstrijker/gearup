@@ -177,5 +177,15 @@
     "manual_lead": "Alles over onderhoud staat in de handleiding van de maker:",
     "manual_link": "handleiding openen",
     "disclaimer": "GearUp is onafhankelijk en verkoopt zelf niets. Elk onderdeel komt uit een bron van de maker; wat nog niet geverifieerd is, staat erbij."
+  },
+  "housead": {
+    "tip": "tip",
+    "tip_plate_title": "Welk model heb je?",
+    "tip_plate_text": "Het modelnummer staat op het typeplaatje: een sticker of plaatje op de machine. Daarmee vind je de juiste uitvoering.",
+    "tip_manual_title": "Eerst de handleiding",
+    "tip_manual_text": "Bij veel onderdelen zie je op welke pagina van de handleiding staat hoe je het vervangt.",
+    "advertise_title": "Adverteren op GearUp?",
+    "advertise_text": "Hier zien bezoekers je advertentie op het moment dat ze een onderdeel zoeken voor hun eigen machine.",
+    "advertise_soon": "Binnenkort mogelijk"
   }
 }
