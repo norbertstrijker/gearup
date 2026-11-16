@@ -1,4 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl'
+import { notFound } from 'next/navigation'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import Header from '@/components/Header'
@@ -28,6 +29,8 @@ export async function generateMetadata({ params }) {
 
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params
+  // Onbekende taal (bv. /onbekend): niet doen alsof het een taal is.
+  if (!routing.locales.includes(locale)) notFound()
   setRequestLocale(locale)
   const messages = await getMessages()
 

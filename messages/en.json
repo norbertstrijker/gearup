@@ -51,7 +51,8 @@
     "understood": "Understood:",
     "adjust_search": "Adjust your search",
     "photo_badge": "photo",
-    "view_parts": "View parts"
+    "view_parts": "View parts",
+    "type_label": "Type"
   },
   "empty": {
     "title": "Your search returned no results",
@@ -108,8 +109,27 @@
     "maaidraad": "Trimmer line",
     "accu": "Battery",
     "lader": "Charger",
-    "zaagblad": "Saw blade",
-    "boren": "Drill bits"
+    "zaagblad": "Guide bar",
+    "boren": "Drill bits",
+    "maaikop": "Trimmer head",
+    "opvangzak": "Grass bag",
+    "beschermkap": "Guard",
+    "draagstel": "Harness",
+    "begrenzingsdraad": "Boundary wire",
+    "accessoire": "Accessory",
+    "spoelkap": "Spool cover",
+    "tegenmes": "Counter blade",
+    "garage": "Garage",
+    "v-snaar": "V-belt",
+    "carburateur": "Carburettor",
+    "trekstarter": "Recoil starter",
+    "startkoord": "Starter cord",
+    "kettingwiel": "Sprocket",
+    "brandstofleiding": "Fuel line",
+    "primer": "Primer",
+    "wiel": "Wheel",
+    "mesbalk": "Cutter bar",
+    "pomp": "Pump"
   },
   "tiers": {
     "basis": "Cheapest",
@@ -121,5 +141,41 @@
     "privacy": "PRIVACY",
     "terms": "TERMS",
     "support": "SUPPORT"
+  },
+  "notfound": {
+    "title": "This page does not exist",
+    "lead": "The link may be outdated or mistyped. Search for your machine again from the home page.",
+    "home": "Go to the home page"
+  },
+  "machine": {
+    "photo_soon": "photo coming",
+    "typenummer": "Type",
+    "motortype": "Engine",
+    "mengverhouding": "Mix ratio",
+    "e10": "E10",
+    "e10_ja": "suitable",
+    "e10_nee": "not suitable",
+    "e10_onbekend": "unknown",
+    "motorolie": "Engine oil",
+    "letop": "NOTE:",
+    "fourmix": "this four-stroke runs on mixed fuel (petrol with two-stroke oil), not on pure petrol with separate engine oil.",
+    "other_versions": "There are more versions of the {model}.",
+    "check_plate": "Check the rating plate on your machine to see which one you have.",
+    "parts_title": "Parts for the {model}",
+    "parts_sub": "For each part you see the number to buy it by and the source it comes from.",
+    "parts_none": "There are no parts in GearUp for this machine yet.",
+    "parts_not_verified_count": "{count, plural, one {One part has} other {# parts have}} not been verified yet.",
+    "options": "{count} options",
+    "fabrieksnummer": "Part number",
+    "type": "Type",
+    "no_number": "Number not known yet",
+    "aantal": "Quantity",
+    "geldt_voor": "Applies to:",
+    "not_verified": "This part has not been verified yet.",
+    "bron": "Source",
+    "procedure": "Maintenance and replacing: manual page {page}",
+    "manual_lead": "Everything about maintenance is in the maker's manual:",
+    "manual_link": "open manual",
+    "disclaimer": "GearUp is independent and sells nothing itself. Every part comes from a maker's source; anything not yet verified is marked."
   }
 }

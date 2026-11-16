@@ -51,7 +51,8 @@
     "understood": "Begrepen:",
     "adjust_search": "Pas je zoekopdracht aan",
     "photo_badge": "foto",
-    "view_parts": "Bekijk onderdelen"
+    "view_parts": "Bekijk onderdelen",
+    "type_label": "Type"
   },
   "empty": {
     "title": "Je zoekopdracht leverde geen resultaten op",
@@ -108,8 +109,27 @@
     "maaidraad": "Maaidraad",
     "accu": "Accu",
     "lader": "Lader",
-    "zaagblad": "Zaagblad",
-    "boren": "Boren"
+    "zaagblad": "Zwaard",
+    "boren": "Boren",
+    "maaikop": "Maaikop",
+    "opvangzak": "Opvangzak",
+    "beschermkap": "Beschermkap",
+    "draagstel": "Draagstel",
+    "begrenzingsdraad": "Begrenzingsdraad",
+    "accessoire": "Accessoire",
+    "spoelkap": "Spoelkap",
+    "tegenmes": "Tegenmes",
+    "garage": "Garage",
+    "v-snaar": "V-snaar",
+    "carburateur": "Carburateur",
+    "trekstarter": "Trekstarter",
+    "startkoord": "Startkoord",
+    "kettingwiel": "Kettingwiel",
+    "brandstofleiding": "Brandstofleiding",
+    "primer": "Primer",
+    "wiel": "Wiel",
+    "mesbalk": "Mesbalk",
+    "pomp": "Pomp"
   },
   "tiers": {
     "basis": "Voordeligst",
@@ -121,5 +141,41 @@
     "privacy": "PRIVACY",
     "terms": "VOORWAARDEN",
     "support": "SUPPORT"
+  },
+  "notfound": {
+    "title": "Deze pagina bestaat niet",
+    "lead": "Misschien is de link verouderd of verkeerd getypt. Zoek je machine opnieuw via de startpagina.",
+    "home": "Naar de startpagina"
+  },
+  "machine": {
+    "photo_soon": "foto volgt",
+    "typenummer": "Type",
+    "motortype": "Motor",
+    "mengverhouding": "Mengverhouding",
+    "e10": "E10",
+    "e10_ja": "geschikt",
+    "e10_nee": "niet geschikt",
+    "e10_onbekend": "onbekend",
+    "motorolie": "Motorolie",
+    "letop": "LET OP:",
+    "fourmix": "deze viertakt loopt op mengsmering (benzine met tweetaktolie), niet op pure benzine met aparte motorolie.",
+    "other_versions": "Er zijn meer uitvoeringen van de {model}.",
+    "check_plate": "Kijk op het typeplaatje van je machine welke je hebt.",
+    "parts_title": "Onderdelen voor de {model}",
+    "parts_sub": "Per onderdeel zie je het nummer waarmee je het koopt en de bron waar het vandaan komt.",
+    "parts_none": "Voor deze machine staan nog geen onderdelen in GearUp.",
+    "parts_not_verified_count": "{count, plural, one {Eén onderdeel is} other {# onderdelen zijn}} nog niet geverifieerd.",
+    "options": "{count} mogelijkheden",
+    "fabrieksnummer": "Fabrieksnummer",
+    "type": "Type",
+    "no_number": "Nummer nog niet bekend",
+    "aantal": "Aantal",
+    "geldt_voor": "Geldt voor:",
+    "not_verified": "Dit onderdeel is nog niet geverifieerd.",
+    "bron": "Bron",
+    "procedure": "Onderhoud en vervangen: handleiding pagina {page}",
+    "manual_lead": "Alles over onderhoud staat in de handleiding van de maker:",
+    "manual_link": "handleiding openen",
+    "disclaimer": "GearUp is onafhankelijk en verkoopt zelf niets. Elk onderdeel komt uit een bron van de maker; wat nog niet geverifieerd is, staat erbij."
   }
 }

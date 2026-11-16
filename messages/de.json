@@ -51,7 +51,8 @@
     "understood": "Verstanden:",
     "adjust_search": "Suche anpassen",
     "photo_badge": "Foto",
-    "view_parts": "Teile ansehen"
+    "view_parts": "Teile ansehen",
+    "type_label": "Typ"
   },
   "empty": {
     "title": "Deine Suche ergab keine Treffer",
@@ -108,8 +109,27 @@
     "maaidraad": "Mähfaden",
     "accu": "Akku",
     "lader": "Ladegerät",
-    "zaagblad": "Sägeblatt",
-    "boren": "Bohrer"
+    "zaagblad": "Führungsschiene",
+    "boren": "Bohrer",
+    "maaikop": "Mähkopf",
+    "opvangzak": "Fangsack",
+    "beschermkap": "Schutzhaube",
+    "draagstel": "Tragegurt",
+    "begrenzingsdraad": "Begrenzungsdraht",
+    "accessoire": "Zubehör",
+    "spoelkap": "Spulendeckel",
+    "tegenmes": "Gegenmesser",
+    "garage": "Garage",
+    "v-snaar": "Keilriemen",
+    "carburateur": "Vergaser",
+    "trekstarter": "Seilzugstarter",
+    "startkoord": "Anwerfseil",
+    "kettingwiel": "Kettenrad",
+    "brandstofleiding": "Kraftstoffleitung",
+    "primer": "Primer",
+    "wiel": "Rad",
+    "mesbalk": "Messerbalken",
+    "pomp": "Pumpe"
   },
   "tiers": {
     "basis": "Günstigste",
@@ -121,5 +141,41 @@
     "privacy": "DATENSCHUTZ",
     "terms": "AGB",
     "support": "SUPPORT"
+  },
+  "notfound": {
+    "title": "Diese Seite gibt es nicht",
+    "lead": "Vielleicht ist der Link veraltet oder falsch eingegeben. Suche dein Gerät erneut über die Startseite.",
+    "home": "Zur Startseite"
+  },
+  "machine": {
+    "photo_soon": "Foto folgt",
+    "typenummer": "Typ",
+    "motortype": "Motor",
+    "mengverhouding": "Mischungsverhältnis",
+    "e10": "E10",
+    "e10_ja": "geeignet",
+    "e10_nee": "nicht geeignet",
+    "e10_onbekend": "unbekannt",
+    "motorolie": "Motoröl",
+    "letop": "ACHTUNG:",
+    "fourmix": "Dieser Viertakter läuft mit Gemisch (Benzin mit Zweitaktöl), nicht mit reinem Benzin und separatem Motoröl.",
+    "other_versions": "Es gibt weitere Ausführungen der {model}.",
+    "check_plate": "Auf dem Typenschild deines Geräts siehst du, welche du hast.",
+    "parts_title": "Teile für die {model}",
+    "parts_sub": "Zu jedem Teil siehst du die Nummer, mit der du es kaufst, und die Quelle.",
+    "parts_none": "Für dieses Gerät sind noch keine Teile in GearUp.",
+    "parts_not_verified_count": "{count, plural, one {Ein Teil ist} other {# Teile sind}} noch nicht verifiziert.",
+    "options": "{count} Möglichkeiten",
+    "fabrieksnummer": "Herstellernummer",
+    "type": "Typ",
+    "no_number": "Nummer noch nicht bekannt",
+    "aantal": "Anzahl",
+    "geldt_voor": "Gilt für:",
+    "not_verified": "Dieses Teil ist noch nicht verifiziert.",
+    "bron": "Quelle",
+    "procedure": "Wartung und Austausch: Anleitung Seite {page}",
+    "manual_lead": "Alles zur Wartung steht in der Anleitung des Herstellers:",
+    "manual_link": "Anleitung öffnen",
+    "disclaimer": "GearUp ist unabhängig und verkauft selbst nichts. Jedes Teil stammt aus einer Quelle des Herstellers; was noch nicht verifiziert ist, steht dabei."
   }
 }

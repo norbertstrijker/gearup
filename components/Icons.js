@@ -167,8 +167,23 @@ const PATHS = {
   ),
 }
 
+// Databasesleutels (enkelvoud) en nieuwe producttypes -> bestaand icoon.
+const ALIASES = {
+  grasmaaier: 'grasmaaiers', zitmaaier: 'grasmaaiers', robotmaaier: 'grasmaaiers',
+  verticuteermachine: 'grasmaaiers', kettingzaag: 'kettingzagen', bosmaaier: 'bosmaaiers',
+  grastrimmer: 'bosmaaiers', heggenschaar: 'heggenscharen', bladblazer: 'bladblazers',
+  hakselaar: 'leaf', hogedrukreiniger: 'bolt',
+  maaikop: 'maaidraad', spoelkap: 'maaidraad', mesbalk: 'maaimes', tegenmes: 'maaimes',
+  kettingwiel: 'ketting', startkoord: 'plug', trekstarter: 'plug', carburateur: 'brandstof',
+  brandstofleiding: 'brandstof', primer: 'brandstof', 'v-snaar': 'target',
+}
+
+function resolve(name) {
+  return PATHS[name] || PATHS[ALIASES[name]] || null
+}
+
 export default function Icon({ name, className = '', strokeWidth = 1.8, viewBox = '0 0 24 24', ...rest }) {
-  const path = PATHS[name] || PATHS.search
+  const path = resolve(name) || PATHS.search
   return (
     <svg
       viewBox={viewBox}
@@ -187,5 +202,5 @@ export default function Icon({ name, className = '', strokeWidth = 1.8, viewBox 
 }
 
 export function hasIcon(name) {
-  return Boolean(PATHS[name])
+  return Boolean(resolve(name))
 }

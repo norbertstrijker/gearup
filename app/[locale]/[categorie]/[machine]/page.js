@@ -1,66 +1,38 @@
-import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { notFound, redirect } from 'next/navigation'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { supabaseServer } from '@/lib/supabase-server'
-import { categoryFromSlug, categoryName, categoryProducttypes } from '@/lib/categories'
-import { fuelInfo, uitlegKey, fetchUitleg } from '@/lib/advice'
+import { categoryFromSlug, categoryName, machineHref } from '@/lib/categories'
 import { isValidUrl } from '@/lib/links'
-import OptionCard from '@/components/OptionCard'
-import GearAccordion from '@/components/GearAccordion'
+import { groupParts, partNumber, pageForLocale, fuelFacts } from '@/lib/machine'
 import Container from '@/components/Container'
 import Icon from '@/components/Icons'
 
-const TIERS = ['basis', 'beter', 'best']
+function title(machine) {
+  const model = machine.uitvoering && machine.uitvoering !== machine.modelnummer ? machine.uitvoering : machine.modelnummer
+  return `${machine.merk} ${model}`
+}
 
 export async function generateMetadata({ params }) {
   const { machine: machineSlug } = await params
   const { data: machine } = await supabaseServer
     .from('gearup_machines')
-    .select('merk, modelnummer')
+    .select('merk, modelnummer, uitvoering')
     .eq('slug', machineSlug)
-    .single()
+    .maybeSingle()
   if (!machine) return { title: 'Not Found' }
   return {
-    title: `${machine.merk} ${machine.modelnummer} — GearUp`,
-    description: `Compatibele onderdelen voor ${machine.merk} ${machine.modelnummer}`,
+    title: `${title(machine)} — GearUp`,
+    description: `Onderdelen die passen op de ${title(machine)}, met bron.`,
   }
 }
 
-function priceLabel(value) {
-  if (value == null) return null
-  return '€' + Number(value).toFixed(2).replace('.', ',')
-}
-
-function AdRail({ side }) {
-  return (
-    <aside
-      className={`${side === 'left' ? 'hidden 2xl:flex' : 'hidden xl:flex'} sticky top-5 flex-col gap-[18px] w-[300px]`}
-    >
-      {['rect', 'half'].map((kind) => (
-        <div
-          key={kind}
-          className={`bg-[rgba(31,34,41,0.5)] border border-dashed border-steel-2 rounded-xl flex items-center justify-center text-mut-d text-center ${
-            kind === 'rect' ? 'h-[250px]' : 'h-[600px]'
-          }`}
-        >
-          <div>
-            <div className="text-[10px] tracking-[0.14em] uppercase text-mut-d mb-2">Advertentie</div>
-            <div className="text-[12.5px] text-mut">{kind === 'rect' ? '300 × 250' : '300 × 600'}</div>
-          </div>
-        </div>
-      ))}
-    </aside>
-  )
-}
-
-export default async function ResultPage({ params, searchParams }) {
+export default async function MachinePage({ params, searchParams }) {
   const { locale, categorie: catSlug, machine: machineSlug } = await params
   const { onderdeel: onderdeelParam } = await searchParams
   setRequestLocale(locale)
-  const t = await getTranslations('result')
+  const t = await getTranslations('machine')
   const tp = await getTranslations('producttypes')
-  const ts = await getTranslations('spec')
-  const tf = await getTranslations('fuel')
-  const tcommon = await getTranslations('common')
 
   const categoryKey = categoryFromSlug(catSlug, locale)
   if (!categoryKey) notFound()
@@ -69,217 +41,241 @@ export default async function ResultPage({ params, searchParams }) {
     .from('gearup_machines')
     .select('*')
     .eq('slug', machineSlug)
-    .single()
+    .maybeSingle()
   if (!machine) notFound()
 
-  // Producten: machine-specifiek eerst, dan generieke fallback
-  const { data: specificProducts } = await supabaseServer
-    .from('gearup_producten')
-    .select('*')
-    .eq('machine_id', machine.id)
-    .eq('markt', locale)
-  const { data: genericProducts } = await supabaseServer
-    .from('gearup_producten')
-    .select('*')
-    .is('machine_id', null)
-    .eq('categorie', machine.categorie)
-    .eq('motortype', machine.motortype)
-    .eq('markt', locale)
-
-  const allProducts = [...(specificProducts || []), ...(genericProducts || [])]
-  const seen = new Set()
-  const deduped = allProducts.filter((p) => {
-    const key = `${p.producttype}-${p.kwaliteit}`
-    if (seen.has(key)) return false
-    seen.add(key)
-    return true
-  })
-
-  const relevantTypes = categoryProducttypes(categoryKey)
-  const grouped = {}
-  for (const type of relevantTypes) {
-    const byTier = {}
-    for (const tier of TIERS) {
-      byTier[tier] = deduped.find((p) => p.producttype === type && p.kwaliteit === tier) || null
-    }
-    grouped[type] = byTier
+  // Verkeerde categorie in de URL: doorsturen naar de juiste in plaats van een foutpagina.
+  if (machine.categorie !== categoryKey) {
+    const href = machineHref(machine, locale)
+    if (!href) notFound()
+    redirect(href)
   }
 
-  const uitlegMap = await fetchUitleg(locale)
-  const fuel = fuelInfo(machine)
+  const [{ data: koppelingen }, { data: uitvoeringen }] = await Promise.all([
+    supabaseServer
+      .from('gearup_koppelingen')
+      .select(
+        'id, geldt_voor, aantal, status, bron_url, bron_soort, vervang_pagina, onderdeel:gearup_onderdelen(id, producttype, naam, maker, fabrieksnummer, universeel_type, specificatie, soort)'
+      )
+      .eq('machine_id', machine.id),
+    supabaseServer
+      .from('gearup_machines')
+      .select('id, slug, categorie, merk, modelnummer, uitvoering, typenummer')
+      .eq('merk', machine.merk)
+      .eq('modelnummer', machine.modelnummer)
+      .neq('id', machine.id),
+  ])
 
-  function specCellsFor(type) {
-    if (type !== 'brandstof' || !fuel.applies) return null
-    return [
-      { l: ts('motortype'), v: machine.motortype, go: false },
-      { l: ts('brandstof'), v: tf(fuel.brandstofKey), go: false },
-      { l: ts('mengverhouding'), v: fuel.meng || ts('none'), go: false },
-      {
-        l: ts('e10'),
-        v: fuel.e10 === true ? tcommon('yes') : fuel.e10 === false ? tcommon('no') : '—',
-        go: fuel.e10 === true,
-      },
-    ]
-  }
-
-  function buildItem(type) {
-    const byTier = grouped[type]
-    const available = TIERS.map((tier) => byTier[tier]).filter(Boolean)
-    const minPrice = available.reduce(
-      (min, p) => (p.prijs_indicatie != null && (min == null || p.prijs_indicatie < min) ? p.prijs_indicatie : min),
-      null
-    )
-    const u = uitlegMap[uitlegKey(type, machine)] || {}
-    const from =
-      available.length > 0
-        ? `${t('from')} ${priceLabel(minPrice)} · ${t('options_count', { count: available.length })}`
-        : t('coming_soon')
-    return {
-      producttype: type,
-      titel: u.titel || null,
-      fallbackName: t('fits_model', { model: machine.modelnummer }),
-      keuze: u.keuze || null,
-      plaatsing: u.plaatsing || null,
-      waarschuwing: u.waarschuwing || null,
-      specCells: specCellsFor(type),
-      manualNote: t('manual_note'),
-      from,
-      optionsByTier: byTier,
-    }
-  }
-
-  // Onderdeel-bewust: gezocht onderdeel groot; anders model-overzicht (alles gelijkwaardig)
-  const heroType =
-    onderdeelParam && relevantTypes.includes(onderdeelParam) ? onderdeelParam : null
-  const accordionTypes = heroType ? relevantTypes.filter((x) => x !== heroType) : relevantTypes
-  const heroItem = heroType ? buildItem(heroType) : null
-  const accordionItems = accordionTypes.map(buildItem)
-
+  const groups = groupParts(koppelingen || [], onderdeelParam)
+  const fuel = fuelFacts(machine)
   const manualUrl = isValidUrl(machine.handleiding_url) ? machine.handleiding_url : null
+  const notVerifiedCount = (koppelingen || []).filter((k) => k.status !== 'geverifieerd').length
 
   return (
-    <div className="w-full pb-12">
-      {/* context */}
-      <Container className="pt-1">
-        <div className="flex items-center gap-[10px] flex-wrap text-[13.5px] text-mut mb-[22px]">
-          <span className="text-mut-d">{t('result_for')}</span>
-          {[categoryName(categoryKey, locale), machine.merk, machine.modelnummer].map((label, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center gap-[7px] bg-ink-2 border border-steel text-paper px-3 py-[6px] rounded-lg font-medium"
-            >
-              <span className="w-[6px] h-[6px] rounded-full bg-mut" />
-              {label}
-            </span>
-          ))}
-        </div>
-      </Container>
-
-      {/* 3-koloms grid: advertentie | content | advertentie */}
-      <div className="grid gap-7 justify-center items-start grid-cols-1 xl:grid-cols-[768px_300px] 2xl:grid-cols-[300px_768px_300px] px-[18px]">
-        <AdRail side="left" />
-
-        <div className="w-full max-w-[768px] mx-auto">
-          {/* HERO — gezocht onderdeel groot */}
-          {heroItem && (
-            <section className="bg-paper text-ink rounded-card p-[26px] relative overflow-hidden border border-line-on-light">
-              <span className="absolute left-0 top-0 bottom-0 w-[6px] bg-signal" />
-              <span className="inline-flex items-center gap-[7px] font-headline font-bold text-[11.5px] tracking-[0.14em] uppercase text-signal-d bg-white border border-[#f0c9b8] px-[10px] py-[5px] rounded-[7px] mb-[14px]">
-                <Icon name={heroItem.producttype} className="w-[13px] h-[13px]" strokeWidth={2.2} />
-                {tp(heroItem.producttype)}
-              </span>
-              <h1 className="font-headline font-extrabold text-2xl leading-tight tracking-[-0.02em] text-ink mb-3">
-                {heroItem.titel ||
-                  t('hero_fallback', { type: tp(heroItem.producttype), merk: machine.merk, model: machine.modelnummer })}
-              </h1>
-
-              {heroItem.keuze && <p className="text-[16px] leading-relaxed text-[#36383d] mb-5">{heroItem.keuze}</p>}
-
-              {heroItem.specCells && (
-                <div className="flex flex-wrap border border-line-on-light rounded-[11px] overflow-hidden bg-white mb-5">
-                  {heroItem.specCells.map((c, i) => (
-                    <div key={i} className="flex-1 min-w-[120px] px-4 py-[13px] border-r border-line-on-light last:border-r-0">
-                      <div className="text-[11px] tracking-[0.05em] uppercase text-mut-d font-semibold mb-[3px]">{c.l}</div>
-                      <div className={`font-headline font-bold text-[17px] ${c.go ? 'text-ok' : 'text-ink'}`}>{c.v}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {heroItem.plaatsing && (
-                <div className="bg-[#faf8f3] border border-line-on-light rounded-[11px] px-4 py-[13px] mb-5">
-                  <div className="font-headline font-bold text-[11px] tracking-[0.06em] uppercase text-mut-d mb-[6px]">
-                    {t('placement_title')}
-                  </div>
-                  <p className="text-[14px] leading-relaxed text-[#36383d]">{heroItem.plaatsing}</p>
-                  <p className="text-[12.5px] text-mut-d mt-2 italic">{heroItem.manualNote}</p>
-                </div>
-              )}
-
-              {heroItem.waarschuwing && (
-                <div className="flex items-start gap-[9px] text-[13.5px] text-[#8a3d12] bg-[#fbeee4] border border-[#f3d4c2] px-[13px] py-[11px] rounded-[9px] leading-snug mb-6">
-                  <span className="flex-none mt-[1px]"><Icon name="warning" className="w-[17px] h-[17px]" strokeWidth={2.2} /></span>
-                  <span>{heroItem.waarschuwing}</span>
-                </div>
-              )}
-
-              <div className="font-headline font-bold text-[13px] tracking-[0.04em] uppercase text-mut-d mb-3">
-                {t('options_lead')}
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-[11px]">
-                {TIERS.map((tier) => (
-                  <OptionCard key={tier} product={heroItem.optionsByTier[tier]} tier={tier} />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Titel boven de onderdelenlijst */}
-          {accordionItems.length > 0 && (
+    <Container className="pb-14">
+      {/* KOP */}
+      <section className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6 items-start mt-1 mb-8">
+        <div className="relative h-[170px] rounded-card bg-gradient-to-br from-paper to-paper-2 flex items-center justify-center text-[#9a958a] overflow-hidden">
+          {machine.afbeelding_url ? (
+            <img src={machine.afbeelding_url} alt={title(machine)} className="h-full w-full object-contain" />
+          ) : (
             <>
-              <div className={`${heroItem ? 'mt-[38px]' : 'mt-1'} mb-[6px] mx-[2px]`}>
-                <h2 className="font-headline font-extrabold text-[21px] tracking-[-0.02em] text-paper leading-tight">
-                  {heroItem
-                    ? t('more_gear_title', { model: machine.modelnummer })
-                    : t('overview_title', { model: machine.modelnummer })}
-                </h2>
-              </div>
-              <p className="text-sm text-mut mx-[2px] mb-[18px] leading-relaxed">
-                {heroItem ? t('more_gear_sub') : t('overview_sub')}
-              </p>
-              <GearAccordion items={accordionItems} />
+              <Icon name={machine.categorie} className="w-20 h-20" strokeWidth={1.4} />
+              <span className="absolute bottom-2 right-3 text-[10px] tracking-[0.08em] uppercase text-[#b0a99c] font-semibold">
+                {t('photo_soon')}
+              </span>
             </>
           )}
-
-          {/* HANDLEIDING — alleen bij geldige URL */}
-          {manualUrl && (
-            <section className="mt-12">
-              <div className="bg-anthracite rounded-card p-8 relative overflow-hidden">
-                <div className="relative z-10 flex flex-col gap-2">
-                  <h3 className="font-headline font-bold text-2xl text-white uppercase leading-none mb-3">{t('manual_title')}</h3>
-                  <p className="text-mut mb-5 max-w-xs">{t('manual_description')}</p>
-                  <a
-                    href={manualUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-signal hover:brightness-110 text-white px-7 py-3 rounded-md font-headline font-bold tracking-widest w-fit transition"
-                  >
-                    {t('manual_button')}
-                  </a>
-                </div>
-              </div>
-            </section>
-          )}
-
-          {/* TRUST */}
-          <div className="mt-8 text-[12px] text-mut-d leading-relaxed border-t border-steel pt-4 flex gap-[9px] items-start">
-            <span className="flex-none mt-[1px] text-mut"><Icon name="shield" className="w-[15px] h-[15px]" strokeWidth={2} /></span>
-            <span>{t('disclaimer')}</span>
-          </div>
         </div>
 
-        <AdRail side="right" />
+        <div>
+          <div className="font-headline font-bold text-[11.5px] tracking-[0.14em] uppercase text-signal mb-2">
+            {categoryName(machine.categorie, locale)}
+          </div>
+          <h1 className="font-headline font-extrabold text-[30px] tracking-[-0.025em] leading-tight mb-3">
+            {title(machine)}
+          </h1>
+
+          <div className="flex flex-wrap gap-2 text-[13px] mb-4">
+            {machine.typenummer && <Chip label={t('typenummer')} value={machine.typenummer} />}
+            {machine.motortype && <Chip label={t('motortype')} value={machine.motortype} />}
+            {fuel.meng && <Chip label={t('mengverhouding')} value={fuel.meng} />}
+            {fuel.e10 && <Chip label={t('e10')} value={t(`e10_${fuel.e10}`)} />}
+            {machine.olie_spec && <Chip label={t('motorolie')} value={machine.olie_spec} />}
+          </div>
+
+          {fuel.fourMix && (
+            <Notice tone="warn" icon="warning">
+              <strong>{t('letop')}</strong> {t('fourmix')}
+            </Notice>
+          )}
+
+          {uitvoeringen && uitvoeringen.length > 0 && (
+            <div className="mt-4 bg-ink-2 border border-steel rounded-[11px] px-4 py-3">
+              <div className="text-[13px] text-paper font-semibold mb-1">
+                {t('other_versions', { model: machine.modelnummer })}
+              </div>
+              <p className="text-[12.5px] text-mut mb-2">{t('check_plate')}</p>
+              <ul className="flex flex-wrap gap-2">
+                {uitvoeringen.map((u) => {
+                  const href = machineHref(u, locale)
+                  if (!href) return null
+                  return (
+                    <li key={u.id}>
+                      <Link
+                        href={href}
+                        className="inline-flex items-center gap-2 text-[13px] border border-steel-2 rounded-lg px-3 py-[6px] hover:border-signal hover:text-signal"
+                      >
+                        {u.uitvoering || u.modelnummer}
+                        {u.typenummer && <span className="text-mut-d">· {t('typenummer')} {u.typenummer}</span>}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ONDERDELEN */}
+      <h2 className="font-headline font-extrabold text-[21px] tracking-[-0.02em] mb-1">
+        {t('parts_title', { model: title(machine) })}
+      </h2>
+      <p className="text-sm text-mut mb-5 leading-relaxed">
+        {groups.length > 0 ? t('parts_sub') : t('parts_none')}
+        {notVerifiedCount > 0 && <> {t('parts_not_verified_count', { count: notVerifiedCount })}</>}
+      </p>
+
+      <div className="flex flex-col gap-[10px]">
+        {groups.map((g) => (
+          <details
+            key={g.producttype}
+            open={g.highlight || groups.length <= 3}
+            className="group rounded-card border border-steel-2 bg-[#272b34] open:border-signal open:bg-anthracite overflow-hidden"
+          >
+            <summary className="cursor-pointer list-none flex items-center gap-[15px] px-4 py-[14px]">
+              <span className="w-[46px] h-[46px] flex-none rounded-[10px] bg-ink border border-steel-2 flex items-center justify-center text-signal">
+                <Icon name={g.producttype} className="w-6 h-6" />
+              </span>
+              <span className="flex-1 min-w-0">
+                <span className="block font-headline font-bold text-[11px] tracking-[0.09em] uppercase text-signal mb-[2px]">
+                  {tp(g.producttype)}
+                </span>
+                <span className="block text-[14.5px] font-semibold text-paper leading-tight">
+                  {g.items.length === 1 ? g.items[0].onderdeel.naam : t('options', { count: g.items.length })}
+                </span>
+              </span>
+              <span className="flex-none text-mut group-open:rotate-180 group-open:text-signal transition-transform">
+                <Icon name="chevronDown" className="w-5 h-5" strokeWidth={2.2} />
+              </span>
+            </summary>
+
+            <ul className="border-t border-steel-2 bg-[#1d2026] divide-y divide-steel-2">
+              {g.items.map((k) => (
+                <PartRow key={k.id} k={k} t={t} locale={locale} manualUrl={manualUrl} showName={g.items.length > 1} />
+              ))}
+            </ul>
+          </details>
+        ))}
       </div>
+
+      {manualUrl && (
+        <p className="mt-8 text-[13.5px] text-mut">
+          {t('manual_lead')}{' '}
+          <a href={manualUrl} target="_blank" rel="noopener noreferrer" className="text-signal underline">
+            {t('manual_link')}
+          </a>
+        </p>
+      )}
+
+      <div className="mt-8 text-[12px] text-mut-d leading-relaxed border-t border-steel pt-4 flex gap-[9px] items-start">
+        <span className="flex-none mt-[1px] text-mut">
+          <Icon name="shield" className="w-[15px] h-[15px]" strokeWidth={2} />
+        </span>
+        <span>{t('disclaimer')}</span>
+      </div>
+    </Container>
+  )
+}
+
+function Chip({ label, value }) {
+  return (
+    <span className="inline-flex items-center gap-[6px] bg-ink-2 border border-steel px-3 py-[5px] rounded-lg">
+      <span className="text-mut-d">{label}</span>
+      <span className="text-paper font-semibold">{value}</span>
+    </span>
+  )
+}
+
+function Notice({ tone, icon, children }) {
+  const cls =
+    tone === 'warn'
+      ? 'text-[#f0b692] bg-[#2a1c12] border-[#5a3a23]'
+      : 'text-mut bg-ink-2 border-steel-2'
+  return (
+    <div className={`flex items-start gap-[8px] text-[13.5px] border px-3 py-[10px] rounded-[9px] leading-snug ${cls}`}>
+      <span className="flex-none mt-[1px]">
+        <Icon name={icon} className="w-4 h-4" strokeWidth={2.2} />
+      </span>
+      <span>{children}</span>
     </div>
+  )
+}
+
+function PartRow({ k, t, locale, manualUrl, showName }) {
+  const o = k.onderdeel
+  const nr = partNumber(o)
+  const page = pageForLocale(k.vervang_pagina, locale)
+  const procUrl = page ? `${(isValidUrl(k.bron_url) && k.bron_url) || manualUrl || ''}#page=${page.page}` : null
+  const showSpec = o.specificatie && o.specificatie.trim() && !o.naam.includes(o.specificatie.trim())
+
+  return (
+    <li className="px-4 py-[13px]">
+      {showName && <div className="text-[14.5px] text-paper font-semibold leading-snug mb-1">{o.naam}</div>}
+
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[13px]">
+        {nr ? (
+          <span>
+            <span className="text-mut-d">{t(nr.kind)}</span> <span className="text-paper font-semibold">{nr.value}</span>
+          </span>
+        ) : (
+          <span className="text-mut-d">{t('no_number')}</span>
+        )}
+        {k.aantal > 1 && (
+          <span>
+            <span className="text-mut-d">{t('aantal')}</span> <span className="text-paper">{k.aantal}</span>
+          </span>
+        )}
+      </div>
+
+      {showSpec && <div className="mt-1 text-[13px] text-mut">{o.specificatie}</div>}
+      {k.geldt_voor && (
+        <div className="mt-1 text-[13px] text-mut">
+          <span className="text-mut-d">{t('geldt_voor')}</span> {k.geldt_voor}
+        </div>
+      )}
+
+      {k.status !== 'geverifieerd' && (
+        <div className="mt-2">
+          <Notice tone="warn" icon="warning">
+            {t('not_verified')}
+          </Notice>
+        </div>
+      )}
+
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[12.5px]">
+        {isValidUrl(k.bron_url) && (
+          <a href={k.bron_url} target="_blank" rel="noopener noreferrer" className="text-mut underline hover:text-signal">
+            {t('bron')}
+          </a>
+        )}
+        {procUrl && procUrl.startsWith('http') && (
+          <a href={procUrl} target="_blank" rel="noopener noreferrer" className="text-mut underline hover:text-signal">
+            {t('procedure', { page: page.page })}
+          </a>
+        )}
+      </div>
+    </li>
   )
 }

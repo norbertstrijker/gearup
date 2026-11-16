@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabaseServer } from '@/lib/supabase-server'
-import { categorySlug } from '@/lib/categories'
+import { machineHref } from '@/lib/categories'
 import { parseQuery } from '@/lib/search'
 
 async function getMerken() {
@@ -9,10 +9,29 @@ async function getMerken() {
   return [...new Set(data.map((r) => r.merk))]
 }
 
-function suggestUrl(base, locale, { merk, categorie, onderdeel, q }) {
+// Andere schrijfwijzen van een merk (gearup_merk_aliassen). Bestaat de tabel niet
+// of is hij leeg, dan zoekt de site gewoon zonder aliassen.
+async function getAliassen() {
+  const { data, error } = await supabaseServer.from('gearup_merk_aliassen').select('alias, merk')
+  if (error || !data) return {}
+  const map = {}
+  for (const r of data) map[r.alias] = r.merk
+  return map
+}
+
+function machineUrl(m, locale, onderdeel, base) {
+  const path = machineHref(m, locale)
+  if (!path) return null
+  const url = new URL(path, base)
+  if (onderdeel) url.searchParams.set('onderdeel', onderdeel)
+  return url
+}
+
+function suggestUrl(base, locale, { merk, categorie, onderdeel, q, model }) {
   const params = new URLSearchParams()
   if (categorie) params.set('cat', categorie)
   if (merk) params.set('merk', merk)
+  if (model) params.set('model', model)
   if (onderdeel) params.set('onderdeel', onderdeel)
   if (q) params.set('q', q)
   return new URL(`/${locale}/suggesties?${params.toString()}`, base)
@@ -27,8 +46,8 @@ export async function GET(request) {
     return NextResponse.redirect(new URL(`/${locale}`, request.url))
   }
 
-  const merken = await getMerken()
-  const parsed = parseQuery(q, merken)
+  const [merken, aliassen] = await Promise.all([getMerken(), getAliassen()])
+  const parsed = parseQuery(q, merken, aliassen)
   const merk = parsed.merken[0] || null
   const categorie = parsed.categorieen[0] || null
   const onderdeel = parsed.onderdelen[0] || null
@@ -48,15 +67,14 @@ export async function GET(request) {
     if (matches && matches.length === 1) {
       // Zeker één model → direct naar resultaat (onderdeel meedragen)
       gevonden = true
-      const m = matches[0]
-      const slug = categorySlug(m.categorie, locale)
-      const url = new URL(`/${locale}/${slug}/${m.slug}`, request.url)
-      if (onderdeel) url.searchParams.set('onderdeel', onderdeel)
-      redirectUrl = url
+      redirectUrl =
+        machineUrl(matches[0], locale, onderdeel, request.url) ||
+        suggestUrl(request.url, locale, { merk, categorie, onderdeel, q })
     } else if (matches && matches.length > 1) {
       // Meerdere mogelijke matches → keuzelijst i.p.v. gokken
+      // Meerdere uitvoeringen of modellen: keuzelijst met alleen deze treffers
       gevonden = true
-      redirectUrl = suggestUrl(request.url, locale, { merk, categorie, onderdeel, q })
+      redirectUrl = suggestUrl(request.url, locale, { merk, categorie, onderdeel, q, model: parsed.modelTokens.join(' ') })
     }
     // 0 matches → val hieronder terug op merk/categorie of vrije zoekopdracht
   }
@@ -83,11 +101,8 @@ export async function GET(request) {
 
     if (free && free.length === 1) {
       gevonden = true
-      const m = free[0]
-      const slug = categorySlug(m.categorie, locale)
-      const url = new URL(`/${locale}/${slug}/${m.slug}`, request.url)
-      if (onderdeel) url.searchParams.set('onderdeel', onderdeel)
-      redirectUrl = url
+      redirectUrl =
+        machineUrl(free[0], locale, onderdeel, request.url) || suggestUrl(request.url, locale, { onderdeel, q })
     } else {
       gevonden = Boolean(free && free.length > 0)
       redirectUrl = suggestUrl(request.url, locale, { onderdeel, q })

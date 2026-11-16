@@ -21,7 +21,7 @@ async function searchMachines(q) {
 export default async function SuggestiesPage({ params, searchParams }) {
   const { locale } = await params
   setRequestLocale(locale)
-  const { q, cat, merk, onderdeel } = await searchParams
+  const { q, cat, merk, onderdeel, model } = await searchParams
   const t = await getTranslations('suggestions')
   const te = await getTranslations('empty')
   const tp = await getTranslations('producttypes')
@@ -34,7 +34,9 @@ export default async function SuggestiesPage({ params, searchParams }) {
     let qy = supabaseServer.from('gearup_machines').select('*')
     if (merk) qy = qy.eq('merk', merk)
     if (validCat) qy = qy.eq('categorie', validCat)
-    const { data } = await qy.order('merk').limit(100)
+    // Modelnummer uit de zoekopdracht (bv. "ms 170"): alleen die uitvoeringen tonen
+    for (const tok of (model || '').split(/\s+/).filter(Boolean)) qy = qy.ilike('modelnummer', `%${tok}%`)
+    const { data } = await qy.order('merk').order('modelnummer').limit(100)
     machines = data || []
   } else if (q) {
     machines = await searchMachines(q)
