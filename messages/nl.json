@@ -181,8 +181,8 @@
     "types_count": "{count, plural, one {# soort} other {# soorten}}",
     "all_versions": "Alle uitvoeringen",
     "choices_lead": "Er zijn meerdere soorten. Elke soort heeft eigen koopopties.",
-    "maten_letop": "op dit model passen zwaarden van {maten}. Elke lengte heeft een eigen ketting. Kies hieronder de lengte van jouw zwaard.",
-    "maten_letop_kort": "op dit model passen meerdere maten. Kies hieronder de maat van jouw zwaard.",
+    "maten_letop": "op dit model passen zwaarden van {maten}. De ketting hoort bij je zwaard, niet bij de zaag. Koop altijd op drie dingen: steek, groefbreedte en aantal aandrijfschakels. Alleen het aantal schakels is niet genoeg. Kies hieronder de lengte van jouw zwaard.",
+    "maten_letop_kort": "de ketting hoort bij je zwaard, niet bij de zaag. Koop altijd op drie dingen: steek, groefbreedte en aantal aandrijfschakels. Alleen het aantal schakels is niet genoeg.",
     "maat_kiezen": "Lengte van je zwaard",
     "diktes_letop": "Er zijn ook twee groefbreedtes ({diktes}); kijk welke jouw zwaard heeft."
   },

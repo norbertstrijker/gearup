@@ -181,10 +181,10 @@
     "types_count": "{count, plural, one {# type} other {# types}}",
     "all_versions": "All versions",
     "choices_lead": "There are several types. Each type has its own buying options.",
-    "maten_letop": "this model takes bars of {maten}. Each length needs its own chain. Pick the length of your bar below.",
-    "maten_letop_kort": "this model takes several sizes. Pick the size of your bar below.",
+    "maten_letop": "this model takes bars of {maten}. The chain belongs to the bar, not to the saw. Always buy on three things: pitch, gauge and number of drive links. The number of drive links alone is not enough. Pick the length of your bar below.",
+    "maten_letop_kort": "the chain belongs to the bar, not to the saw. Always buy on three things: pitch, gauge and number of drive links. The number of drive links alone is not enough.",
     "maat_kiezen": "Length of your bar",
-    "diktes_letop": "There are also two groove widths ({diktes}); check which one your bar has."
+    "diktes_letop": "There are also two gauges ({diktes}); check which one your bar has."
   },
   "housead": {
     "tip": "tip",

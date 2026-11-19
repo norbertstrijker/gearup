@@ -33,16 +33,18 @@ export default function PartChoices({ items, locale, manualUrl, options = {}, li
 
   return (
     <div className="flex flex-col gap-3">
-      {groups.length > 1 && (
-        <>
-          <div className={`flex items-start gap-[8px] text-[13.5px] border px-3 py-[10px] rounded-[9px] leading-snug ${c.warn}`}>
+      {(groups.length > 1 || items[0]?.onderdeel?.producttype === 'ketting') && (
+        <div className={`flex items-start gap-[8px] text-[13.5px] border px-3 py-[10px] rounded-[9px] leading-snug ${c.warn}`}>
             <span className="flex-none mt-[1px]"><Icon name="warning" className="w-4 h-4" strokeWidth={2.2} /></span>
             <span>
               <strong>{t('letop')}</strong>{' '}
-              {lengtes.length > 1 ? t('maten_letop', { maten: matenTekst }) : t('maten_letop_kort')}
+              {lengtes.length > 1 && groups.length > 1 ? t('maten_letop', { maten: matenTekst }) : t('maten_letop_kort')}
               {diktes.length > 1 && ' ' + t('diktes_letop', { diktes: lijst(diktes.map((x) => x.replace(' mm', ''))) + ' mm' })}
             </span>
-          </div>
+        </div>
+      )}
+      {groups.length > 1 && (
+        <>
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={t('maat_kiezen')}>
             {groups.map((x, i) => (
               <button

@@ -181,8 +181,8 @@
     "types_count": "{count, plural, one {# Sorte} other {# Sorten}}",
     "all_versions": "Alle Ausführungen",
     "choices_lead": "Es gibt mehrere Sorten. Jede Sorte hat eigene Kaufoptionen.",
-    "maten_letop": "auf dieses Modell passen Schienen von {maten}. Jede Länge hat eine eigene Kette. Wähle unten die Länge deiner Schiene.",
-    "maten_letop_kort": "auf dieses Modell passen mehrere Größen. Wähle unten die Größe deiner Schiene.",
+    "maten_letop": "auf dieses Modell passen Schienen von {maten}. Die Kette gehört zur Schiene, nicht zur Säge. Kaufe immer nach drei Angaben: Teilung, Nutbreite und Anzahl Treibglieder. Nur die Anzahl Treibglieder reicht nicht. Wähle unten die Länge deiner Schiene.",
+    "maten_letop_kort": "die Kette gehört zur Schiene, nicht zur Säge. Kaufe immer nach drei Angaben: Teilung, Nutbreite und Anzahl Treibglieder. Nur die Anzahl Treibglieder reicht nicht.",
     "maat_kiezen": "Länge deiner Schiene",
     "diktes_letop": "Es gibt auch zwei Nutbreiten ({diktes}); prüfe, welche deine Schiene hat."
   },
