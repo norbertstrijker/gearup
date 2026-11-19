@@ -142,7 +142,6 @@ export default async function ResultPage({ params, searchParams }) {
           items={byType[type]}
           locale={locale}
           manualUrl={manualUrlFor()}
-          optionsFor={() => ({ basis: null, beter: null, best: null })}
           light={light}
         />
       ) : (

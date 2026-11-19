@@ -180,7 +180,11 @@
     "standaard": "Fitted as standard on this machine",
     "types_count": "{count, plural, one {# type} other {# types}}",
     "all_versions": "All versions",
-    "choices_lead": "There are several types. Each type has its own buying options."
+    "choices_lead": "There are several types. Each type has its own buying options.",
+    "maten_letop": "this model takes bars of {maten}. Each length needs its own chain. Pick the length of your bar below.",
+    "maten_letop_kort": "this model takes several sizes. Pick the size of your bar below.",
+    "maat_kiezen": "Length of your bar",
+    "diktes_letop": "There are also two groove widths ({diktes}); check which one your bar has."
   },
   "housead": {
     "tip": "tip",
@@ -191,5 +195,14 @@
     "advertise_title": "Advertise on GearUp?",
     "advertise_text": "Visitors see your ad here at the moment they are looking for a part for their own machine.",
     "advertise_soon": "Coming soon"
+  },
+  "soorten": {
+    "micro": "Smooth cutting, easy to sharpen",
+    "micro3": "Low kickback and vibration",
+    "super": "Fast cutting",
+    "super3": "Fast cutting, low kickback",
+    "hexa": "Stays sharp longer",
+    "hexa3": "Stays sharp longer, low kickback",
+    "duro3": "Heavy work, stays sharp up to ten times longer"
   }
 }

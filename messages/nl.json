@@ -180,7 +180,11 @@
     "standaard": "Zit standaard op deze machine",
     "types_count": "{count, plural, one {# soort} other {# soorten}}",
     "all_versions": "Alle uitvoeringen",
-    "choices_lead": "Er zijn meerdere soorten. Elke soort heeft eigen koopopties."
+    "choices_lead": "Er zijn meerdere soorten. Elke soort heeft eigen koopopties.",
+    "maten_letop": "op dit model passen zwaarden van {maten}. Elke lengte heeft een eigen ketting. Kies hieronder de lengte van jouw zwaard.",
+    "maten_letop_kort": "op dit model passen meerdere maten. Kies hieronder de maat van jouw zwaard.",
+    "maat_kiezen": "Lengte van je zwaard",
+    "diktes_letop": "Er zijn ook twee groefbreedtes ({diktes}); kijk welke jouw zwaard heeft."
   },
   "housead": {
     "tip": "tip",
@@ -191,5 +195,14 @@
     "advertise_title": "Adverteren op GearUp?",
     "advertise_text": "Hier zien bezoekers je advertentie op het moment dat ze een onderdeel zoeken voor hun eigen machine.",
     "advertise_soon": "Binnenkort mogelijk"
+  },
+  "soorten": {
+    "micro": "Zacht snijdend, makkelijk te slijpen",
+    "micro3": "Weinig terugslag en trilling",
+    "super": "Snel zagen",
+    "super3": "Snel zagen, weinig terugslag",
+    "hexa": "Langer scherp",
+    "hexa3": "Langer scherp, weinig terugslag",
+    "duro3": "Zwaar werk, tot tien keer langer scherp"
   }
 }
