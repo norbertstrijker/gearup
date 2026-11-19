@@ -47,7 +47,9 @@ function AccordionItem({ item }) {
           {/* keuze-advies */}
           {item.keuze && <p className="text-[14px] leading-relaxed text-mut mb-4">{item.keuze}</p>}
 
-          {/* feiten uit de bron: welk onderdeel precies, nummer, voorwaarden */}
+          {/* feiten uit de bron: welk onderdeel precies, nummer, voorwaarden; bij meerdere soorten
+              staan die onder elkaar met eigen koopopties */}
+          {item.choices && <p className="text-[13px] text-mut mb-3">{item.choicesLead}</p>}
           {item.facts && <div className="mb-4">{item.facts}</div>}
 
           {/* feitelijke specs (brandstof) */}
@@ -81,14 +83,18 @@ function AccordionItem({ item }) {
             </div>
           )}
 
-          <div className="font-headline font-bold text-[11px] tracking-wide uppercase text-mut mb-[11px]">
-            {t('result.options_label')}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-[9px]">
-            {TIERS.map((tier) => (
-              <OptionCard key={tier} product={item.optionsByTier[tier]} tier={tier} mini />
-            ))}
-          </div>
+          {!item.choices && (
+            <>
+              <div className="font-headline font-bold text-[11px] tracking-wide uppercase text-mut mb-[11px]">
+                {t('result.options_label')}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-[9px]">
+                {TIERS.map((tier) => (
+                  <OptionCard key={tier} product={item.optionsByTier[tier]} tier={tier} mini />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

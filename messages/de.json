@@ -176,7 +176,11 @@
     "procedure": "Wartung und Austausch: Anleitung Seite {page}",
     "manual_lead": "Alles zur Wartung steht in der Anleitung des Herstellers:",
     "manual_link": "Anleitung öffnen",
-    "disclaimer": "GearUp ist unabhängig und verkauft selbst nichts. Jedes Teil stammt aus einer Quelle des Herstellers; was noch nicht verifiziert ist, steht dabei."
+    "disclaimer": "GearUp ist unabhängig und verkauft selbst nichts. Jedes Teil stammt aus einer Quelle des Herstellers; was noch nicht verifiziert ist, steht dabei.",
+    "standaard": "Ab Werk auf dieser Maschine",
+    "types_count": "{count, plural, one {# Sorte} other {# Sorten}}",
+    "all_versions": "Alle Ausführungen",
+    "choices_lead": "Es gibt mehrere Sorten. Jede Sorte hat eigene Kaufoptionen."
   },
   "housead": {
     "tip": "Tipp",

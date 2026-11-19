@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 import Icon from '@/components/Icons'
 import { isValidUrl } from '@/lib/links'
-import { partNumber, pageForLocale } from '@/lib/machine'
+import { procedureDoc, partNumber, pageForLocale } from '@/lib/machine'
 
 // Feiten uit de bron per onderdeel: welk onderdeel precies, het nummer waarmee je het koopt,
 // de voorwaarden en waar het in de handleiding staat. Staat in het uitgeklapte deel.
@@ -18,7 +18,7 @@ export default function PartFacts({ items, locale, manualUrl, light = false }) {
         const o = k.onderdeel
         const nr = partNumber(o)
         const page = pageForLocale(k.vervang_pagina, locale)
-        const docUrl = (isValidUrl(k.bron_url) && k.bron_url) || manualUrl
+        const docUrl = procedureDoc(k, manualUrl, isValidUrl)
         return (
           <li key={k.id} className="px-3 py-[11px] text-[13px] leading-snug">
             {items.length > 1 && <div className={`font-semibold mb-1 ${c.main}`}>{o.naam}</div>}

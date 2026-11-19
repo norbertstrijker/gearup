@@ -5,8 +5,9 @@ import { supabaseServer } from '@/lib/supabase-server'
 import { categoryFromSlug, categoryName, machineHref } from '@/lib/categories'
 import { fuelInfo, uitlegKey, fetchUitleg } from '@/lib/advice'
 import { isValidUrl } from '@/lib/links'
-import { groupParts, fuelFacts } from '@/lib/machine'
+import { groupParts, fuelFacts, hasChoices } from '@/lib/machine'
 import PartFacts from '@/components/PartFacts'
+import PartChoices from '@/components/PartChoices'
 import HouseAd from '@/components/HouseAd'
 import OptionCard from '@/components/OptionCard'
 import GearAccordion from '@/components/GearAccordion'
@@ -54,6 +55,7 @@ export default async function ResultPage({ params, searchParams }) {
   const ts = await getTranslations('spec')
   const tf = await getTranslations('fuel')
   const tcommon = await getTranslations('common')
+  const tm = await getTranslations('machine')
 
   const categoryKey = categoryFromSlug(catSlug, locale)
   if (!categoryKey) notFound()
@@ -76,7 +78,7 @@ export default async function ResultPage({ params, searchParams }) {
     supabaseServer
       .from('gearup_koppelingen')
       .select(
-        'id, geldt_voor, aantal, status, bron_url, bron_soort, vervang_pagina, onderdeel:gearup_onderdelen(id, producttype, naam, maker, fabrieksnummer, universeel_type, specificatie, soort)'
+        'id, geldt_voor, aantal, status, bron_url, bron_soort, vervang_pagina, standaard, onderdeel:gearup_onderdelen(id, producttype, naam, maker, fabrieksnummer, universeel_type, specificatie, soort, kenmerk)'
       )
       .eq('machine_id', machine.id),
     supabaseServer
@@ -132,7 +134,21 @@ export default async function ResultPage({ params, searchParams }) {
       titel: u.titel || null,
       fallbackName:
         byType[type].length === 1 ? byType[type][0].onderdeel.naam : t('fits_model', { model: modelLabel }),
-      facts: <PartFacts items={byType[type]} locale={locale} manualUrl={manualUrlFor()} light={light} />,
+      // Meerdere soorten: onder elkaar, elk met eigen koopopties (besluit 18 nov). Koopopties per
+      // soort komen later uit de kooplinks; tot dan "binnenkort".
+      choices: hasChoices(byType[type]),
+      facts: hasChoices(byType[type]) ? (
+        <PartChoices
+          items={byType[type]}
+          locale={locale}
+          manualUrl={manualUrlFor()}
+          optionsFor={() => ({ basis: null, beter: null, best: null })}
+          light={light}
+        />
+      ) : (
+        <PartFacts items={byType[type]} locale={locale} manualUrl={manualUrlFor()} light={light} />
+      ),
+      choicesLead: tm('choices_lead'),
       keuze: u.keuze || null,
       plaatsing: u.plaatsing || null,
       waarschuwing: u.waarschuwing || null,
@@ -222,16 +238,21 @@ export default async function ResultPage({ params, searchParams }) {
                 </div>
               )}
 
+              {heroItem.choices && <p className="text-[14px] text-[#36383d] mb-3">{heroItem.choicesLead}</p>}
               {heroItem.facts && <div className="mb-5">{heroItem.facts}</div>}
 
-              <div className="font-headline font-bold text-[13px] tracking-[0.04em] uppercase text-mut-d mb-3">
-                {t('options_lead')}
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-[11px]">
-                {TIERS.map((tier) => (
-                  <OptionCard key={tier} product={heroItem.optionsByTier[tier]} tier={tier} />
-                ))}
-              </div>
+              {!heroItem.choices && (
+                <>
+                  <div className="font-headline font-bold text-[13px] tracking-[0.04em] uppercase text-mut-d mb-3">
+                    {t('options_lead')}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-[11px]">
+                    {TIERS.map((tier) => (
+                      <OptionCard key={tier} product={heroItem.optionsByTier[tier]} tier={tier} />
+                    ))}
+                  </div>
+                </>
+              )}
             </section>
           )}
 

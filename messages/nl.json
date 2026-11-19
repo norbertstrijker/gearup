@@ -176,7 +176,11 @@
     "procedure": "Onderhoud en vervangen: handleiding pagina {page}",
     "manual_lead": "Alles over onderhoud staat in de handleiding van de maker:",
     "manual_link": "handleiding openen",
-    "disclaimer": "GearUp is onafhankelijk en verkoopt zelf niets. Elk onderdeel komt uit een bron van de maker; wat nog niet geverifieerd is, staat erbij."
+    "disclaimer": "GearUp is onafhankelijk en verkoopt zelf niets. Elk onderdeel komt uit een bron van de maker; wat nog niet geverifieerd is, staat erbij.",
+    "standaard": "Zit standaard op deze machine",
+    "types_count": "{count, plural, one {# soort} other {# soorten}}",
+    "all_versions": "Alle uitvoeringen",
+    "choices_lead": "Er zijn meerdere soorten. Elke soort heeft eigen koopopties."
   },
   "housead": {
     "tip": "tip",

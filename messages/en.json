@@ -176,7 +176,11 @@
     "procedure": "Maintenance and replacing: manual page {page}",
     "manual_lead": "Everything about maintenance is in the maker's manual:",
     "manual_link": "open manual",
-    "disclaimer": "GearUp is independent and sells nothing itself. Every part comes from a maker's source; anything not yet verified is marked."
+    "disclaimer": "GearUp is independent and sells nothing itself. Every part comes from a maker's source; anything not yet verified is marked.",
+    "standaard": "Fitted as standard on this machine",
+    "types_count": "{count, plural, one {# type} other {# types}}",
+    "all_versions": "All versions",
+    "choices_lead": "There are several types. Each type has its own buying options."
   },
   "housead": {
     "tip": "tip",
