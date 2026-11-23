@@ -23,7 +23,9 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
   const eenStandaard = stdLengtes.length === 1 ? stdLengtes[0] : null
   const [lengte, setLengte] = useState(lengtes.length === 1 ? lengtes[0] : eenStandaard)
   const opLengte = groups.filter((g) => g.lengte === lengte)
-  const [variant, setVariant] = useState(0)
+  // Bij de standaardlengte staat de standaardvariant (steek, groefbreedte) voorgekozen.
+  const stdIndex = Math.max(0, groups.filter((x) => x.lengte === eenStandaard).findIndex((x) => x.standaard))
+  const [variant, setVariant] = useState(lengte === eenStandaard ? stdIndex : 0)
   const g = opLengte.length === 1 ? opLengte[0] : opLengte.length > 1 ? opLengte[Math.min(variant, opLengte.length - 1)] : null
   const kiesVariant = opLengte.length > 1
 
@@ -71,7 +73,7 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
           <p className={`text-[12.5px] mb-2 ${c.mute}`}>{t('waar_staat')}</p>
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={tm('maat_kiezen')}>
             {lengtes.map((l) => (
-              <button key={l} type="button" role="radio" aria-checked={l === lengte} onClick={() => { setLengte(l); setVariant(0) }} className={chip(l === lengte)}>
+              <button key={l} type="button" role="radio" aria-checked={l === lengte} onClick={() => { setLengte(l); setVariant(l === eenStandaard ? stdIndex : 0) }} className={chip(l === lengte)}>
                 {l ? l + ' cm' : '?'}
               </button>
             ))}
