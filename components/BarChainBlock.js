@@ -6,91 +6,35 @@ import Icon from '@/components/Icons'
 import { PartRow, palette } from '@/components/PartChoices'
 import { groupBarChain, partNumber, soortVan } from '@/lib/machine'
 
-// Zwaard en ketting in één blok (besluiten 19 nov, Norbert):
-// 1. Heeft de maker een standaardset (zwaard + ketting af fabriek), dan eerst de vraag
-//    "Is het zwaard op je zaag nooit vervangen?" met die sets.
-// 2. Daaronder: andere zwaarden en kettingen, te kiezen op lengte (en groefbreedte/steek als die
-//    bij dezelfde lengte verschillen).
-// 3. Per gekozen maat: de kettingen (los te koop, elk met eigen koopopties) en de zwaarden.
+// Zwaard en ketting in één blok (besluiten 19 en 23 nov, Norbert).
+// Eén model kan zwaarden van meerdere lengtes hebben, ook af fabriek. Daarom eerst de lengte
+// (en de groefbreedte als die bij dezelfde lengte verschilt). Pas daarna de ketting: per lengte is er
+// hooguit één standaardset, dus "zat dit zwaard er al op?" geeft dan één antwoord.
 export default function BarChainBlock({ items, locale, manualUrl, options = {}, light = false }) {
   const t = useTranslations('zk')
   const tm = useTranslations('machine')
-  const ts = useTranslations('soorten')
   const c = palette(light)
   const groups = groupBarChain(items)
-  const sets = groups.map((g, i) => ({ g, i })).filter((x) => x.g.standaard)
-  const [sel, setSel] = useState(sets.length ? sets[0].i : 0)
-  const g = groups[Math.min(sel, groups.length - 1)]
-  if (!g) return null
+  const lengtes = [...new Set(groups.map((g) => g.lengte))]
+  const [lengte, setLengte] = useState(lengtes.length === 1 ? lengtes[0] : null)
+  const opLengte = groups.filter((g) => g.lengte === lengte)
+  const [variant, setVariant] = useState(0)
+  const g = opLengte.length === 1 ? opLengte[0] : opLengte.length > 1 ? opLengte[Math.min(variant, opLengte.length - 1)] : null
+  const kiesVariant = opLengte.length > 1
 
   const naam = (k) => {
     const sv = soortVan(k.onderdeel)
     return sv ? sv.merknaam : k.onderdeel.naam.replace(/^(zwaard|zaagketting) /, '')
   }
   const nummer = (k) => partNumber(k.onderdeel)?.value
+  const chip = (on) => `border rounded-[9px] px-3 py-[7px] text-[13px] font-semibold transition ${on ? c.chipOn : c.chip}`
+  const variantLabel = (x) => [x.steek, x.dikte ? x.dikte + ' mm' : ''].filter(Boolean).join(' · ')
+
+  const stdKetting = g ? g.kettingen.find((k) => k.standaard === true) : null
+  const stdZwaard = g ? g.zwaarden.find((k) => k.standaard === true) : null
 
   return (
     <div className="flex flex-col gap-4">
-      {sets.length > 0 && (
-        <div className={`border rounded-[10px] px-3 py-3 ${c.box}`}>
-          <p className={`font-semibold text-[14px] mb-2 ${c.main}`}>{t('standaard_vraag')}</p>
-          <ul className="flex flex-col gap-2">
-            {sets.map(({ g: s, i }) => {
-              const z = s.zwaarden.find((k) => k.standaard === true)
-              const ks = s.kettingen.filter((k) => k.standaard === true)
-              return (
-                <li key={s.key}>
-                  <button
-                    type="button"
-                    onClick={() => setSel(i)}
-                    className={`w-full text-left border rounded-[9px] px-3 py-[9px] text-[13px] leading-snug transition ${
-                      i === sel ? c.chipOn : c.chip
-                    }`}
-                  >
-                    <span className="font-semibold">{s.label}</span>
-                    {z && (
-                      <span>
-                        {' · '}
-                        {t('zwaard')} {naam(z)}
-                        {nummer(z) && <> ({nummer(z)})</>}
-                      </span>
-                    )}
-                    {ks.map((k) => (
-                      <span key={k.id}>
-                        {' · '}
-                        {t('ketting')} {naam(k)}
-                        {nummer(k) && <> ({nummer(k)})</>}
-                      </span>
-                    ))}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      )}
-
-      {groups.length > 1 && (
-        <div>
-          <p className={`text-[14px] mb-1 ${c.main}`}>{sets.length ? t('andere') : t('andere_zonder_standaard')}</p>
-          <p className={`text-[12.5px] mb-2 ${c.mute}`}>{t('waar_staat')}</p>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={tm('maat_kiezen')}>
-            {groups.map((x, i) => (
-              <button
-                key={x.key}
-                type="button"
-                role="radio"
-                aria-checked={i === sel}
-                onClick={() => setSel(i)}
-                className={`border rounded-[9px] px-3 py-[7px] text-[13px] font-semibold transition ${i === sel ? c.chipOn : c.chip}`}
-              >
-                {x.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className={`flex items-start gap-[8px] text-[13.5px] border px-3 py-[10px] rounded-[9px] leading-snug ${c.warn}`}>
         <span className="flex-none mt-[1px]"><Icon name="warning" className="w-4 h-4" strokeWidth={2.2} /></span>
         <span>
@@ -98,35 +42,85 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
         </span>
       </div>
 
-      <div>
-        <h3 className={`font-headline font-bold text-[12px] tracking-[0.05em] uppercase mb-2 ${c.mute}`}>
-          {t('kettingen_kop', { maat: g.label })}
-        </h3>
-        {g.kettingen.length ? (
-          <ul className={`border rounded-[10px] divide-y ${c.box} ${c.div}`}>
-            {g.kettingen.map((k) => (
-              <PartRow key={k.id + '-' + g.key} k={k} locale={locale} manualUrl={manualUrl} c={c} opts={options[k.id] || {}} />
+      {lengtes.length > 1 && (
+        <div>
+          <p className={`font-semibold text-[14px] mb-1 ${c.main}`}>{t('lengte_vraag')}</p>
+          <p className={`text-[12.5px] mb-2 ${c.mute}`}>{t('waar_staat')}</p>
+          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={tm('maat_kiezen')}>
+            {lengtes.map((l) => (
+              <button key={l} type="button" role="radio" aria-checked={l === lengte} onClick={() => { setLengte(l); setVariant(0) }} className={chip(l === lengte)}>
+                {l ? l + ' cm' : '?'}
+              </button>
             ))}
-          </ul>
-        ) : (
-          <p className={`text-[13px] ${c.sub}`}>{t('geen_ketting')}</p>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
 
-      <div>
-        <h3 className={`font-headline font-bold text-[12px] tracking-[0.05em] uppercase mb-2 ${c.mute}`}>
-          {t('zwaarden_kop', { maat: g.label })}
-        </h3>
-        {g.zwaarden.length ? (
-          <ul className={`border rounded-[10px] divide-y ${c.box} ${c.div}`}>
-            {g.zwaarden.map((k) => (
-              <PartRow key={k.id} k={k} locale={locale} manualUrl={manualUrl} c={c} opts={options[k.id] || {}} />
+      {kiesVariant && (
+        <div>
+          <p className={`font-semibold text-[14px] mb-2 ${c.main}`}>{t('variant_vraag')}</p>
+          <div className="flex flex-wrap gap-2" role="radiogroup">
+            {opLengte.map((x, i) => (
+              <button key={x.key} type="button" role="radio" aria-checked={i === variant} onClick={() => setVariant(i)} className={chip(i === variant)}>
+                {variantLabel(x)}
+              </button>
             ))}
-          </ul>
-        ) : (
-          <p className={`text-[13px] ${c.sub}`}>{t('geen_zwaard')}</p>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
+
+      {!g && <p className={`text-[13px] ${c.sub}`}>{t('kies_eerst')}</p>}
+
+      {g && stdKetting && (
+        <div className={`border rounded-[10px] px-3 py-3 text-[13.5px] leading-snug ${c.box}`}>
+          <p className={`font-semibold mb-1 ${c.main}`}>{t('standaard_vraag', { maat: g.lengte + ' cm' })}</p>
+          <p className={c.sub}>
+            {t('ketting')} <span className={`font-semibold ${c.main}`}>{naam(stdKetting)}</span>
+            {nummer(stdKetting) && <> ({nummer(stdKetting)})</>}
+            {stdZwaard && (
+              <>
+                {' · '}
+                {t('zwaard')} {naam(stdZwaard)}
+                {nummer(stdZwaard) && <> ({nummer(stdZwaard)})</>}
+              </>
+            )}
+          </p>
+          <p className={`mt-1 text-[12.5px] ${c.mute}`}>{t('andere_ook')}</p>
+        </div>
+      )}
+
+      {g && (
+        <>
+          <div>
+            <h3 className={`font-headline font-bold text-[12px] tracking-[0.05em] uppercase mb-2 ${c.mute}`}>
+              {t('kettingen_kop', { maat: g.label })}
+            </h3>
+            {g.kettingen.length ? (
+              <ul className={`border rounded-[10px] divide-y ${c.box} ${c.div}`}>
+                {g.kettingen.map((k) => (
+                  <PartRow key={k.id + '-' + g.key} k={k} locale={locale} manualUrl={manualUrl} c={c} opts={options[k.id] || {}} />
+                ))}
+              </ul>
+            ) : (
+              <p className={`text-[13px] ${c.sub}`}>{t('geen_ketting')}</p>
+            )}
+          </div>
+          <div>
+            <h3 className={`font-headline font-bold text-[12px] tracking-[0.05em] uppercase mb-2 ${c.mute}`}>
+              {t('zwaarden_kop', { maat: g.label })}
+            </h3>
+            {g.zwaarden.length ? (
+              <ul className={`border rounded-[10px] divide-y ${c.box} ${c.div}`}>
+                {g.zwaarden.map((k) => (
+                  <PartRow key={k.id} k={k} locale={locale} manualUrl={manualUrl} c={c} opts={options[k.id] || {}} />
+                ))}
+              </ul>
+            ) : (
+              <p className={`text-[13px] ${c.sub}`}>{t('geen_zwaard')}</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }
