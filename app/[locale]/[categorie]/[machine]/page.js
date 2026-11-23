@@ -5,7 +5,8 @@ import { supabaseServer } from '@/lib/supabase-server'
 import { categoryFromSlug, categoryName, machineHref } from '@/lib/categories'
 import { fuelInfo, uitlegKey, fetchUitleg } from '@/lib/advice'
 import { isValidUrl } from '@/lib/links'
-import { groupParts, fuelFacts, hasChoices } from '@/lib/machine'
+import { groupParts, fuelFacts, hasChoices, isFuelMix } from '@/lib/machine'
+import FuelBlock from '@/components/FuelBlock'
 import BarChainBlock from '@/components/BarChainBlock'
 import PartFacts from '@/components/PartFacts'
 import PartChoices from '@/components/PartChoices'
@@ -140,6 +141,23 @@ export default async function ResultPage({ params, searchParams }) {
       available.length > 0
         ? `${t('from')} ${priceLabel(minPrice)} · ${t('options_count', { count: available.length })}`
         : null
+    if (type === 'brandstof' && isFuelMix(byType[type])) {
+      return {
+        producttype: type,
+        titel: light ? t('hero_fallback', { type: tp('brandstof'), merk: machine.merk, model: modelLabel }) : null,
+        fallbackName: t('fits_model', { model: modelLabel }),
+        choices: true,
+        facts: <FuelBlock items={byType[type]} e10={fuel.e10} light={light} />,
+        choicesLead: null,
+        keuze: null,
+        plaatsing: null,
+        waarschuwing: null,
+        specCells: null,
+        manualNote: t('manual_note'),
+        from: null,
+        optionsByTier: byTier,
+      }
+    }
     if (type === 'ketting' && kettingen) {
       return {
         producttype: type,

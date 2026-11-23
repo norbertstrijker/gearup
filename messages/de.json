@@ -217,5 +217,27 @@
     "zwaarden_kop": "Schiene {maat}",
     "geen_ketting": "Für diese Größe ist noch keine Kette in GearUp.",
     "geen_zwaard": "Für diese Größe ist noch keine Schiene in GearUp."
+  },
+  "bs": {
+    "kant_kop": "Fertig gemischt",
+    "kant_titel": "Fertiges 2-Takt-Gemisch 1:50",
+    "kant_uitleg": "Benzin und Öl sind schon gemischt. Du füllst es direkt in den Tank.",
+    "origineel": "Vom Hersteller:",
+    "meng_kop": "Selbst mischen?",
+    "meng_kop_alleen": "Selbst mischen",
+    "meng_uitleg": "Du mischst normales Benzin mit Zweitaktöl, zum Beispiel im Kanister oder in einer Mischflasche.",
+    "benzine": "Benzin:",
+    "benzine_e10_ja": "normales Super von der Tankstelle. E10 ist erlaubt.",
+    "benzine_e10_nee": "Super ohne E10, zum Beispiel Super Plus (E5). Kein E10.",
+    "benzine_e10_onbekend": "Super von der Tankstelle. Ob E10 erlaubt ist, steht nicht in der Anleitung.",
+    "olie": "Öl, wie viel pro Liter Benzin:",
+    "ml_per_liter": "{ml} ml Öl pro Liter",
+    "olie_stihl": "mit STIHL-Zweitaktöl",
+    "olie_stihl_of_jaso": "mit STIHL-Zweitaktöl oder Öl mit JASO FB, FC oder FD auf der Flasche",
+    "olie_ander_merk": "mit Zweitaktöl einer anderen Marke",
+    "olie_algemeen": "mit Zweitaktöl",
+    "olie_let_op": "Die Menge hängt davon ab, welches Öl du kaufst. Prüfe beim gewählten Öl, welche Regel dazugehört.",
+    "alle_voorwaarden": "Alle Bedingungen aus der Anleitung",
+    "bron": "Quelle"
   }
 }

@@ -217,5 +217,27 @@
     "zwaarden_kop": "Zwaard {maat}",
     "geen_ketting": "Voor deze maat staat nog geen ketting in GearUp.",
     "geen_zwaard": "Voor deze maat staat nog geen zwaard in GearUp."
+  },
+  "bs": {
+    "kant_kop": "Kant-en-klaar",
+    "kant_titel": "Kant-en-klare 2-taktbrandstof 1:50",
+    "kant_uitleg": "Benzine en olie zijn al gemengd. Je giet het zo in de tank.",
+    "origineel": "Van de maker:",
+    "meng_kop": "Zelf mengen?",
+    "meng_kop_alleen": "Zelf mengen",
+    "meng_uitleg": "Je mengt gewone benzine met 2-taktolie, bijvoorbeeld in een jerrycan of mengfles.",
+    "benzine": "Benzine:",
+    "benzine_e10_ja": "gewone Euro 95 van de pomp. E10 mag.",
+    "benzine_e10_nee": "Euro 95 zonder E10, bijvoorbeeld Super Plus 98 (E5). Geen E10.",
+    "benzine_e10_onbekend": "Euro 95 van de pomp. Of E10 mag, staat niet in de handleiding.",
+    "olie": "Olie, hoeveel per liter benzine:",
+    "ml_per_liter": "{ml} ml olie per liter",
+    "olie_stihl": "met STIHL-2-taktolie",
+    "olie_stihl_of_jaso": "met STIHL-2-taktolie of olie met JASO FB, FC of FD op de fles",
+    "olie_ander_merk": "met 2-taktolie van een ander merk",
+    "olie_algemeen": "met 2-taktolie",
+    "olie_let_op": "De hoeveelheid hangt af van welke olie je koopt. Kijk bij de olie die je kiest welke regel erbij hoort.",
+    "alle_voorwaarden": "Alle voorwaarden uit de handleiding",
+    "bron": "Bron"
   }
 }

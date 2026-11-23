@@ -217,5 +217,27 @@
     "zwaarden_kop": "Bar {maat}",
     "geen_ketting": "No chain for this size in GearUp yet.",
     "geen_zwaard": "No bar for this size in GearUp yet."
+  },
+  "bs": {
+    "kant_kop": "Ready-mixed",
+    "kant_titel": "Ready-mixed 2-stroke fuel 1:50",
+    "kant_uitleg": "Petrol and oil are already mixed. You pour it straight into the tank.",
+    "origineel": "From the maker:",
+    "meng_kop": "Mixing it yourself?",
+    "meng_kop_alleen": "Mixing it yourself",
+    "meng_uitleg": "You mix regular petrol with two-stroke oil, for example in a can or a mixing bottle.",
+    "benzine": "Petrol:",
+    "benzine_e10_ja": "regular unleaded from the pump. E10 is fine.",
+    "benzine_e10_nee": "unleaded without E10, for example super unleaded (E5). No E10.",
+    "benzine_e10_onbekend": "regular unleaded from the pump. The manual does not say whether E10 is allowed.",
+    "olie": "Oil, how much per litre of petrol:",
+    "ml_per_liter": "{ml} ml oil per litre",
+    "olie_stihl": "with STIHL two-stroke oil",
+    "olie_stihl_of_jaso": "with STIHL two-stroke oil or oil marked JASO FB, FC or FD",
+    "olie_ander_merk": "with two-stroke oil of another brand",
+    "olie_algemeen": "with two-stroke oil",
+    "olie_let_op": "The amount depends on which oil you buy. Check which rule goes with the oil you pick.",
+    "alle_voorwaarden": "All conditions from the manual",
+    "bron": "Source"
   }
 }
