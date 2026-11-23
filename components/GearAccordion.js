@@ -30,7 +30,7 @@ function AccordionItem({ item }) {
         </span>
         <span className="flex-1 min-w-0">
           <span className="block font-headline font-bold text-[11px] tracking-[0.09em] uppercase text-signal mb-[3px]">
-            {tp(item.producttype)}
+            {item.typeLabel || tp(item.producttype)}
           </span>
           <span className="block text-[15px] font-semibold text-paper leading-tight group-hover:text-signal transition-colors">
             {item.titel || item.fallbackName}
@@ -49,7 +49,7 @@ function AccordionItem({ item }) {
 
           {/* feiten uit de bron: welk onderdeel precies, nummer, voorwaarden; bij meerdere soorten
               staan die onder elkaar met eigen koopopties */}
-          {item.choices && <p className="text-[13px] text-mut mb-3">{item.choicesLead}</p>}
+          {item.choices && item.choicesLead && <p className="text-[13px] text-mut mb-3">{item.choicesLead}</p>}
           {item.facts && <div className="mb-4">{item.facts}</div>}
 
           {/* feitelijke specs (brandstof) */}

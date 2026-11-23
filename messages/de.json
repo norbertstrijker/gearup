@@ -204,5 +204,18 @@
     "hexa": "Länger scharf",
     "hexa3": "Länger scharf, rückschlagarm",
     "duro3": "Schwere Einsätze, bis zu zehnmal länger scharf"
+  },
+  "zk": {
+    "titel": "Schiene und Kette",
+    "standaard_vraag": "Wurde die Schiene an deiner Säge nie gewechselt? Dann gehört eine davon dazu:",
+    "zwaard": "Schiene",
+    "ketting": "Kette",
+    "andere": "Auf dein Modell passen auch andere Schienen und Ketten. Hast du eine andere Schiene oder willst du eine andere Kette? Wähle dann Länge und Nutbreite deiner Schiene.",
+    "andere_zonder_standaard": "Auf dein Modell passen verschiedene Schienen und Ketten. Wähle Länge und Nutbreite deiner Schiene.",
+    "waar_staat": "Länge und Nutbreite stehen meist hinten auf der Schiene, auf der Seite des Motors.",
+    "kettingen_kop": "Kette für Schiene {maat}",
+    "zwaarden_kop": "Schiene {maat}",
+    "geen_ketting": "Für diese Größe ist noch keine Kette in GearUp.",
+    "geen_zwaard": "Für diese Größe ist noch keine Schiene in GearUp."
   }
 }

@@ -204,5 +204,18 @@
     "hexa": "Langer scherp",
     "hexa3": "Langer scherp, weinig terugslag",
     "duro3": "Zwaar werk, tot tien keer langer scherp"
+  },
+  "zk": {
+    "titel": "Zwaard en ketting",
+    "standaard_vraag": "Is het zwaard op je zaag nooit vervangen? Dan hoort er één van deze bij:",
+    "zwaard": "zwaard",
+    "ketting": "ketting",
+    "andere": "Op jouw model passen ook andere zwaarden en kettingen. Heb je een ander zwaard of wil je een andere ketting? Kies dan de lengte en groefbreedte van je zwaard.",
+    "andere_zonder_standaard": "Op jouw model passen verschillende zwaarden en kettingen. Kies de lengte en groefbreedte van je zwaard.",
+    "waar_staat": "Lengte en groefbreedte staan meestal achter op het zwaard, aan de kant van de motor.",
+    "kettingen_kop": "Ketting voor zwaard {maat}",
+    "zwaarden_kop": "Zwaard {maat}",
+    "geen_ketting": "Voor deze maat staat nog geen ketting in GearUp.",
+    "geen_zwaard": "Voor deze maat staat nog geen zwaard in GearUp."
   }
 }

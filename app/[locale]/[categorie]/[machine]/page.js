@@ -6,6 +6,7 @@ import { categoryFromSlug, categoryName, machineHref } from '@/lib/categories'
 import { fuelInfo, uitlegKey, fetchUitleg } from '@/lib/advice'
 import { isValidUrl } from '@/lib/links'
 import { groupParts, fuelFacts, hasChoices } from '@/lib/machine'
+import BarChainBlock from '@/components/BarChainBlock'
 import PartFacts from '@/components/PartFacts'
 import PartChoices from '@/components/PartChoices'
 import HouseAd from '@/components/HouseAd'
@@ -56,6 +57,7 @@ export default async function ResultPage({ params, searchParams }) {
   const tf = await getTranslations('fuel')
   const tcommon = await getTranslations('common')
   const tm = await getTranslations('machine')
+  const tzk = await getTranslations('zk')
 
   const categoryKey = categoryFromSlug(catSlug, locale)
   if (!categoryKey) notFound()
@@ -91,7 +93,16 @@ export default async function ResultPage({ params, searchParams }) {
 
   // Per producttype de koppelingen uit de database. Koopopties (basis/beter/best) komen
   // later uit de kooplinks; tot die er zijn, blijven de drie vakken leeg ("binnenkort").
-  const groups = groupParts(koppelingen || [], onderdeelParam)
+  // Zwaard en ketting in één blok (besluit 19 nov): zwaarden (zaagblad) gaan mee in het kettingblok.
+  const highlight = onderdeelParam === 'zaagblad' ? 'ketting' : onderdeelParam
+  const groups0 = groupParts(koppelingen || [], highlight)
+  const zwaarden = groups0.find((g) => g.producttype === 'zaagblad')
+  const kettingen = groups0.find((g) => g.producttype === 'ketting')
+  const groups = kettingen
+    ? groups0.filter((g) => g.producttype !== 'zaagblad').map((g) =>
+        g.producttype === 'ketting' ? { ...g, items: [...g.items, ...(zwaarden?.items || [])] } : g
+      )
+    : groups0
   const relevantTypes = groups.map((g) => g.producttype)
   const byType = Object.fromEntries(groups.map((g) => [g.producttype, g.items]))
   const grouped = {}
@@ -129,6 +140,24 @@ export default async function ResultPage({ params, searchParams }) {
       available.length > 0
         ? `${t('from')} ${priceLabel(minPrice)} · ${t('options_count', { count: available.length })}`
         : null
+    if (type === 'ketting' && kettingen) {
+      return {
+        producttype: type,
+        typeLabel: tzk('titel'),
+        titel: light ? t('hero_fallback', { type: tzk('titel'), merk: machine.merk, model: modelLabel }) : null,
+        fallbackName: t('fits_model', { model: modelLabel }),
+        choices: true,
+        facts: <BarChainBlock items={byType[type]} locale={locale} manualUrl={manualUrlFor()} light={light} />,
+        choicesLead: null,
+        keuze: null,
+        plaatsing: null,
+        waarschuwing: null,
+        specCells: null,
+        manualNote: t('manual_note'),
+        from: null,
+        optionsByTier: byTier,
+      }
+    }
     return {
       producttype: type,
       titel: u.titel || null,
@@ -160,7 +189,7 @@ export default async function ResultPage({ params, searchParams }) {
 
   // Onderdeel-bewust: gezocht onderdeel groot; anders model-overzicht (alles gelijkwaardig)
   const heroType =
-    onderdeelParam && relevantTypes.includes(onderdeelParam) ? onderdeelParam : null
+    highlight && relevantTypes.includes(highlight) ? highlight : null
   function manualUrlFor() {
     return isValidUrl(machine.handleiding_url) ? machine.handleiding_url : null
   }
@@ -200,7 +229,7 @@ export default async function ResultPage({ params, searchParams }) {
               <span className="absolute left-0 top-0 bottom-0 w-[6px] bg-signal" />
               <span className="inline-flex items-center gap-[7px] font-headline font-bold text-[11.5px] tracking-[0.14em] uppercase text-signal-d bg-white border border-[#f0c9b8] px-[10px] py-[5px] rounded-[7px] mb-[14px]">
                 <Icon name={heroItem.producttype} className="w-[13px] h-[13px]" strokeWidth={2.2} />
-                {tp(heroItem.producttype)}
+                {heroItem.typeLabel || tp(heroItem.producttype)}
               </span>
               <h1 className="font-headline font-extrabold text-2xl leading-tight tracking-[-0.02em] text-ink mb-3">
                 {heroItem.titel ||
@@ -237,7 +266,7 @@ export default async function ResultPage({ params, searchParams }) {
                 </div>
               )}
 
-              {heroItem.choices && <p className="text-[14px] text-[#36383d] mb-3">{heroItem.choicesLead}</p>}
+              {heroItem.choices && heroItem.choicesLead && <p className="text-[14px] text-[#36383d] mb-3">{heroItem.choicesLead}</p>}
               {heroItem.facts && <div className="mb-5">{heroItem.facts}</div>}
 
               {!heroItem.choices && (

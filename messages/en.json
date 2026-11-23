@@ -204,5 +204,18 @@
     "hexa": "Stays sharp longer",
     "hexa3": "Stays sharp longer, low kickback",
     "duro3": "Heavy work, stays sharp up to ten times longer"
+  },
+  "zk": {
+    "titel": "Guide bar and chain",
+    "standaard_vraag": "Has the bar on your saw never been replaced? Then it came with one of these:",
+    "zwaard": "bar",
+    "ketting": "chain",
+    "andere": "Other bars and chains also fit your model. Do you have a different bar, or want a different chain? Then pick the length and gauge of your bar.",
+    "andere_zonder_standaard": "Several bars and chains fit your model. Pick the length and gauge of your bar.",
+    "waar_staat": "Length and gauge are usually stamped on the back of the bar, on the engine side.",
+    "kettingen_kop": "Chain for {maat} bar",
+    "zwaarden_kop": "Bar {maat}",
+    "geen_ketting": "No chain for this size in GearUp yet.",
+    "geen_zwaard": "No bar for this size in GearUp yet."
   }
 }
