@@ -207,7 +207,7 @@
   },
   "zk": {
     "titel": "Zwaard en ketting",
-    "standaard_vraag": "Zit het zwaard van {maat} er nog op dat bij de zaag zat? Dan hoort deze erbij:",
+    "standaard_vraag": "Is het zwaard op je zaag nooit vervangen? Dan zit er een zwaard van {maat} op en hoort deze ketting erbij:",
     "zwaard": "zwaard",
     "ketting": "ketting",
     "andere": "Op jouw model passen ook andere zwaarden en kettingen. Heb je een ander zwaard of wil je een andere ketting? Kies dan de lengte en groefbreedte van je zwaard.",
@@ -217,10 +217,11 @@
     "zwaarden_kop": "Zwaard {maat}",
     "geen_ketting": "Voor deze maat staat nog geen ketting in GearUp.",
     "geen_zwaard": "Voor deze maat staat nog geen zwaard in GearUp.",
-    "lengte_vraag": "Hoe lang is het zwaard op je zaag?",
+    "lengte_vraag": "Voor welke maat zwaard zoek je een ketting?",
     "variant_vraag": "Bij deze lengte zijn er meer zwaarden. Welke groefbreedte (en steek) staat op jouw zwaard?",
     "kies_eerst": "Kies eerst de lengte van je zwaard. Dan zie je welke ketting en welk zwaard erbij horen.",
-    "andere_ook": "Heb je een ander zwaard van deze lengte of wil je een andere ketting? Hieronder staan ze allemaal."
+    "andere_ook": "Heb je een ander zwaard van deze lengte of wil je een andere ketting? Hieronder staan ze allemaal.",
+    "lengte_vraag_ander": "Zit er een ander zwaard op? Voor welke maat zwaard zoek je een ketting?"
   },
   "bs": {
     "kant_kop": "Kant-en-klaar",

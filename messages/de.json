@@ -207,7 +207,7 @@
   },
   "zk": {
     "titel": "Schiene und Kette",
-    "standaard_vraag": "Ist noch die {maat}-Schiene drauf, die mit der Säge kam? Dann gehört diese dazu:",
+    "standaard_vraag": "Wurde die Schiene an deiner Säge nie gewechselt? Dann ist eine {maat}-Schiene drauf und diese Kette gehört dazu:",
     "zwaard": "Schiene",
     "ketting": "Kette",
     "andere": "Auf dein Modell passen auch andere Schienen und Ketten. Hast du eine andere Schiene oder willst du eine andere Kette? Wähle dann Länge und Nutbreite deiner Schiene.",
@@ -217,10 +217,11 @@
     "zwaarden_kop": "Schiene {maat}",
     "geen_ketting": "Für diese Größe ist noch keine Kette in GearUp.",
     "geen_zwaard": "Für diese Größe ist noch keine Schiene in GearUp.",
-    "lengte_vraag": "Wie lang ist die Schiene an deiner Säge?",
+    "lengte_vraag": "Für welche Schienenlänge suchst du eine Kette?",
     "variant_vraag": "Bei dieser Länge gibt es mehrere Schienen. Welche Nutbreite (und Teilung) steht auf deiner Schiene?",
     "kies_eerst": "Wähle zuerst die Länge deiner Schiene. Dann siehst du, welche Kette und welche Schiene dazugehören.",
-    "andere_ook": "Hast du eine andere Schiene dieser Länge oder willst du eine andere Kette? Unten stehen alle."
+    "andere_ook": "Hast du eine andere Schiene dieser Länge oder willst du eine andere Kette? Unten stehen alle.",
+    "lengte_vraag_ander": "Ist eine andere Schiene drauf? Für welche Schienenlänge suchst du eine Kette?"
   },
   "bs": {
     "kant_kop": "Fertig gemischt",

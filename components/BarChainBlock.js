@@ -16,7 +16,12 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
   const c = palette(light)
   const groups = groupBarChain(items)
   const lengtes = [...new Set(groups.map((g) => g.lengte))]
-  const [lengte, setLengte] = useState(lengtes.length === 1 ? lengtes[0] : null)
+  // Besluit 23 nov (Norbert): komt het model af fabriek met één zwaardlengte, dan eerst die standaardset
+  // ("nooit vervangen?") en daarna de vraag voor een ander zwaard. Meerdere standaardlengtes of geen
+  // standaard: alleen de vraag "voor welke maat zwaard zoek je een ketting?".
+  const stdLengtes = [...new Set(groups.filter((x) => x.standaard).map((x) => x.lengte))]
+  const eenStandaard = stdLengtes.length === 1 ? stdLengtes[0] : null
+  const [lengte, setLengte] = useState(lengtes.length === 1 ? lengtes[0] : eenStandaard)
   const opLengte = groups.filter((g) => g.lengte === lengte)
   const [variant, setVariant] = useState(0)
   const g = opLengte.length === 1 ? opLengte[0] : opLengte.length > 1 ? opLengte[Math.min(variant, opLengte.length - 1)] : null
@@ -30,8 +35,9 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
   const chip = (on) => `border rounded-[9px] px-3 py-[7px] text-[13px] font-semibold transition ${on ? c.chipOn : c.chip}`
   const variantLabel = (x) => [x.steek, x.dikte ? x.dikte + ' mm' : ''].filter(Boolean).join(' · ')
 
-  const stdKetting = g ? g.kettingen.find((k) => k.standaard === true) : null
-  const stdZwaard = g ? g.zwaarden.find((k) => k.standaard === true) : null
+  const stdGroep = eenStandaard !== null ? groups.find((x) => x.standaard && x.lengte === eenStandaard) : null
+  const stdKetting = stdGroep ? stdGroep.kettingen.find((k) => k.standaard === true) : null
+  const stdZwaard = stdGroep ? stdGroep.zwaarden.find((k) => k.standaard === true) : null
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,9 +48,26 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
         </span>
       </div>
 
+      {stdKetting && (
+        <div className={`border rounded-[10px] px-3 py-3 text-[13.5px] leading-snug ${c.box}`}>
+          <p className={`font-semibold mb-1 ${c.main}`}>{t('standaard_vraag', { maat: stdGroep.lengte + ' cm' })}</p>
+          <p className={c.sub}>
+            {t('ketting')} <span className={`font-semibold ${c.main}`}>{naam(stdKetting)}</span>
+            {nummer(stdKetting) && <> ({nummer(stdKetting)})</>}
+            {stdZwaard && (
+              <>
+                {' · '}
+                {t('zwaard')} {naam(stdZwaard)}
+                {nummer(stdZwaard) && <> ({nummer(stdZwaard)})</>}
+              </>
+            )}
+          </p>
+        </div>
+      )}
+
       {lengtes.length > 1 && (
         <div>
-          <p className={`font-semibold text-[14px] mb-1 ${c.main}`}>{t('lengte_vraag')}</p>
+          <p className={`font-semibold text-[14px] mb-1 ${c.main}`}>{stdKetting ? t('lengte_vraag_ander') : t('lengte_vraag')}</p>
           <p className={`text-[12.5px] mb-2 ${c.mute}`}>{t('waar_staat')}</p>
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={tm('maat_kiezen')}>
             {lengtes.map((l) => (
@@ -70,24 +93,6 @@ export default function BarChainBlock({ items, locale, manualUrl, options = {}, 
       )}
 
       {!g && <p className={`text-[13px] ${c.sub}`}>{t('kies_eerst')}</p>}
-
-      {g && stdKetting && (
-        <div className={`border rounded-[10px] px-3 py-3 text-[13.5px] leading-snug ${c.box}`}>
-          <p className={`font-semibold mb-1 ${c.main}`}>{t('standaard_vraag', { maat: g.lengte + ' cm' })}</p>
-          <p className={c.sub}>
-            {t('ketting')} <span className={`font-semibold ${c.main}`}>{naam(stdKetting)}</span>
-            {nummer(stdKetting) && <> ({nummer(stdKetting)})</>}
-            {stdZwaard && (
-              <>
-                {' · '}
-                {t('zwaard')} {naam(stdZwaard)}
-                {nummer(stdZwaard) && <> ({nummer(stdZwaard)})</>}
-              </>
-            )}
-          </p>
-          <p className={`mt-1 text-[12.5px] ${c.mute}`}>{t('andere_ook')}</p>
-        </div>
-      )}
 
       {g && (
         <>
